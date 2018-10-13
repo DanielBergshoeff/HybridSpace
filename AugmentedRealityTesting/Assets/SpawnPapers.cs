@@ -22,6 +22,7 @@ public class SpawnPapers : MonoBehaviour {
 
     public void RegisterModelTouch()
     {
+        if(Input.touches.Length != 0) {
         Touch touch = Input.touches[0];
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(touch.position);
@@ -40,6 +41,7 @@ public class SpawnPapers : MonoBehaviour {
                 }
                 
             }
+        }
         }
     }
 }
