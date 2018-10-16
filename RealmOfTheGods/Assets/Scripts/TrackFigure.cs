@@ -6,6 +6,7 @@ using Vuforia;
 public class TrackFigure : MonoBehaviour,  IVirtualButtonEventHandler, ITrackableEventHandler{
 
     public GameObject line;
+    public GameObject parentObjectsToSwap;
     public GameObject[] objectsToSwap;
 
     public GameObject frontCard;
@@ -18,20 +19,28 @@ public class TrackFigure : MonoBehaviour,  IVirtualButtonEventHandler, ITrackabl
 
     public void OnButtonPressed(VirtualButtonBehaviour vb)
     {
-        
+        Debug.Log("Button " + vb.gameObject.name + " has been pressed!");
     }
 
     public void OnButtonReleased(VirtualButtonBehaviour vb)
     {
-        if (buttons[currentButton] == vb.gameObject)
-        {
-            lastPressedButton = vb.gameObject;
-            currentButton++;
-            if(currentButton >= buttons.Length)
-            {
-                line.SetActive(true);
+        if (currentButton < buttons.Length) {
+            if (buttons[currentButton] == vb.gameObject) {
+                Debug.Log("Button " + currentButton + " has been released!");
+
+                lastPressedButton = vb.gameObject;
+                currentButton++;
+                if (currentButton >= buttons.Length) {
+                    line.SetActive(true);
+                }
             }
         }
+    }
+
+    public void SetParent(Transform child, Transform parent, float xRotation) {
+        child.parent = parent;
+        child.localPosition = Vector3.zero;
+        child.localRotation = new Quaternion(xRotation, Quaternion.identity.y, Quaternion.identity.z, Quaternion.identity.w);
     }
 
     public void OnTrackableStateChanged(TrackableBehaviour.Status previousStatus, TrackableBehaviour.Status newStatus)
@@ -39,21 +48,15 @@ public class TrackFigure : MonoBehaviour,  IVirtualButtonEventHandler, ITrackabl
         if (newStatus == TrackableBehaviour.Status.NO_POSE)
         {
             Debug.Log("Front not found");
-            line.transform.parent = backCard.transform;
-            for (int i = 0; i < objectsToSwap.Length; i++)
-            {
-                objectsToSwap[i].transform.parent = backCard.transform;
-            }
+            SetParent(line.transform, backCard.transform, 180);
+            SetParent(parentObjectsToSwap.transform, backCard.transform, 180);
         }
         else //if (newStatus == TrackableBehaviour.Status.TRACKED || newStatus == TrackableBehaviour.Status.EXTENDED_TRACKED || newStatus == TrackableBehaviour.Status.DETECTED)
         {
             Debug.Log("Front found");
 
-            line.transform.parent = frontCard.transform;
-            for (int i = 0; i < objectsToSwap.Length; i++)
-            {
-                objectsToSwap[i].transform.parent = frontCard.transform;
-            }
+            SetParent(line.transform, frontCard.transform, 0);
+            SetParent(parentObjectsToSwap.transform, frontCard.transform, 0);
         }
     }
 
