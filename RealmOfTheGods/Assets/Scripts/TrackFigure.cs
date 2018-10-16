@@ -7,7 +7,6 @@ public class TrackFigure : MonoBehaviour,  IVirtualButtonEventHandler, ITrackabl
 
     public GameObject line;
     public GameObject parentObjectsToSwap;
-    public GameObject[] objectsToSwap;
 
     public GameObject frontCard;
     public GameObject backCard;
@@ -17,24 +16,32 @@ public class TrackFigure : MonoBehaviour,  IVirtualButtonEventHandler, ITrackabl
     private int currentButton;
     private GameObject lastPressedButton;
 
+    public Color colorStart;
+    public Color colorPressed;
+
     public void OnButtonPressed(VirtualButtonBehaviour vb)
     {
         Debug.Log("Button " + vb.gameObject.name + " has been pressed!");
+
+        if (currentButton < buttons.Length)
+        {
+            if (buttons[currentButton] == vb.gameObject)
+            {
+                lastPressedButton = vb.gameObject;
+                currentButton++;
+                if (currentButton >= buttons.Length)
+                {
+                    line.SetActive(true);
+                }
+
+                vb.gameObject.GetComponentInChildren<SpriteRenderer>().color = colorPressed;
+            }
+        }
     }
 
     public void OnButtonReleased(VirtualButtonBehaviour vb)
     {
-        if (currentButton < buttons.Length) {
-            if (buttons[currentButton] == vb.gameObject) {
-                Debug.Log("Button " + currentButton + " has been released!");
-
-                lastPressedButton = vb.gameObject;
-                currentButton++;
-                if (currentButton >= buttons.Length) {
-                    line.SetActive(true);
-                }
-            }
-        }
+        
     }
 
     public void SetParent(Transform child, Transform parent, float xRotation) {
@@ -68,6 +75,7 @@ public class TrackFigure : MonoBehaviour,  IVirtualButtonEventHandler, ITrackabl
         for (int i = 0; i < buttons.Length; i++)
         {
             buttons[i].GetComponent<VirtualButtonBehaviour>().RegisterEventHandler(this);
+            buttons[i].GetComponentInChildren<SpriteRenderer>().color = colorStart;
         }
 
         frontCard.GetComponent<TrackableBehaviour>().RegisterTrackableEventHandler(this);
