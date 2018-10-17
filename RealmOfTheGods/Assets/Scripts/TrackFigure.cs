@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Vuforia;
 
-public class TrackFigure : MonoBehaviour,  IVirtualButtonEventHandler, ITrackableEventHandler{
+public class TrackFigure : AbstractTrackFigure, ITrackableEventHandler{
 
     public GameObject line;
     public GameObject parentObjectsToSwap;
@@ -11,15 +11,15 @@ public class TrackFigure : MonoBehaviour,  IVirtualButtonEventHandler, ITrackabl
     public GameObject frontCard;
     public GameObject backCard;
 
-    public GameObject[] buttons;
+    //public GameObject[] buttons;
 
-    private int currentButton;
-    private GameObject lastPressedButton;
+    //private int currentButton;
+    //private GameObject lastPressedButton;
 
     public Color colorStart;
     public Color colorPressed;
 
-    public void OnButtonPressed(VirtualButtonBehaviour vb)
+    /*public void OnButtonPressed(VirtualButtonBehaviour vb)
     {
         Debug.Log("Button " + vb.gameObject.name + " has been pressed!");
 
@@ -42,7 +42,7 @@ public class TrackFigure : MonoBehaviour,  IVirtualButtonEventHandler, ITrackabl
     public void OnButtonReleased(VirtualButtonBehaviour vb)
     {
         
-    }
+    }*/
 
     public void SetParent(Transform child, Transform parent, float xRotation) {
         child.parent = parent;
@@ -68,21 +68,51 @@ public class TrackFigure : MonoBehaviour,  IVirtualButtonEventHandler, ITrackabl
     }
 
     // Use this for initialization
-    void Start () {
-        currentButton = 0;
+    protected override void Start () {
+        base.Start();
+
+        ResetButtonColours();
+
         line.SetActive(false);
-
-        for (int i = 0; i < buttons.Length; i++)
-        {
-            buttons[i].GetComponent<VirtualButtonBehaviour>().RegisterEventHandler(this);
-            buttons[i].GetComponentInChildren<SpriteRenderer>().color = colorStart;
-        }
-
         frontCard.GetComponent<TrackableBehaviour>().RegisterTrackableEventHandler(this);
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+
+    protected override void OnCompletedFigure() {
+        line.SetActive(true);
+    }
+
+    protected override void OnFigureFailed()
+    {
+        base.OnFigureFailed();
+
+        ResetButtonColours();
+    }
+
+    public override void OnButtonPressed(VirtualButtonBehaviour vb)
+    {
+        base.OnButtonPressed(vb);
+        vb.gameObject.GetComponentInChildren<SpriteRenderer>().color = colorPressed;
+    }
+
+    public override void OnButtonReleased(VirtualButtonBehaviour vb)
+    {
+        base.OnButtonReleased(vb);
+        vb.gameObject.GetComponentInChildren<SpriteRenderer>().color = colorStart;
+    }
+
+    // Update is called once per frame
+    protected override void Update () {
+        base.Update();
 	}
+
+    private void ResetButtonColours()
+    {
+        foreach (VirtualButtonBehaviourArray vbba in vbBehaviourArray)
+        {
+            foreach (VirtualButtonBehaviour vbb in vbba.vbBehaviours)
+            {
+                vbb.gameObject.GetComponentInChildren<SpriteRenderer>().color = colorStart;
+            }
+        }
+    }
 }
