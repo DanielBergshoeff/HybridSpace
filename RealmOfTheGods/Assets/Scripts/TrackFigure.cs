@@ -55,14 +55,14 @@ public class TrackFigure : MonoBehaviour,  IVirtualButtonEventHandler, ITrackabl
         if (newStatus == TrackableBehaviour.Status.NO_POSE)
         {
             Debug.Log("Front not found");
-            SetParent(line.transform, backCard.transform, 180);
+            SetParent(line.transform, backCard.transform, 90f);
             SetParent(parentObjectsToSwap.transform, backCard.transform, 180);
         }
         else //if (newStatus == TrackableBehaviour.Status.TRACKED || newStatus == TrackableBehaviour.Status.EXTENDED_TRACKED || newStatus == TrackableBehaviour.Status.DETECTED)
         {
             Debug.Log("Front found");
 
-            SetParent(line.transform, frontCard.transform, 0);
+            SetParent(line.transform, frontCard.transform, -90f);
             SetParent(parentObjectsToSwap.transform, frontCard.transform, 0);
         }
     }
