@@ -97,7 +97,6 @@ public class TrackFigure : AbstractTrackFigure, ITrackableEventHandler{
     public override void OnButtonReleased(VirtualButtonBehaviour vb)
     {
         base.OnButtonReleased(vb);
-        vb.gameObject.GetComponentInChildren<SpriteRenderer>().color = colorStart;
     }
 
     // Update is called once per frame
