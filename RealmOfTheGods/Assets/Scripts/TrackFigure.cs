@@ -55,7 +55,7 @@ public class TrackFigure : AbstractTrackFigure, ITrackableEventHandler{
         if (newStatus == TrackableBehaviour.Status.NO_POSE)
         {
             Debug.Log("Front not found");
-            SetParent(line.transform, backCard.transform, 90f);
+            SetParent(line.transform, backCard.transform, -90f);
             SetParent(parentObjectsToSwap.transform, backCard.transform, 180);
         }
         else //if (newStatus == TrackableBehaviour.Status.TRACKED || newStatus == TrackableBehaviour.Status.EXTENDED_TRACKED || newStatus == TrackableBehaviour.Status.DETECTED)

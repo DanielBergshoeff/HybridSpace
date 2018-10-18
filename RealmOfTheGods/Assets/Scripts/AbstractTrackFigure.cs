@@ -16,6 +16,7 @@ public abstract class AbstractTrackFigure : MonoBehaviour, IVirtualButtonEventHa
     public VirtualButtonBehaviourArray[] vbBehaviourArray;
 
     private int currentButtonSet;
+    private VirtualButtonBehaviour btnPressed;
 
     [SerializeField]
     private double timeToPress;
@@ -25,40 +26,44 @@ public abstract class AbstractTrackFigure : MonoBehaviour, IVirtualButtonEventHa
     public virtual void OnButtonPressed(VirtualButtonBehaviour vb)
     {
         Debug.Log("Button " + vb.gameObject.name + " has been pressed!");
+        Debug.Log(vb.Pressed);
 
         if (currentButtonSet < vbBehaviourArray.Length)
         {
-            bool nextSet = true;
-            bool correctSet = false;
-
-            foreach (VirtualButtonBehaviour vbb in vbBehaviourArray[currentButtonSet].vbBehaviours)
-            {
-                if (!vbb.Pressed)
-                {
-                    nextSet = false;
-                }
-                if(vbb == vb)
-                {
-                    correctSet = true;
-                }
-            }
-
-            if (nextSet && correctSet)
-            {
-                currentButtonSet++;
-                currentTime = 0;
-
-                if (currentButtonSet >= vbBehaviourArray.Length)
-                {
-                    OnCompletedFigure();
-                }
-            }
-            else if(!correctSet)
-            {
-                OnFigureFailed();
-            }
-
+            btnPressed = vb;
         }
+    }
+
+    public virtual void CheckButtonsPressed(VirtualButtonBehaviour vb) {
+        bool nextSet = true;
+        bool correctSet = false;
+
+        foreach (VirtualButtonBehaviour vbb in vbBehaviourArray[currentButtonSet].vbBehaviours) {
+            if (!vbb.Pressed) {
+                nextSet = false;
+                Debug.Log("Not next set");
+            }
+            if (vbb == vb) {
+                correctSet = true;
+                Debug.Log("Correct set");
+            }
+        }
+
+        if (nextSet && correctSet) {
+            currentButtonSet++;
+            currentTime = 0;
+            Debug.Log(currentButtonSet);
+
+            if (currentButtonSet >= vbBehaviourArray.Length) {
+                OnCompletedFigure();
+            }
+        }
+        else if (!correctSet) {
+            Debug.Log("Not the correct set");
+            OnFigureFailed();
+        }
+
+        btnPressed = null;
     }
 
     public virtual void OnButtonReleased(VirtualButtonBehaviour vb)
@@ -70,6 +75,7 @@ public abstract class AbstractTrackFigure : MonoBehaviour, IVirtualButtonEventHa
 
     protected virtual void OnFigureFailed()
     {
+        Debug.Log("Figure failed");
         currentButtonSet = 0;
         currentTime = 0;
     }
@@ -96,6 +102,10 @@ public abstract class AbstractTrackFigure : MonoBehaviour, IVirtualButtonEventHa
             {
                 OnFigureFailed();
             }
+        }
+
+        if(btnPressed != null) {
+            CheckButtonsPressed(btnPressed);
         }
     }
 
