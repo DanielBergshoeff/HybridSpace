@@ -8,41 +8,13 @@ public class TrackFigure : AbstractTrackFigure, ITrackableEventHandler{
     public GameObject line;
     public GameObject parentObjectsToSwap;
 
+    public GameObject[] objectsToHide;
+
     public GameObject frontCard;
     public GameObject backCard;
 
-    //public GameObject[] buttons;
-
-    //private int currentButton;
-    //private GameObject lastPressedButton;
-
     public Color colorStart;
     public Color colorPressed;
-
-    /*public void OnButtonPressed(VirtualButtonBehaviour vb)
-    {
-        Debug.Log("Button " + vb.gameObject.name + " has been pressed!");
-
-        if (currentButton < buttons.Length)
-        {
-            if (buttons[currentButton] == vb.gameObject)
-            {
-                lastPressedButton = vb.gameObject;
-                currentButton++;
-                if (currentButton >= buttons.Length)
-                {
-                    line.SetActive(true);
-                }
-
-                vb.gameObject.GetComponentInChildren<SpriteRenderer>().color = colorPressed;
-            }
-        }
-    }
-
-    public void OnButtonReleased(VirtualButtonBehaviour vb)
-    {
-        
-    }*/
 
     public void SetParent(Transform child, Transform parent, float xRotation) {
         child.parent = parent;
@@ -55,15 +27,24 @@ public class TrackFigure : AbstractTrackFigure, ITrackableEventHandler{
         if (newStatus == TrackableBehaviour.Status.NO_POSE)
         {
             Debug.Log("Front not found");
-            SetParent(line.transform, backCard.transform, -90f);
-            SetParent(parentObjectsToSwap.transform, backCard.transform, 180);
+            SetParent(line.transform, backCard.transform, -90);
+            //SetParent(parentObjectsToSwap.transform, backCard.transform, 180);
+
+            foreach (GameObject go in objectsToHide) {
+                go.transform.GetChild(0).GetComponent<Renderer>().enabled = false;
+            }
         }
         else //if (newStatus == TrackableBehaviour.Status.TRACKED || newStatus == TrackableBehaviour.Status.EXTENDED_TRACKED || newStatus == TrackableBehaviour.Status.DETECTED)
         {
             Debug.Log("Front found");
 
-            SetParent(line.transform, frontCard.transform, -90f);
-            SetParent(parentObjectsToSwap.transform, frontCard.transform, 0);
+            SetParent(line.transform, frontCard.transform, -90);
+            //SetParent(parentObjectsToSwap.transform, frontCard.transform, 0);
+
+
+            foreach (GameObject go in objectsToHide) {
+                go.transform.GetChild(0).GetComponent<Renderer>().enabled = true;
+            }
         }
     }
 
