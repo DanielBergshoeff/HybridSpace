@@ -23,6 +23,8 @@ public abstract class AbstractTrackFigure : MonoBehaviour, IVirtualButtonEventHa
 
     private double currentTime;
 
+    private bool completed;
+
     public virtual void OnButtonPressed(VirtualButtonBehaviour vb)
     {
         Debug.Log("Button " + vb.gameObject.name + " has been pressed!");
@@ -71,7 +73,9 @@ public abstract class AbstractTrackFigure : MonoBehaviour, IVirtualButtonEventHa
         
     }
 
-    protected abstract void OnCompletedFigure();
+    protected virtual void OnCompletedFigure() {
+        completed = true;
+    }
 
     protected virtual void OnFigureFailed()
     {
@@ -95,7 +99,7 @@ public abstract class AbstractTrackFigure : MonoBehaviour, IVirtualButtonEventHa
 
     protected virtual void Update()
     {
-        if (currentButtonSet > 0)
+        if (currentButtonSet > 0 && !completed)
         {
             currentTime += Time.deltaTime;
             if(currentTime > timeToPress)

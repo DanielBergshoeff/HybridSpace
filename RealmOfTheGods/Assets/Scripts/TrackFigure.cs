@@ -19,7 +19,7 @@ public class TrackFigure : AbstractTrackFigure, ITrackableEventHandler{
     public void SetParent(Transform child, Transform parent, float xRotation) {
         child.parent = parent;
         child.localPosition = Vector3.zero;
-        child.localRotation = new Quaternion(xRotation, Quaternion.identity.y, Quaternion.identity.z, Quaternion.identity.w);
+        child.localEulerAngles = new Vector3(xRotation, Quaternion.identity.y, Quaternion.identity.z);
     }
 
     public void OnTrackableStateChanged(TrackableBehaviour.Status previousStatus, TrackableBehaviour.Status newStatus)
@@ -59,6 +59,7 @@ public class TrackFigure : AbstractTrackFigure, ITrackableEventHandler{
 	}
 
     protected override void OnCompletedFigure() {
+        base.OnCompletedFigure();
         line.SetActive(true);
     }
 
@@ -95,4 +96,5 @@ public class TrackFigure : AbstractTrackFigure, ITrackableEventHandler{
             }
         }
     }
+
 }
