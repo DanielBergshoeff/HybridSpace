@@ -1,9 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<QCARConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="qcar_config.xsd">
-  <Tracking>
-    <ImageTarget name="TestCardJack" size="1.000000 1.384892" />
-    <ImageTarget name="TestCardQueen" size="1.000000 1.400353" />
-    <ImageTarget name="TestCardKing" size="1.000000 1.408714" />
-    <ImageTarget name="TestCard" size="1.000000 1.379730" />
-  </Tracking>
+<QCARConfig>
+    <Tracking>
+        <ImageTarget name="TestSideBottom" size="1.000000 1.000000"/>
+        <ImageTarget name="TestSideTop" size="1.000000 1.000000"/>
+        <ImageTarget name="TestSide2_2" size="1.000000 1.000000"/>
+        <ImageTarget name="TestSide2_1" size="1.000000 1.000000"/>
+        <ImageTarget name="TestSideCore" size="1.000000 1.000000"/>
+        <ImageTarget name="TestSide1" size="1.000000 1.000000"/>
+        <ImageTarget name="TestCardJack" size="1.000000 1.384892"/>
+        <ImageTarget name="TestCardQueen" size="1.000000 1.400353"/>
+        <ImageTarget name="TestCardKing" size="1.000000 1.408714"/>
+        <ImageTarget name="TestCard" size="1.000000 1.379730"/>
+        <ImageTarget name="TestCube.Left" size="1.000000 1.000000"/>
+        <ImageTarget name="TestCube.Back" size="1.000000 1.000000"/>
+        <ImageTarget name="TestCube.Top" size="1.000000 1.000000"/>
+        <ImageTarget name="TestCube.Bottom" size="1.000000 1.000000"/>
+        <ImageTarget name="TestCube.Right" size="1.000000 1.000000"/>
+        <ImageTarget name="TestCube.Front" size="1.000000 1.000000"/>
+        <MultiTarget name="TestCube">
+            <Part name="TestCube.Left" translation="-0.5 0 0" rotation="AD: 0 1 0 -90"/>
+            <Part name="TestCube.Right" translation="0.5 0 0" rotation="AD: 0 1 0 90"/>
+            <Part name="TestCube.Front" translation="0 0 0.5" rotation="AD: 1 0 0 0"/>
+            <Part name="TestCube.Back" translation="0 0 -0.5" rotation="AD: 0 1 0 180"/>
+            <Part name="TestCube.Top" translation="0 0.5 0" rotation="AD: 1 0 0 -90"/>
+            <Part name="TestCube.Bottom" translation="0 -0.5 0" rotation="AD: 1 0 0 90"/>
+        </MultiTarget>
+    </Tracking>
 </QCARConfig>
