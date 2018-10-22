@@ -8,6 +8,7 @@ public class SphereSpawner : MonoBehaviour {
 
     public float timePerSpawn;
     public float forceUpward;
+    public float forceX;
 
     private float timer;
 
@@ -21,8 +22,9 @@ public class SphereSpawner : MonoBehaviour {
         timer += Time.deltaTime;
         if(timer >= timePerSpawn) {
             GameObject go = Instantiate(spherePrefab, transform.position, Quaternion.identity);
-            go.GetComponent<Rigidbody>().AddForce(new Vector3(0, forceUpward, 0));
+            go.GetComponent<Rigidbody>().AddForce(new Vector3(forceX, forceUpward, 0));
             timer = 0;
+
         }
 	}
 }
