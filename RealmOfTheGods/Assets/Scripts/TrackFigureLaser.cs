@@ -10,6 +10,8 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
     public float laserWidth = 0.1f;
     public float laserMaxLength = 10f;
 
+    public Transform lineStart;
+
     public GameObject parentObjectsToSwap;
 
     public GameObject[] objectsToHide;
@@ -118,7 +120,7 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
         base.Update();
         if(completed)
         {
-            ShootLaserFromTargetPosition(currentCard.transform.position, Vector3.forward, laserMaxLength);
+            ShootLaserFromTargetPosition(lineStart.localPosition, currentCard.transform.forward, laserMaxLength);
         }
 	}
 
