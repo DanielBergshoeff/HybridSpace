@@ -23,7 +23,7 @@ public abstract class AbstractTrackFigure : MonoBehaviour, IVirtualButtonEventHa
 
     private double currentTime;
 
-    private bool completed;
+    protected bool completed;
 
     public virtual void OnButtonPressed(VirtualButtonBehaviour vb)
     {

@@ -3,15 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using Vuforia;
 
-public class TrackFigure : AbstractTrackFigure, ITrackableEventHandler{
+public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
 
     public GameObject line;
+    public LineRenderer laserLineRenderer;
+    public float laserWidth = 0.1f;
+    public float laserMaxLength = 10f;
+
     public GameObject parentObjectsToSwap;
 
     public GameObject[] objectsToHide;
 
     public GameObject frontCard;
     public GameObject backCard;
+
+    private GameObject currentCard;
 
     public Color colorStart;
     public Color colorPressed;
@@ -29,6 +35,7 @@ public class TrackFigure : AbstractTrackFigure, ITrackableEventHandler{
             Debug.Log("Front not found");
             SetParent(line.transform, backCard.transform, -90);
             //SetParent(parentObjectsToSwap.transform, backCard.transform, 180);
+            currentCard = backCard;
 
             foreach (GameObject go in objectsToHide) {
                 go.transform.GetChild(0).GetComponent<Renderer>().enabled = false;
@@ -41,6 +48,7 @@ public class TrackFigure : AbstractTrackFigure, ITrackableEventHandler{
             SetParent(line.transform, frontCard.transform, -90);
             //SetParent(parentObjectsToSwap.transform, frontCard.transform, 0);
 
+            currentCard = frontCard;
 
             foreach (GameObject go in objectsToHide) {
                 go.transform.GetChild(0).GetComponent<Renderer>().enabled = true;
@@ -56,11 +64,35 @@ public class TrackFigure : AbstractTrackFigure, ITrackableEventHandler{
 
         line.SetActive(false);
         frontCard.GetComponent<TrackableBehaviour>().RegisterTrackableEventHandler(this);
-	}
+
+        Vector3[] initLaserPositions = new Vector3[2] { Vector3.zero, Vector3.zero };
+        laserLineRenderer.SetPositions(initLaserPositions);
+        laserLineRenderer.startWidth = laserWidth;
+        laserLineRenderer.endWidth = laserWidth;
+    }
 
     protected override void OnCompletedFigure() {
         base.OnCompletedFigure();
         line.SetActive(true);
+    }
+
+    void ShootLaserFromTargetPosition(Vector3 targetPosition, Vector3 direction, float length)
+    {
+        Ray ray = new Ray(targetPosition, direction);
+        RaycastHit raycastHit;
+        Vector3 endPosition = targetPosition + (length * direction);
+
+        if (Physics.Raycast(ray, out raycastHit, length))
+        {
+            endPosition = raycastHit.point;
+            if(raycastHit.collider.gameObject.tag == "Humanoid")
+            {
+                raycastHit.collider.gameObject.GetComponent<Humanoid>().myParticleSystem.SetActive(true);
+            }
+        }
+
+        laserLineRenderer.SetPosition(0, targetPosition);
+        laserLineRenderer.SetPosition(1, endPosition);
     }
 
     protected override void OnFigureFailed()
@@ -84,6 +116,10 @@ public class TrackFigure : AbstractTrackFigure, ITrackableEventHandler{
     // Update is called once per frame
     protected override void Update () {
         base.Update();
+        if(completed)
+        {
+            ShootLaserFromTargetPosition(currentCard.transform.position, Vector3.forward, laserMaxLength);
+        }
 	}
 
     private void ResetButtonColours()

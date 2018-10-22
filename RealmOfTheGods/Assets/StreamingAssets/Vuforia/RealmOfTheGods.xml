@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QCARConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="qcar_config.xsd">
   <Tracking>
+    <ImageTarget name="ControlCardFrontTest" size="1.000000 1.396975" />
+    <ImageTarget name="BaseCardFrontTest" size="1.000000 1.366541" />
+    <ImageTarget name="ControlCardBack" size="1.000000 1.500000" />
+    <ImageTarget name="ControlCardFront" size="1.000000 1.500000" />
+    <ImageTarget name="BaseCardBack" size="1.000000 1.500000" />
+    <ImageTarget name="BaseCardFront" size="1.000000 1.500000" />
     <ImageTarget name="DeathCardBack" size="1.000000 1.500000" />
     <ImageTarget name="DeathCard" size="1.000000 1.500000" />
     <ImageTarget name="HeartCard3" size="1.000000 1.500000" />
