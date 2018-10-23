@@ -10,8 +10,6 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
     public float laserWidth = 0.1f;
     public float laserMaxLength = 10f;
 
-    public Transform lineStart;
-
     public GameObject parentObjectsToSwap;
 
     public GameObject[] objectsToHide;
@@ -94,6 +92,9 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
             if(raycastHit.collider.gameObject.tag == "Humanoid")
             {
                 raycastHit.collider.gameObject.GetComponent<Humanoid>().myParticleSystem.SetActive(true);
+                line.SetActive(false);
+                completed = false;
+                ResetButtonColours();
             }
         }
 
@@ -124,7 +125,7 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
         base.Update();
         if(completed)
         {
-            ShootLaserFromTargetPosition(currentCard.transform.position, currentCard.transform.up, laserMaxLength);
+            ShootLaserFromTargetPosition(currentCard.transform.position, -currentCard.transform.up, laserMaxLength);
         }
 	}
 
