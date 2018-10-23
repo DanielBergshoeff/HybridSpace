@@ -35,8 +35,8 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
         if (newStatus == TrackableBehaviour.Status.NO_POSE)
         {
             Debug.Log("Front not found");
-            SetParent(line.transform, backCard.transform, -90);
-            //SetParent(parentObjectsToSwap.transform, backCard.transform, 180);
+            //SetParent(line.transform, backCard.transform, 0);
+            SetParent(parentObjectsToSwap.transform, backCard.transform, 0);
             currentCard = backCard;
 
             foreach (GameObject go in objectsToHide) {
@@ -47,8 +47,8 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
         {
             Debug.Log("Front found");
 
-            SetParent(line.transform, frontCard.transform, -90);
-            //SetParent(parentObjectsToSwap.transform, frontCard.transform, 0);
+            //SetParent(line.transform, frontCard.transform, 0);
+            SetParent(parentObjectsToSwap.transform, frontCard.transform, 0);
 
             currentCard = frontCard;
 
@@ -84,9 +84,13 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
         RaycastHit raycastHit;
         Vector3 endPosition = targetPosition + (length * direction);
 
+        Debug.DrawRay(targetPosition, direction * length, Color.green);
+
         if (Physics.Raycast(ray, out raycastHit, length))
         {
+            Debug.Log(raycastHit.collider.name);
             endPosition = raycastHit.point;
+            
             if(raycastHit.collider.gameObject.tag == "Humanoid")
             {
                 raycastHit.collider.gameObject.GetComponent<Humanoid>().myParticleSystem.SetActive(true);
@@ -120,7 +124,7 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
         base.Update();
         if(completed)
         {
-            ShootLaserFromTargetPosition(lineStart.localPosition, currentCard.transform.forward, laserMaxLength);
+            ShootLaserFromTargetPosition(currentCard.transform.position, currentCard.transform.up, laserMaxLength);
         }
 	}
 

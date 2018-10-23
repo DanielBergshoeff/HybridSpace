@@ -39,9 +39,11 @@ public class TrackFigurePlacement : AbstractTrackFigure, ITrackableEventHandler{
         }
         else //if (newStatus == TrackableBehaviour.Status.TRACKED || newStatus == TrackableBehaviour.Status.EXTENDED_TRACKED || newStatus == TrackableBehaviour.Status.DETECTED)
         {
+            if(!completed) { 
             Debug.Log("Front found");
-            foreach (GameObject go in objectsToHide) {
-                go.transform.GetChild(0).GetComponent<Renderer>().enabled = true;
+                foreach (GameObject go in objectsToHide) {
+                    go.transform.GetChild(0).GetComponent<Renderer>().enabled = true;
+                }
             }
         }
     }
@@ -59,9 +61,11 @@ public class TrackFigurePlacement : AbstractTrackFigure, ITrackableEventHandler{
         base.OnCompletedFigure();
         prefabToPlace.SetActive(true);
 
-        foreach (GameObject go in objectsToHide)
+        foreach (VirtualButtonBehaviourArray vbba in vbBehaviourArray)
         {
-            go.transform.GetChild(0).GetComponent<Renderer>().enabled = false;
+            foreach (VirtualButtonBehaviour vbb in vbba.vbBehaviours) {
+                vbb.gameObject.GetComponentInChildren<SpriteRenderer>().enabled = false;
+            }
         }
     }
 

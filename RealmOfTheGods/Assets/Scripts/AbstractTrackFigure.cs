@@ -10,8 +10,7 @@ public class VirtualButtonBehaviourArray
     public VirtualButtonBehaviour[] vbBehaviours;
 }
 
-public abstract class AbstractTrackFigure : MonoBehaviour, IVirtualButtonEventHandler
-{
+public abstract class AbstractTrackFigure : MonoBehaviour, IVirtualButtonEventHandler {
     [SerializeField]
     public VirtualButtonBehaviourArray[] vbBehaviourArray;
 
@@ -25,13 +24,11 @@ public abstract class AbstractTrackFigure : MonoBehaviour, IVirtualButtonEventHa
 
     protected bool completed;
 
-    public virtual void OnButtonPressed(VirtualButtonBehaviour vb)
-    {
+    public virtual void OnButtonPressed(VirtualButtonBehaviour vb) {
         Debug.Log("Button " + vb.gameObject.name + " has been pressed!");
         Debug.Log(vb.Pressed);
 
-        if (currentButtonSet < vbBehaviourArray.Length)
-        {
+        if (currentButtonSet < vbBehaviourArray.Length) {
             btnPressed = vb;
         }
     }
@@ -39,6 +36,7 @@ public abstract class AbstractTrackFigure : MonoBehaviour, IVirtualButtonEventHa
     public virtual void CheckButtonsPressed(VirtualButtonBehaviour vb) {
         bool nextSet = true;
         bool correctSet = false;
+        bool lastSet = false;
 
         foreach (VirtualButtonBehaviour vbb in vbBehaviourArray[currentButtonSet].vbBehaviours) {
             if (!vbb.Pressed) {
@@ -51,6 +49,15 @@ public abstract class AbstractTrackFigure : MonoBehaviour, IVirtualButtonEventHa
             }
         }
 
+        if (currentButtonSet > 0) {
+            foreach (VirtualButtonBehaviour vbb in vbBehaviourArray[currentButtonSet - 1].vbBehaviours) {
+                if (vbb == vb) {
+                    lastSet = true;
+                    Debug.Log("Last set");
+                }
+            }
+        }
+
         if (nextSet && correctSet) {
             currentButtonSet++;
             currentTime = 0;
@@ -60,7 +67,7 @@ public abstract class AbstractTrackFigure : MonoBehaviour, IVirtualButtonEventHa
                 OnCompletedFigure();
             }
         }
-        else if (!correctSet) {
+        else if (!correctSet && !lastSet) {
             Debug.Log("Not the correct set");
             OnFigureFailed();
         }
