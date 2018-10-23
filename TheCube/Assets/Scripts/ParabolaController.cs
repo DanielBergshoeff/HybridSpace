@@ -11,9 +11,9 @@ public class ParabolaController : MonoBehaviour
     /// <summary>
     /// Start of Parabola
     /// </summary>
-    public GameObject ParabolaRoot;
+    public GameObject[] ParabolaRoot;
 
-    public GameObject ParabolaRoot2;
+    private int currentParabola;
 
     private Magnet magnetTouching;
 
@@ -34,33 +34,36 @@ public class ParabolaController : MonoBehaviour
     protected float animationTime = float.MaxValue;
 
     //gizmo
-    protected ParabolaFly gizmo;
+    protected ParabolaFly[] gizmos;
 
     //draw
-    protected ParabolaFly parabolaFly;
+    protected ParabolaFly[] parabolaFly;
 
     void OnDrawGizmos()
     {
-        if (gizmo == null)
+        for (int i = 0; i < gizmos.Length; i++)
         {
-            gizmo = new ParabolaFly(ParabolaRoot.transform);
-        }
+            if (gizmos[i] == null)
+            {
+                gizmos[i] = new ParabolaFly(ParabolaRoot[0].transform);
+            }
 
-        gizmo.RefreshTransforms(1f);
-        if ((gizmo.Points.Length - 1) % 2 != 0)
-            return;
+            gizmos[i].RefreshTransforms(1f);
+            if ((gizmos[i].Points.Length - 1) % 2 != 0)
+                return;
 
-        int accur = 50;
-        Vector3 prevPos = gizmo.Points[0].position;
-        for (int c = 1; c <= accur; c++)
-        {
-            float currTime = c * gizmo.GetDuration() / accur;
-            Vector3 currPos = gizmo.GetPositionAtTime(currTime);
-            float mag = (currPos - prevPos).magnitude * 2;
-            Gizmos.color = new Color(mag, 0, 0, 1);
-            Gizmos.DrawLine(prevPos, currPos);
-            Gizmos.DrawSphere(currPos, 0.01f);
-            prevPos = currPos;
+            int accur = 50;
+            Vector3 prevPos = gizmos[i].Points[0].position;
+            for (int c = 1; c <= accur; c++)
+            {
+                float currTime = c * gizmos[i].GetDuration() / accur;
+                Vector3 currPos = gizmos[i].GetPositionAtTime(currTime);
+                float mag = (currPos - prevPos).magnitude * 2;
+                Gizmos.color = new Color(mag, 0, 0, 1);
+                Gizmos.DrawLine(prevPos, currPos);
+                Gizmos.DrawSphere(currPos, 0.01f);
+                prevPos = currPos;
+            }
         }
     }
 
@@ -68,8 +71,15 @@ public class ParabolaController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        currentParabola = 0;
 
-        parabolaFly = new ParabolaFly(ParabolaRoot.transform);
+        gizmos = new ParabolaFly[ParabolaRoot.Length];
+        parabolaFly = new ParabolaFly[ParabolaRoot.Length];
+
+        for (int i = 0; i < parabolaFly.Length; i++)
+        {
+            parabolaFly[i] = new ParabolaFly(ParabolaRoot[0].transform);
+        }
 
         if (Autostart)
         {
@@ -87,14 +97,23 @@ public class ParabolaController : MonoBehaviour
             {
                 if (magnetTouching.myType == MagnetType.RED)
                 {
-                    parabolaFly = new ParabolaFly(ParabolaRoot2.transform);
-                    RefreshTransforms(Speed);
-                    FollowParabola();
+                    currentParabola++;
+                    if (currentParabola > ParabolaRoot.Length - 1)
+                    {
+
+                    }
+                    else
+                    {
+                        parabolaFly[0] = new ParabolaFly(ParabolaRoot[currentParabola].transform);
+                        RefreshTransforms(Speed);
+                        FollowParabola();
+                    }
                 }
             }
             else
             {
-                parabolaFly = new ParabolaFly(ParabolaRoot.transform);
+                currentParabola = 0;
+                parabolaFly[0] = new ParabolaFly(ParabolaRoot[0].transform);
                 RefreshTransforms(Speed);
                 FollowParabola();
             }
@@ -102,15 +121,15 @@ public class ParabolaController : MonoBehaviour
 
         nextParbola = false;
 
-        if (Animation && parabolaFly != null && animationTime < parabolaFly.GetDuration())
+        if (Animation && parabolaFly[0] != null && animationTime < parabolaFly[0].GetDuration())
         {
             int parabolaIndexBefore;
             int parabolaIndexAfter;
-            parabolaFly.GetParabolaIndexAtTime(animationTime, out parabolaIndexBefore);
+            parabolaFly[0].GetParabolaIndexAtTime(animationTime, out parabolaIndexBefore);
             animationTime += Time.deltaTime;
-            parabolaFly.GetParabolaIndexAtTime(animationTime, out parabolaIndexAfter);
+            parabolaFly[0].GetParabolaIndexAtTime(animationTime, out parabolaIndexAfter);
 
-            transform.position = parabolaFly.GetPositionAtTime(animationTime);
+            transform.position = parabolaFly[0].GetPositionAtTime(animationTime);
 
             if (parabolaIndexBefore != parabolaIndexAfter)
                 nextParbola = true;
@@ -118,7 +137,7 @@ public class ParabolaController : MonoBehaviour
             //if (transform.position.y > HighestPoint.y)
             //HighestPoint = transform.position;
         }
-        else if (Animation && parabolaFly != null && animationTime > parabolaFly.GetDuration())
+        else if (Animation && parabolaFly[0] != null && animationTime > parabolaFly[0].GetDuration())
         {
             animationTime = float.MaxValue;
             Animation = false;
@@ -150,29 +169,29 @@ public class ParabolaController : MonoBehaviour
     {
         RefreshTransforms(Speed);
         animationTime = 0f;
-        transform.position = parabolaFly.Points[0].position;
+        transform.position = parabolaFly[0].Points[0].position;
         Animation = true;
         //HighestPoint = points[0].position;
     }
 
     public Vector3 getHighestPoint(int parabolaIndex)
     {
-        return parabolaFly.getHighestPoint(parabolaIndex);
+        return parabolaFly[0].getHighestPoint(parabolaIndex);
     }
 
     public Transform[] getPoints()
     {
-        return parabolaFly.Points;
+        return parabolaFly[0].Points;
     }
 
     public Vector3 GetPositionAtTime(float time)
     {
-        return parabolaFly.GetPositionAtTime(time);
+        return parabolaFly[0].GetPositionAtTime(time);
     }
 
     public float GetDuration()
     {
-        return parabolaFly.GetDuration();
+        return parabolaFly[0].GetDuration();
     }
 
     public void StopFollow()
@@ -184,7 +203,7 @@ public class ParabolaController : MonoBehaviour
     /// </summary>
     public void RefreshTransforms(float speed)
     {
-        parabolaFly.RefreshTransforms(speed);
+        parabolaFly[0].RefreshTransforms(speed);
     }
 
 
