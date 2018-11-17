@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Vuforia;
+using UnityEngine.Networking;
+using UnityEngine.Networking.Match;
 
 public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
 
@@ -9,6 +11,8 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
     public LineRenderer laserLineRenderer;
     public float laserWidth = 0.1f;
     public float laserMaxLength = 10f;
+
+    public GameObject prefabWarrior;
 
     public GameObject parentObjectsToSwap;
 
@@ -88,18 +92,24 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
         {
             Debug.Log(raycastHit.collider.name);
             endPosition = raycastHit.point;
-            
-            if(raycastHit.collider.gameObject.tag == "Humanoid")
+
+            OnLaserHit(raycastHit);
+        }
+
+        laserLineRenderer.SetPosition(0, targetPosition);
+        laserLineRenderer.SetPosition(1, endPosition);
+    }
+
+    protected void OnLaserHit(RaycastHit raycastHit) {
+        /*if(raycastHit.collider.gameObject.tag == "Humanoid")
             {
                 raycastHit.collider.gameObject.GetComponent<Humanoid>().myParticleSystem.SetActive(true);
                 line.SetActive(false);
                 completed = false;
                 ResetButtonColours();
-            }
-        }
-
-        laserLineRenderer.SetPosition(0, targetPosition);
-        laserLineRenderer.SetPosition(1, endPosition);
+            }*/
+        GameObject go = Instantiate(prefabWarrior, raycastHit.point, Quaternion.identity);
+        NetworkServer.Spawn(go);
     }
 
     protected override void OnFigureFailed()
