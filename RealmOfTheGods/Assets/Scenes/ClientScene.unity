@@ -1248,6 +1248,8 @@ MonoBehaviour:
   laserMaxLength: 10
   prefabWarrior: {fileID: 1080929683521512, guid: 9d5fef8b0dbd30c489d10f4f94a2d263,
     type: 2}
+  client: {fileID: 0}
+  cnm: {fileID: 901234171}
   parentObjectsToSwap: {fileID: 286460099}
   objectsToHide:
   - {fileID: 846659623}
