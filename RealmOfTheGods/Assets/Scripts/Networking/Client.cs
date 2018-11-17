@@ -28,7 +28,7 @@ public class Client : NetworkBehaviour
     {
         base.OnStartLocalPlayer();
         Debug.Log("Joined match");
-        Debug.Log(isLocalPlayer);
+        Debug.Log(hasAuthority);
         
         if (isLocalPlayer)
         {
