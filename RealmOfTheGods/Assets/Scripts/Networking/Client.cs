@@ -72,7 +72,13 @@ public class Client : NetworkBehaviour
     }
 
     public void SpawnWarriorClient(GameObject prefab, Vector3 pos) {
-        CmdSpawnWarrior(prefab, pos);
+        if (hasAuthority) {
+            Debug.Log("Authority");
+            CmdSpawnWarrior(prefab, pos);
+        }
+        else {
+            Debug.Log("No authority");
+        }
     }
 
     [Command]
