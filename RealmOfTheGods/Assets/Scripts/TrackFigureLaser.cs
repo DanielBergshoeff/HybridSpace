@@ -108,15 +108,16 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
                 completed = false;
                 ResetButtonColours();
             }*/
-        GameObject go = Instantiate(prefabWarrior, raycastHit.point, Quaternion.identity);
-        CmdSpawn(go);
+        
+        CmdSpawn(raycastHit.point);
         line.SetActive(false);
         completed = false;
         ResetButtonColours();
     }
 
     [Command]
-    public void CmdSpawn(GameObject go) {
+    public void CmdSpawn(Vector3 pos) {
+        GameObject go = Instantiate(prefabWarrior, pos, Quaternion.identity);
         NetworkServer.Spawn(go);
     }
 
