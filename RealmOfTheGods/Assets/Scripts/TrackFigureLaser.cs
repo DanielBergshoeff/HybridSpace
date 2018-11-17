@@ -13,6 +13,7 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
     public float laserMaxLength = 10f;
 
     public GameObject prefabWarrior;
+    public Client client;
 
     public GameObject parentObjectsToSwap;
 
@@ -108,17 +109,11 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
                 completed = false;
                 ResetButtonColours();
             }*/
-        
-        CmdSpawn(raycastHit.point);
+
+        client.SpawnWarriorClient(prefabWarrior, raycastHit.point);
         line.SetActive(false);
         completed = false;
         ResetButtonColours();
-    }
-
-    [Command]
-    public void CmdSpawn(Vector3 pos) {
-        GameObject go = Instantiate(prefabWarrior, pos, Quaternion.identity);
-        NetworkServer.Spawn(go);
     }
 
     protected override void OnFigureFailed()

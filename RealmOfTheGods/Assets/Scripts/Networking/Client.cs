@@ -71,6 +71,16 @@ public class Client : NetworkBehaviour
         clientConnection.SetPersistantScore(teamScore);
     }
 
+    public void SpawnWarriorClient(GameObject prefab, Vector3 pos) {
+        CmdSpawnWarrior(prefab, pos);
+    }
+
+    [Command]
+    private void CmdSpawnWarrior(GameObject prefab, Vector3 pos) {
+        GameObject go = Instantiate(prefab, pos, Quaternion.identity);
+        NetworkServer.Spawn(go);
+    }
+
     // ------------------------------------ CHANGE VALUE FROM SERVER
     // Should only be called serverside
     public void AddScoreServer(int score) {
