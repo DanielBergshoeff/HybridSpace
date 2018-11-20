@@ -13,6 +13,11 @@ public class Client : NetworkBehaviour
     // private reference to custom client persistance
     private ClientConnection clientConnection;
 
+    public static Client LocalClient {
+        get;
+        private set;
+    }
+
     // variable for demonstration purposes
     private int teamScore;
 
@@ -39,6 +44,7 @@ public class Client : NetworkBehaviour
 
             //NEW
             CmdGetConnection(NetworkManager.singleton.networkAddress);
+            LocalClient = this;
             Debug.Log(hasAuthority);
         }
     }

@@ -13,8 +13,6 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
     public float laserMaxLength = 10f;
 
     public GameObject prefabWarrior;
-    public Client client;
-    public CustomNetworkManager cnm;
 
     public GameObject parentObjectsToSwap;
 
@@ -67,7 +65,6 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
         base.Start();
 
         ResetButtonColours();
-        client = cnm.playerPrefab.GetComponent<Client>();
 
         line.SetActive(false);
         frontCard.GetComponent<TrackableBehaviour>().RegisterTrackableEventHandler(this);
@@ -112,7 +109,7 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
                 ResetButtonColours();
             }*/
 
-        client.SpawnWarriorClient(prefabWarrior, raycastHit.point);
+        Client.LocalClient.SpawnWarriorClient(prefabWarrior, raycastHit.point);
         line.SetActive(false);
         completed = false;  
         ResetButtonColours();
