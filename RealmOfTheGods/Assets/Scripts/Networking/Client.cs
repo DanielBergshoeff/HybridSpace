@@ -73,23 +73,24 @@ public class Client : NetworkBehaviour
     }
 
     public void SpawnWarriorClient(GameObject prefab, Vector3 pos) {
-        if (isServer) {
-            Debug.Log("Server");
-            RpcSpawnWarrior(prefab, pos);
+        if (isLocalPlayer) {
+            Debug.Log("Is local player");
+            if (hasAuthority) {
+                Debug.Log("Authority");
+                CmdSpawnWarrior(prefab, pos);
+            }
+            else {
+                Debug.Log("No authority");
+            }
         }
         else {
-            Debug.Log("No server");
-            CmdSpawnWarrior(prefab, pos);
+            Debug.Log("Not the local player");
         }
+            
     }
 
     [Command]
     private void CmdSpawnWarrior(GameObject prefab, Vector3 pos) {
-        RpcSpawnWarrior(prefab, pos);
-    }
-
-    [ClientRpc]
-    private void RpcSpawnWarrior(GameObject prefab, Vector3 pos) {
         GameObject go = Instantiate(prefab, pos, Quaternion.identity);
         NetworkServer.Spawn(go);
     }
