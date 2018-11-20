@@ -135,6 +135,10 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
 
     // Update is called once per frame
     protected override void Update () {
+        if (Input.GetKeyDown(KeyCode.E)) {
+            Client.LocalClient.SpawnWarriorClient(Vector3.zero);
+        }
+
         base.Update();
         if(completed)
         {
