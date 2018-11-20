@@ -13,6 +13,8 @@ public class Client : NetworkBehaviour
     // private reference to custom client persistance
     private ClientConnection clientConnection;
 
+    [SerializeField] private GameObject warriorPrefab;
+
     public static Client LocalClient {
         get;
         private set;
@@ -78,12 +80,12 @@ public class Client : NetworkBehaviour
         clientConnection.SetPersistantScore(teamScore);
     }
 
-    public void SpawnWarriorClient(GameObject prefab, Vector3 pos) {
+    public void SpawnWarriorClient(Vector3 pos) {
         if (isLocalPlayer) {
             Debug.Log("Is local player");
             if (hasAuthority) {
                 Debug.Log("Authority");
-                CmdSpawnWarrior(prefab, pos);
+                CmdSpawnWarrior(pos);
             }
             else {
                 Debug.Log("No authority");
@@ -96,8 +98,8 @@ public class Client : NetworkBehaviour
     }
 
     [Command]
-    private void CmdSpawnWarrior(GameObject prefab, Vector3 pos) {
-        GameObject go = Instantiate(prefab, pos, Quaternion.identity);
+    private void CmdSpawnWarrior(Vector3 pos) {
+        GameObject go = Instantiate(warriorPrefab, pos, Quaternion.identity);
         NetworkServer.Spawn(go);
     }
 

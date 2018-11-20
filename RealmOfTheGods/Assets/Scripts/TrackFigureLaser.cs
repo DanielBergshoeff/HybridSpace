@@ -109,7 +109,7 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
                 ResetButtonColours();
             }*/
 
-        Client.LocalClient.SpawnWarriorClient(prefabWarrior, raycastHit.point);
+        Client.LocalClient.SpawnWarriorClient(raycastHit.point);
         line.SetActive(false);
         completed = false;  
         ResetButtonColours();
