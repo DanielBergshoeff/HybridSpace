@@ -13,6 +13,7 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
     public float laserMaxLength = 10f;
 
     public GameObject prefabWarrior;
+    public GameObject baseIsland;
 
     public GameObject parentObjectsToSwap;
 
@@ -109,7 +110,7 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
                 ResetButtonColours();
             }*/
 
-        Client.LocalClient.SpawnWarriorClient(raycastHit.point);
+        Client.LocalClient.SpawnWarriorClient(raycastHit.point, baseIsland);
         line.SetActive(false);
         completed = false;  
         ResetButtonColours();
@@ -135,10 +136,6 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
 
     // Update is called once per frame
     protected override void Update () {
-        if (Input.GetKeyDown(KeyCode.E)) {
-            Client.LocalClient.SpawnWarriorClient(Vector3.zero);
-        }
-
         base.Update();
         if(completed)
         {

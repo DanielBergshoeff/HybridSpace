@@ -80,12 +80,12 @@ public class Client : NetworkBehaviour
         clientConnection.SetPersistantScore(teamScore);
     }
 
-    public void SpawnWarriorClient(Vector3 pos) {
+    public void SpawnWarriorClient(Vector3 pos, GameObject parent) {
         if (isLocalPlayer) {
             Debug.Log("Is local player");
             if (hasAuthority) {
                 Debug.Log("Authority");
-                CmdSpawnWarrior(pos);
+                CmdSpawnWarrior(pos, parent);
             }
             else {
                 Debug.Log("No authority");
@@ -98,9 +98,18 @@ public class Client : NetworkBehaviour
     }
 
     [Command]
-    private void CmdSpawnWarrior(Vector3 pos) {
+    private void CmdSpawnWarrior(Vector3 pos, GameObject parent) {
         GameObject go = Instantiate(warriorPrefab, pos, Quaternion.identity);
+        go.transform.parent = parent.transform;
         NetworkServer.Spawn(go);
+        RpcSyncWarriorOnce(go.transform.localPosition, go.transform.localRotation, go, parent);
+    }
+
+    [ClientRpc]
+    public void RpcSyncWarriorOnce(Vector3 localPos, Quaternion localRot, GameObject go, GameObject parent) {
+        go.transform.parent = parent.transform;
+        go.transform.localPosition = localPos;
+        go.transform.localRotation = localRot;
     }
 
     // ------------------------------------ CHANGE VALUE FROM SERVER
