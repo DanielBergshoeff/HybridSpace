@@ -28,7 +28,6 @@ public class Client : NetworkBehaviour
     {
         base.OnStartLocalPlayer();
         Debug.Log("Joined match");
-        Debug.Log(hasAuthority);
         
         if (isLocalPlayer)
         {
@@ -40,6 +39,7 @@ public class Client : NetworkBehaviour
 
             //NEW
             CmdGetConnection(NetworkManager.singleton.networkAddress);
+            Debug.Log(hasAuthority);
         }
     }
 
