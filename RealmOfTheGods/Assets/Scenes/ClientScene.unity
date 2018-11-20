@@ -1197,7 +1197,7 @@ Prefab:
         type: 2}
       propertyPath: m_SpawnPrefabs.Array.data[0]
       value: 
-      objectReference: {fileID: 1080929683521512, guid: 9d5fef8b0dbd30c489d10f4f94a2d263,
+      objectReference: {fileID: 1249962201998810, guid: 0d0f41a49830d0047ad84fe00148fa72,
         type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 68f06ef3e167a5d46b7ae7efdb1e0284, type: 2}
@@ -1248,8 +1248,6 @@ MonoBehaviour:
   laserMaxLength: 10
   prefabWarrior: {fileID: 1080929683521512, guid: 9d5fef8b0dbd30c489d10f4f94a2d263,
     type: 2}
-  client: {fileID: 0}
-  cnm: {fileID: 901234171}
   parentObjectsToSwap: {fileID: 286460099}
   objectsToHide:
   - {fileID: 846659623}
