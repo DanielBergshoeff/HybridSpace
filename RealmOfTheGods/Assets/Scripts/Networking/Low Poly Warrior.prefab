@@ -684,6 +684,8 @@ GameObject:
   - component: {fileID: 95044490577658338}
   - component: {fileID: 65151643731952932}
   - component: {fileID: 114208174609323174}
+  - component: {fileID: 114386976015074188}
+  - component: {fileID: 114797455095936416}
   m_Layer: 0
   m_Name: Low Poly Warrior
   m_TagString: Humanoid
@@ -5917,6 +5919,59 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myParticleSystem: {fileID: 1160575156075898}
+--- !u!114 &114386976015074188
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1249962201998810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 13
+    i1: 15
+    i2: 65
+    i3: 164
+    i4: 152
+    i5: 48
+    i6: 208
+    i7: 4
+    i8: 122
+    i9: 216
+    i10: 79
+    i11: 224
+    i12: 1
+    i13: 72
+    i14: 250
+    i15: 114
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
+--- !u!114 &114797455095936416
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1249962201998810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 1
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
 --- !u!137 &137567774637446282
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
