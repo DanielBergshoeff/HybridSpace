@@ -72,7 +72,7 @@ MonoBehaviour:
     i14: 231
     i15: 173
   m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
+  m_LocalPlayerAuthority: 1
 --- !u!114 &114782620099567982
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -86,4 +86,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clientConnectionBase: {fileID: 11400000, guid: e67f12f6c78563c4ab5c9d580d710f6c,
     type: 2}
-  prefabWarrior: {fileID: 0}
