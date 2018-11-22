@@ -36,6 +36,7 @@ public class Client : NetworkBehaviour
     public override void OnStartServer()
     {
         base.OnStartServer();
+        OnBasePlaced = new MyGameObjectEvent();
     }
 
     // Called on player-object creation Clientside
