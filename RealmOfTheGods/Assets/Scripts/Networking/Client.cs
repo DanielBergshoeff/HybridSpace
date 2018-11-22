@@ -144,9 +144,8 @@ public class Client : NetworkBehaviour
         if(warriors == null) {
             warriors = new List<GameObject>();
         }
-        else {
-            warriors.Add(go);
-        }
+
+        warriors.Add(go);
     }
 
     [ClientRpc]
@@ -158,9 +157,8 @@ public class Client : NetworkBehaviour
         if (warriors == null) {
             warriors = new List<GameObject>();
         }
-        else {
-            warriors.Add(go);
-        }
+
+        warriors.Add(go);
     }
 
     [ClientRpc]
