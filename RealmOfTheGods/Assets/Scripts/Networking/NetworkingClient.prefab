@@ -35,7 +35,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1430811143326298}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.1727382, y: 0.21510452, z: 0.014110327}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -88,3 +88,4 @@ MonoBehaviour:
     type: 2}
   warriorPrefab: {fileID: 1249962201998810, guid: 0d0f41a49830d0047ad84fe00148fa72,
     type: 2}
+  basePrefab: {fileID: 1255128589903234, guid: 2b34987f02f2d8c4c9add02489b4fd72, type: 2}

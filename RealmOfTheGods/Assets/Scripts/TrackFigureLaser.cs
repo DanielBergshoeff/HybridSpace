@@ -110,7 +110,7 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
                 ResetButtonColours();
             }*/
 
-        Client.LocalClient.SpawnWarriorClient(raycastHit.point, baseIsland);
+        Client.LocalClient.SpawnWarriorClient(raycastHit.point);
         line.SetActive(false);
         completed = false;  
         ResetButtonColours();
@@ -136,6 +136,14 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
 
     // Update is called once per frame
     protected override void Update () {
+        if(Input.GetKeyDown(KeyCode.B)) {
+            Client.LocalClient.SpawnBaseClient();
+            
+        }
+        else if(Input.GetKeyDown(KeyCode.W)) {
+            Client.LocalClient.SpawnWarriorClient(Vector3.zero);
+        }
+
         base.Update();
         if(completed)
         {

@@ -14,6 +14,9 @@ public class Client : NetworkBehaviour
     private ClientConnection clientConnection;
 
     [SerializeField] private GameObject warriorPrefab;
+    [SerializeField] private GameObject basePrefab;
+
+    private GameObject baseCore;
 
     public static Client LocalClient {
         get;
@@ -80,12 +83,12 @@ public class Client : NetworkBehaviour
         clientConnection.SetPersistantScore(teamScore);
     }
 
-    public void SpawnWarriorClient(Vector3 pos, GameObject parent) {
+    public void SpawnWarriorClient(Vector3 pos) {
         if (isLocalPlayer) {
             Debug.Log("Is local player");
             if (hasAuthority) {
                 Debug.Log("Authority");
-                CmdSpawnWarrior(pos, parent);
+                CmdSpawnWarrior(pos);
             }
             else {
                 Debug.Log("No authority");
@@ -97,12 +100,22 @@ public class Client : NetworkBehaviour
             
     }
 
+    public void SpawnBaseClient() {
+        CmdSpawnBase();
+    }
+
     [Command]
-    private void CmdSpawnWarrior(Vector3 pos, GameObject parent) {
+    private void CmdSpawnBase() {
+        baseCore = Instantiate(basePrefab, Vector3.zero, Quaternion.identity);
+        NetworkServer.Spawn(baseCore);
+    }
+
+    [Command]
+    private void CmdSpawnWarrior(Vector3 pos) {
         GameObject go = Instantiate(warriorPrefab, pos, Quaternion.identity);
-        go.transform.parent = parent.transform;
+        go.transform.parent = baseCore.transform;
         NetworkServer.Spawn(go);
-        RpcSyncWarriorOnce(go.transform.localPosition, go.transform.localRotation, go, parent);
+        RpcSyncWarriorOnce(go.transform.localPosition, go.transform.localRotation, go, baseCore);
     }
 
     [ClientRpc]
