@@ -133,6 +133,7 @@ public class Client : NetworkBehaviour
         baseCore = go;
         OnBasePlaced.Invoke(go);
         go.transform.rotation = rot;
+        go.transform.localPosition = Vector3.zero;
     }
 
     [Command]
