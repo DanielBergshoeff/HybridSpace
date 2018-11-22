@@ -115,12 +115,12 @@ public class Client : NetworkBehaviour
         baseCore.transform.Rotate(new Vector3(90, 0, 0));
         NetworkServer.Spawn(baseCore);
         RpcRotateBaseOnce(baseCore.transform.rotation, baseCore);
-        OnBasePlaced.Invoke(baseCore);
     }
 
     [ClientRpc]
     private void RpcRotateBaseOnce(Quaternion rot, GameObject go) {
         go.transform.rotation = rot;
+        OnBasePlaced.Invoke(baseCore);
     }
 
     [Command]
