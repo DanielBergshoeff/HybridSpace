@@ -3,10 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.Events;
+
+public class MyGameObjectEvent : UnityEvent<GameObject> {
+}
 
 public class Client : NetworkBehaviour
 {
-    
     // Put the template scriptableobject in here to support persistance
     [SerializeField] private ClientConnection clientConnectionBase;
 
@@ -15,6 +18,8 @@ public class Client : NetworkBehaviour
 
     [SerializeField] private GameObject warriorPrefab;
     [SerializeField] private GameObject basePrefab;
+
+    public static MyGameObjectEvent OnBasePlaced;
 
     private GameObject baseCore;
 
@@ -107,7 +112,15 @@ public class Client : NetworkBehaviour
     [Command]
     private void CmdSpawnBase() {
         baseCore = Instantiate(basePrefab, Vector3.zero, Quaternion.identity);
+        baseCore.transform.Rotate(new Vector3(90, 0, 0));
         NetworkServer.Spawn(baseCore);
+        RpcRotateBaseOnce(baseCore.transform.rotation, baseCore);
+        OnBasePlaced.Invoke(baseCore);
+    }
+
+    [ClientRpc]
+    private void RpcRotateBaseOnce(Quaternion rot, GameObject go) {
+        go.transform.rotation = rot;
     }
 
     [Command]
