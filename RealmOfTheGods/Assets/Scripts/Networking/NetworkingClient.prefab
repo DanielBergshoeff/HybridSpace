@@ -86,6 +86,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clientConnectionBase: {fileID: 11400000, guid: e67f12f6c78563c4ab5c9d580d710f6c,
     type: 2}
-  warriorPrefab: {fileID: 1249962201998810, guid: 0d0f41a49830d0047ad84fe00148fa72,
+  warriorPrefab: {fileID: 1080929683521512, guid: 9d5fef8b0dbd30c489d10f4f94a2d263,
     type: 2}
   basePrefab: {fileID: 1255128589903234, guid: 2b34987f02f2d8c4c9add02489b4fd72, type: 2}
