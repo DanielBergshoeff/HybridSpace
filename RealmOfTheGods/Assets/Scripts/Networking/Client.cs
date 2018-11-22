@@ -119,7 +119,7 @@ public class Client : NetworkBehaviour
     [ClientRpc]
     private void RpcRotateBaseOnce(Quaternion rot, GameObject go) {
         go.transform.rotation = rot;
-        OnBasePlaced.Invoke(baseCore);
+        OnBasePlaced.Invoke(go);
     }
 
     [Command]
