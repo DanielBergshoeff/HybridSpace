@@ -31,12 +31,15 @@ public class Client : NetworkBehaviour
     // variable for demonstration purposes
     private int teamScore;
 
+    private void Start() {
+        OnBasePlaced = new MyGameObjectEvent();
+    }
+
 
     // Called on player-object creation Serverside
     public override void OnStartServer()
     {
         base.OnStartServer();
-        OnBasePlaced = new MyGameObjectEvent();
     }
 
     // Called on player-object creation Clientside
