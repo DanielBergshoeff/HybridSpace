@@ -8,6 +8,7 @@ public class ParentManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        Client.OnBasePlaced = new MyGameObjectEvent();
         Client.OnBasePlaced.AddListener(SetBaseParent);
 	}
 	
