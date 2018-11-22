@@ -134,6 +134,8 @@ public class Client : NetworkBehaviour
     [ClientRpc]
     public void RpcSyncWarriorOnce(Vector3 localPos, Quaternion localRot, GameObject go, GameObject parent) {
         go.transform.parent = parent.transform;
+        NetworkTransformChild ntc = go.transform.parent.gameObject.AddComponent<NetworkTransformChild>();
+        ntc.target = go.transform;
         go.transform.localPosition = localPos;
         go.transform.localRotation = localRot;
     }
