@@ -293,7 +293,6 @@ GameObject:
   - component: {fileID: 65922594338720946}
   - component: {fileID: 114772602285937820}
   - component: {fileID: 114523613441971104}
-  - component: {fileID: 114559303306334444}
   m_Layer: 0
   m_Name: Low Poly Warrior
   m_TagString: Humanoid
@@ -5939,27 +5938,6 @@ MonoBehaviour:
     i15: 99
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
---- !u!114 &114559303306334444
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1080929683521512}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_TransformSyncMode: 1
-  m_SendInterval: 0.1
-  m_SyncRotationAxis: 7
-  m_RotationSyncCompression: 0
-  m_SyncSpin: 0
-  m_MovementTheshold: 0.001
-  m_VelocityThreshold: 0.0001
-  m_SnapThreshold: 5
-  m_InterpolateRotation: 1
-  m_InterpolateMovement: 1
 --- !u!114 &114772602285937820
 MonoBehaviour:
   m_ObjectHideFlags: 1

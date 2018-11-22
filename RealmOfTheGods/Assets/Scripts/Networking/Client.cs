@@ -23,9 +23,21 @@ public class Client : NetworkBehaviour
 
     private GameObject baseCore;
 
+    private List<GameObject> warriors;
+
     public static Client LocalClient {
         get;
         private set;
+    }
+
+    private void Update() {
+        if (isServer) {
+            if(warriors != null) {
+                for (int i = 0; i < warriors.Count; i++) {
+                    RpcSyncGameObject(i, warriors[i].transform.localPosition, warriors[i].transform.localRotation);
+                }
+            }
+        }
     }
 
     // variable for demonstration purposes
@@ -129,15 +141,32 @@ public class Client : NetworkBehaviour
         go.transform.parent = baseCore.transform;
         NetworkServer.Spawn(go);
         RpcSyncWarriorOnce(go.transform.localPosition, go.transform.localRotation, go, baseCore);
+        if(warriors == null) {
+            warriors = new List<GameObject>();
+        }
+        else {
+            warriors.Add(go);
+        }
     }
 
     [ClientRpc]
-    public void RpcSyncWarriorOnce(Vector3 localPos, Quaternion localRot, GameObject go, GameObject parent) {
+    private void RpcSyncWarriorOnce(Vector3 localPos, Quaternion localRot, GameObject go, GameObject parent) {
         go.transform.parent = parent.transform;
-        NetworkTransformChild ntc = go.transform.parent.gameObject.AddComponent<NetworkTransformChild>();
-        ntc.target = go.transform;
         go.transform.localPosition = localPos;
         go.transform.localRotation = localRot;
+
+        if (warriors == null) {
+            warriors = new List<GameObject>();
+        }
+        else {
+            warriors.Add(go);
+        }
+    }
+
+    [ClientRpc]
+    private void RpcSyncGameObject(int index, Vector3 localPos, Quaternion localRotation) {
+        warriors[index].transform.localPosition = localPos;
+        warriors[index].transform.localRotation = localRotation;
     }
 
     // ------------------------------------ CHANGE VALUE FROM SERVER
