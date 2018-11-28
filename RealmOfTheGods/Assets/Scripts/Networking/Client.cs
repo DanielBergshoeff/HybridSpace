@@ -116,6 +116,11 @@ public class Client : NetworkBehaviour
             
     }
 
+    protected void SetClientBaseServer(GameObject newBaseCore) {
+        baseCore = newBaseCore;
+        RpcRotateBaseOnce(baseCore.transform.rotation, baseCore);
+    }
+
     public void SpawnBaseClient() {
         CmdSpawnBase();
     }
@@ -125,11 +130,14 @@ public class Client : NetworkBehaviour
         baseCore = Instantiate(basePrefab, Vector3.zero, Quaternion.identity);
         baseCore.transform.Rotate(new Vector3(90, 0, 0));
         NetworkServer.Spawn(baseCore);
-        RpcRotateBaseOnce(baseCore.transform.rotation, baseCore);
+        foreach (ClientConnection clientConnection in clientConnection.clients) {
+            clientConnection.client.SetClientBaseServer(baseCore);
+        }
     }
 
     [ClientRpc]
     private void RpcRotateBaseOnce(Quaternion rot, GameObject go) {
+        if (!isLocalPlayer) { return; }
         baseCore = go;
         OnBasePlaced.Invoke(go);
         go.transform.rotation = rot;
