@@ -15,6 +15,8 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
     public GameObject prefabWarrior;
     public GameObject baseIsland;
 
+    public VirtualButtonBehaviour vbbAction;
+
     public GameObject parentObjectsToSwap;
 
     public GameObject[] objectsToHide;
@@ -23,6 +25,8 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
     public GameObject backCard;
 
     private GameObject currentCard;
+
+    private Vector3 currentLaserPosition;
 
     public Color colorStart;
     public Color colorPressed;
@@ -65,6 +69,10 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
     protected override void Start () {
         base.Start();
 
+        vbbAction.RegisterEventHandler(this);
+
+        vbbAction.gameObject.SetActive(false);
+
         ResetButtonColours();
 
         line.SetActive(false);
@@ -79,6 +87,7 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
     protected override void OnCompletedFigure() {
         base.OnCompletedFigure();
         line.SetActive(true);
+        vbbAction.gameObject.SetActive(true);
     }
 
     void ShootLaserFromTargetPosition(Vector3 targetPosition, Vector3 direction, float length)
@@ -110,10 +119,7 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
                 ResetButtonColours();
             }*/
 
-        Client.LocalClient.SpawnWarriorClient(raycastHit.point - Client.LocalClient.baseCore.transform.position);
-        line.SetActive(false);
-        completed = false;  
-        ResetButtonColours();
+        currentLaserPosition = raycastHit.point;
     }
 
     protected override void OnFigureFailed()
@@ -127,6 +133,14 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
     {
         base.OnButtonPressed(vb);
         vb.gameObject.GetComponentInChildren<SpriteRenderer>().color = colorPressed;
+
+        if(vb == vbbAction) {
+            Client.LocalClient.SpawnWarriorClient(currentLaserPosition - Client.LocalClient.baseCore.transform.position);
+            line.SetActive(false);
+            completed = false;
+            ResetButtonColours();
+            vbbAction.gameObject.SetActive(false);
+        }
     }
 
     public override void OnButtonReleased(VirtualButtonBehaviour vb)

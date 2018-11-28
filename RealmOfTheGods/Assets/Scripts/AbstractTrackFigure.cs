@@ -37,6 +37,15 @@ public abstract class AbstractTrackFigure : MonoBehaviour, IVirtualButtonEventHa
         bool nextSet = true;
         bool correctSet = false;
         bool lastSet = false;
+        bool anySet = false;
+
+        foreach (VirtualButtonBehaviourArray vbba in vbBehaviourArray) {
+            foreach (VirtualButtonBehaviour vbb in vbba.vbBehaviours) {
+                if(vbb == vb) {
+                    anySet = true;
+                }
+            }
+        }
 
         foreach (VirtualButtonBehaviour vbb in vbBehaviourArray[currentButtonSet].vbBehaviours) {
             if (!vbb.Pressed) {
@@ -67,7 +76,7 @@ public abstract class AbstractTrackFigure : MonoBehaviour, IVirtualButtonEventHa
                 OnCompletedFigure();
             }
         }
-        else if (!correctSet && !lastSet) {
+        else if (!correctSet && !lastSet && anySet) {
             Debug.Log("Not the correct set");
             OnFigureFailed();
         }
