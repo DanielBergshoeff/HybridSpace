@@ -21,7 +21,7 @@ public class Client : NetworkBehaviour
 
     public static MyGameObjectEvent OnBasePlaced;
 
-    private GameObject baseCore;
+    public GameObject baseCore;
 
     private List<GameObject> warriors;
 
@@ -146,14 +146,13 @@ public class Client : NetworkBehaviour
 
     [Command]
     private void CmdSpawnWarrior(Vector3 pos) {
-        GameObject go = Instantiate(warriorPrefab, pos, Quaternion.identity);
+        GameObject go = Instantiate(warriorPrefab, baseCore.transform.position + pos, Quaternion.identity);
         go.transform.parent = baseCore.transform;
         NetworkServer.Spawn(go);
         RpcSyncWarriorOnce(go.transform.localPosition, go.transform.localRotation, go, baseCore);
         if(warriors == null) {
             warriors = new List<GameObject>();
         }
-
         warriors.Add(go);
     }
 
