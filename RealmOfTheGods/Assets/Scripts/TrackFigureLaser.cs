@@ -72,6 +72,7 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
         vbbAction.RegisterEventHandler(this);
 
         vbbAction.gameObject.SetActive(false);
+        vbbAction.enabled = false;
 
         ResetButtonColours();
 
@@ -88,6 +89,13 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
         base.OnCompletedFigure();
         line.SetActive(true);
         vbbAction.gameObject.SetActive(true);
+        vbbAction.enabled = true;
+        foreach (VirtualButtonBehaviourArray vbba in vbBehaviourArray) {
+            foreach (VirtualButtonBehaviour vbb in vbba.vbBehaviours) {
+                vbb.enabled = false;
+                vbb.gameObject.SetActive(false);
+            }
+        }
     }
 
     void ShootLaserFromTargetPosition(Vector3 targetPosition, Vector3 direction, float length)
@@ -131,7 +139,9 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
 
     public override void OnButtonPressed(VirtualButtonBehaviour vb)
     {
+        Debug.Log("Button pressed: " + vb.gameObject.name);
         base.OnButtonPressed(vb);
+        Debug.Log("Got through base!");
         vb.gameObject.GetComponentInChildren<SpriteRenderer>().color = colorPressed;
 
         if(vb == vbbAction) {
@@ -140,7 +150,15 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
             completed = false;
             ResetButtonColours();
             vbbAction.gameObject.SetActive(false);
+            foreach (VirtualButtonBehaviourArray vbba in vbBehaviourArray) {
+                foreach (VirtualButtonBehaviour vbb in vbba.vbBehaviours) {
+                    vbb.enabled = true;
+                    vbb.gameObject.SetActive(true);
+                }
+            }
         }
+
+        Debug.Log("End of OnButtonPressed");
     }
 
     public override void OnButtonReleased(VirtualButtonBehaviour vb)
