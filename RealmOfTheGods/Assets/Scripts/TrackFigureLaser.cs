@@ -15,7 +15,7 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
     public GameObject prefabWarrior;
     public GameObject baseIsland;
 
-    public VirtualButtonBehaviour vbbAction;
+    public GameObject vbbAction;
 
     public GameObject parentObjectsToSwap;
 
@@ -69,10 +69,12 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
     protected override void Start () {
         base.Start();
 
-        vbbAction.RegisterEventHandler(this);
+        vbbAction.GetComponent<VirtualButtonBehaviour>().RegisterEventHandler(this);
 
-        vbbAction.gameObject.SetActive(false);
-        vbbAction.enabled = false;
+        vbbAction.GetComponentInChildren<SpriteRenderer>().enabled = false;
+
+        //vbbAction.gameObject.SetActive(false);
+        vbbAction.GetComponent<VirtualButtonBehaviour>().enabled = false;
 
         ResetButtonColours();
 
@@ -88,8 +90,8 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
     protected override void OnCompletedFigure() {
         base.OnCompletedFigure();
         line.SetActive(true);
-        vbbAction.gameObject.SetActive(true);
-        vbbAction.enabled = true;
+        vbbAction.GetComponent<VirtualButtonBehaviour>().enabled = true;
+        vbbAction.GetComponentInChildren<SpriteRenderer>().enabled = false;
         foreach (VirtualButtonBehaviourArray vbba in vbBehaviourArray) {
             foreach (VirtualButtonBehaviour vbb in vbba.vbBehaviours) {
                 vbb.enabled = false;
@@ -106,28 +108,18 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
 
         Debug.DrawRay(targetPosition, direction * length, Color.green);
 
+        currentLaserPosition = Vector3.negativeInfinity;
+
         if (Physics.Raycast(ray, out raycastHit, length))
         {
             Debug.Log(raycastHit.collider.name);
             endPosition = raycastHit.point;
 
-            OnLaserHit(raycastHit);
+            currentLaserPosition = raycastHit.point;
         }
 
         laserLineRenderer.SetPosition(0, targetPosition);
         laserLineRenderer.SetPosition(1, endPosition);
-    }
-
-    protected void OnLaserHit(RaycastHit raycastHit) {
-        /*if(raycastHit.collider.gameObject.tag == "Humanoid")
-            {
-                raycastHit.collider.gameObject.GetComponent<Humanoid>().myParticleSystem.SetActive(true);
-                line.SetActive(false);
-                completed = false;
-                ResetButtonColours();
-            }*/
-
-        currentLaserPosition = raycastHit.point;
     }
 
     protected override void OnFigureFailed()
@@ -144,16 +136,19 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
         Debug.Log("Got through base!");
         vb.gameObject.GetComponentInChildren<SpriteRenderer>().color = colorPressed;
 
-        if(vb == vbbAction) {
-            Client.LocalClient.SpawnWarriorClient(currentLaserPosition - Client.LocalClient.baseCore.transform.position);
-            line.SetActive(false);
-            completed = false;
-            ResetButtonColours();
-            vbbAction.gameObject.SetActive(false);
-            foreach (VirtualButtonBehaviourArray vbba in vbBehaviourArray) {
-                foreach (VirtualButtonBehaviour vbb in vbba.vbBehaviours) {
-                    vbb.enabled = true;
-                    vbb.gameObject.SetActive(true);
+        if(vb.gameObject == vbbAction) {
+            if (currentLaserPosition != Vector3.negativeInfinity) {
+                Client.LocalClient.SpawnWarriorClient(currentLaserPosition - Client.LocalClient.baseCore.transform.position);
+                line.SetActive(false);
+                completed = false;
+                ResetButtonColours();
+                vbbAction.GetComponentInChildren<SpriteRenderer>().enabled = false;
+                vbbAction.GetComponent<VirtualButtonBehaviour>().enabled = false;
+                foreach (VirtualButtonBehaviourArray vbba in vbBehaviourArray) {
+                    foreach (VirtualButtonBehaviour vbb in vbba.vbBehaviours) {
+                        vbb.enabled = true;
+                        vbb.gameObject.SetActive(true);
+                    }
                 }
             }
         }

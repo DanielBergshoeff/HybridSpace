@@ -1332,7 +1332,7 @@ MonoBehaviour:
   prefabWarrior: {fileID: 1080929683521512, guid: 9d5fef8b0dbd30c489d10f4f94a2d263,
     type: 2}
   baseIsland: {fileID: 2002675130}
-  vbbAction: {fileID: 1422952617}
+  vbbAction: {fileID: 1422952612}
   parentObjectsToSwap: {fileID: 286460099}
   objectsToHide:
   - {fileID: 846659623}
