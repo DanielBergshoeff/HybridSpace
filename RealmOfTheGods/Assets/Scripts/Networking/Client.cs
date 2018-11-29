@@ -128,7 +128,6 @@ public class Client : NetworkBehaviour
     [Command]
     private void CmdSpawnBase() {
         baseCore = Instantiate(basePrefab, Vector3.zero, Quaternion.identity);
-        baseCore.transform.Rotate(new Vector3(90, 0, 0));
         NetworkServer.Spawn(baseCore);
         foreach (ClientConnection clientConnection in clientConnection.clients) {
             clientConnection.client.SetClientBaseServer(baseCore);
@@ -171,6 +170,7 @@ public class Client : NetworkBehaviour
 
     [ClientRpc]
     private void RpcSyncGameObject(int index, Vector3 localPos, Quaternion localRotation) {
+        if(!isLocalPlayer) { return; }
         warriors[index].transform.localPosition = localPos;
         warriors[index].transform.localRotation = localRotation;
     }
