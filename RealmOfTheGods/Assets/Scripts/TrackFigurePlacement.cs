@@ -10,13 +10,14 @@ public class TrackFigurePlacement : AbstractTrackFigure, ITrackableEventHandler{
     public GameObject[] objectsToHide;
 
     public GameObject prefabToPlace;
-    public GameObject parentToPrefab;
 
     public GameObject frontCard;
     public GameObject backCard;
 
     public Color colorStart;
     public Color colorPressed;
+
+    public bool spawned;
 
     public void SetParent(Transform child, Transform parent, float xRotation) {
         child.parent = parent;
@@ -60,6 +61,8 @@ public class TrackFigurePlacement : AbstractTrackFigure, ITrackableEventHandler{
     protected override void OnCompletedFigure() {
         base.OnCompletedFigure();
         prefabToPlace.SetActive(true);
+
+        spawned = true;
 
         foreach (VirtualButtonBehaviourArray vbba in vbBehaviourArray)
         {
