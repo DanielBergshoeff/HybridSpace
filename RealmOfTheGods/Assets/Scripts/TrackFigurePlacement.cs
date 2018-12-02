@@ -65,7 +65,7 @@ public class TrackFigurePlacement : AbstractTrackFigure, ITrackableEventHandler{
     protected override void OnCompletedFigure() {
         base.OnCompletedFigure();
 
-        Ray ray = new Ray(frontCard.transform.position + new Vector3(0, 100, 0), -frontCard.transform.up);
+        Ray ray = new Ray(frontCard.transform.position + new Vector3(0, 100, 0), -Client.LocalClient.baseCore.transform.up);
         RaycastHit raycastHit;
 
         if (Physics.Raycast(ray, out raycastHit, 110)) {
