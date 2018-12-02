@@ -18,12 +18,14 @@ public class Client : NetworkBehaviour
 
     [SerializeField] private GameObject warriorPrefab;
     [SerializeField] private GameObject basePrefab;
+    [SerializeField] private GameObject flagPrefab;
 
     public static MyGameObjectEvent OnBasePlaced;
 
     public GameObject baseCore;
 
     private List<GameObject> warriors;
+    private List<GameObject> flags;
 
     public static Client LocalClient {
         get;
@@ -34,6 +36,10 @@ public class Client : NetworkBehaviour
         if (isServer) {
             if(warriors != null) {
                 for (int i = 0; i < warriors.Count; i++) {
+                    if(warriors[i].transform.position != flags[i].transform.position) {
+                        warriors[i].transform.position = Vector3.MoveTowards(warriors[i].transform.position, flags[i].transform.position, warriors[i].GetComponent<Unit>().speed * Time.deltaTime);
+                    }
+
                     RpcSyncGameObject(i, warriors[i].transform.localPosition, warriors[i].transform.localRotation);
                 }
             }
@@ -77,52 +83,43 @@ public class Client : NetworkBehaviour
         NetworkConnection conn = connectionToClient;
         conn.address = adress;
         clientConnection = clientConnectionBase.Get(conn, this);
-
-        teamScore = clientConnection.teamScore;
-        RpcSetScore(teamScore);
-    }
-
-    // ------------------------------------ CHANGE VALUE FROM CLIENT
-    // Should only be called clientside
-    public void AddScoreClient(int score)
-    {
-        teamScore += score;
-        CmdSetScore(teamScore);
-    }
-
-    // When called clientside, will be executed serverside
-    [Command]
-    private void CmdSetScore(int score) {
-        teamScore = score;
-
-        // custom persistance
-        clientConnection.SetPersistantScore(teamScore);
     }
 
     public void SpawnWarriorClient(Vector3 pos) {
-        if (isLocalPlayer) {
-            Debug.Log("Is local player");
-            if (hasAuthority) {
-                Debug.Log("Authority");
-                CmdSpawnWarrior(pos);
-            }
-            else {
-                Debug.Log("No authority");
-            }
-        }
-        else {
-            Debug.Log("Not the local player");
-        }
-            
+        if (!isLocalPlayer) { return; }
+        CmdSpawnWarrior(pos);
+        CmdSpawnFlag(pos);
+    }
+
+    public void SetUnitFlag(Vector3 pos, GameObject unit) {
+        if(!isLocalPlayer) { return; }
+        CmdSetFlag(pos, unit);
     }
 
     protected void SetClientBaseServer(GameObject newBaseCore) {
         baseCore = newBaseCore;
-        RpcRotateBaseOnce(baseCore.transform.rotation, baseCore);
+        RpcSyncBaseOnce(baseCore.transform.rotation, baseCore);
     }
 
     public void SpawnBaseClient() {
         CmdSpawnBase();
+    }
+
+    [Command]
+    private void CmdSetFlag(Vector3 pos, GameObject unit) {
+        for (int i = 0; i < warriors.Count; i++) {
+            if (warriors[i] == unit) {
+                flags[i].transform.position = pos;
+            }
+        }
+        
+    }
+
+    [Command]
+    private void CmdSpawnFlag(Vector3 pos) {
+        GameObject flag = Instantiate(flagPrefab, baseCore.transform.position + pos, Quaternion.identity);
+        flag.transform.parent = baseCore.transform;
+        flags.Add(flag);
     }
 
     [Command]
@@ -135,7 +132,7 @@ public class Client : NetworkBehaviour
     }
 
     [ClientRpc]
-    private void RpcRotateBaseOnce(Quaternion rot, GameObject go) {
+    private void RpcSyncBaseOnce(Quaternion rot, GameObject go) {
         if (!isLocalPlayer) { return; }
         baseCore = go;
         OnBasePlaced.Invoke(go);
@@ -173,27 +170,6 @@ public class Client : NetworkBehaviour
         if(!isLocalPlayer) { return; }
         warriors[index].transform.localPosition = localPos;
         warriors[index].transform.localRotation = localRotation;
-    }
-
-    // ------------------------------------ CHANGE VALUE FROM SERVER
-    // Should only be called serverside
-    public void AddScoreServer(int score) {
-        teamScore += score;
-        RpcSetScore(teamScore);
-
-        // custom persistance
-        clientConnection.SetPersistantScore(teamScore);
-    }
-
-    // When called on server side, will be executed client side
-    [ClientRpc]
-    private void RpcSetScore(int score) {
-        // check if this set score is meant for this client, 
-        // otherwise it's executed on the client-object on every client game instance, 
-        // not so much a problem with variables but could become an issue with methods chains
-        if (!isLocalPlayer) { return; }
-
-        teamScore = score;
     }
 
     // Called when Client loses connection, Clientside

@@ -1810,6 +1810,7 @@ GameObject:
   - component: {fileID: 95759714762976538}
   - component: {fileID: 65413506095588064}
   - component: {fileID: 114471112237780690}
+  - component: {fileID: 114873165772567738}
   m_Layer: 0
   m_Name: Low Poly Warrior
   m_TagString: Humanoid
@@ -5979,6 +5980,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myParticleSystem: {fileID: 1448164208232278}
+--- !u!114 &114873165772567738
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1486093780674370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5021a0ad65504534fa3d7a903e4f3298, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 3
 --- !u!137 &137563774202153838
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

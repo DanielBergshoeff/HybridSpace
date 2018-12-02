@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using Vuforia;
 
+public enum UnitType {
+    Null,
+    Warrior
+}
+
 public class TrackFigurePlacement : AbstractTrackFigure, ITrackableEventHandler{
-
-    public GameObject parentObjectsToSwap;
-
     public GameObject[] objectsToHide;
 
-    public GameObject prefabToPlace;
+    public UnitType unitToPlace;
 
     public GameObject frontCard;
     public GameObject backCard;
@@ -17,7 +19,7 @@ public class TrackFigurePlacement : AbstractTrackFigure, ITrackableEventHandler{
     public Color colorStart;
     public Color colorPressed;
 
-    public bool spawned;
+    private Vector3 currentPosition;
 
     public void SetParent(Transform child, Transform parent, float xRotation) {
         child.parent = parent;
@@ -55,20 +57,29 @@ public class TrackFigurePlacement : AbstractTrackFigure, ITrackableEventHandler{
 
         ResetButtonColours();
 
+        currentPosition = Vector3.zero;
+
         frontCard.GetComponent<TrackableBehaviour>().RegisterTrackableEventHandler(this);
 	}
 
     protected override void OnCompletedFigure() {
         base.OnCompletedFigure();
-        prefabToPlace.SetActive(true);
 
-        spawned = true;
+        Ray ray = new Ray(frontCard.transform.position + new Vector3(0, 100, 0), -frontCard.transform.up);
+        RaycastHit raycastHit;
 
-        foreach (VirtualButtonBehaviourArray vbba in vbBehaviourArray)
-        {
-            foreach (VirtualButtonBehaviour vbb in vbba.vbBehaviours) {
-                vbb.gameObject.GetComponentInChildren<SpriteRenderer>().enabled = false;
+        if (Physics.Raycast(ray, out raycastHit, 110)) {
+            Debug.Log(raycastHit.collider.name);
+            Client.LocalClient.SpawnWarriorClient(raycastHit.point - Client.LocalClient.baseCore.transform.position);
+
+            foreach (VirtualButtonBehaviourArray vbba in vbBehaviourArray) {
+                foreach (VirtualButtonBehaviour vbb in vbba.vbBehaviours) {
+                    vbb.gameObject.GetComponentInChildren<SpriteRenderer>().enabled = false;
+                }
             }
+        }
+        else {
+            OnFigureFailed();
         }
     }
 
@@ -92,6 +103,23 @@ public class TrackFigurePlacement : AbstractTrackFigure, ITrackableEventHandler{
     // Update is called once per frame
     protected override void Update () {
         base.Update();
+
+        if(completed && currentPosition != frontCard.transform.position) {
+            Ray ray = new Ray(frontCard.transform.position + new Vector3(0, 100, 0), -frontCard.transform.up);
+            RaycastHit raycastHit;
+
+            if (Physics.Raycast(ray, out raycastHit, 110)) {
+                Debug.Log(raycastHit.collider.name);
+                //Client.LocalClient.SpawnWarriorClient(raycastHit.point - Client.LocalClient.baseCore.transform.position));
+
+                //Set warrior flag
+
+                currentPosition = frontCard.transform.position;
+            }
+        }
+        else {
+            currentPosition = frontCard.transform.position;
+        }
 	}
 
     private void ResetButtonColours()

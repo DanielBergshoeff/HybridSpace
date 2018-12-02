@@ -2,24 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ParentManager : MonoBehaviour {
+public class GameManager : MonoBehaviour {
 
     public GameObject baseParent;
+    public GameObject canvas;
 
 	// Use this for initialization
 	void Start () {
         if (Client.OnBasePlaced == null) {
             Client.OnBasePlaced = new MyGameObjectEvent();
         }
-        Client.OnBasePlaced.AddListener(SetBaseParent);
-	}
+        Client.OnBasePlaced.AddListener(BaseSpawned);
+    }
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
 
-    private void SetBaseParent(GameObject go) {
+    public void SpawnBase() {
+        Client.LocalClient.SpawnBaseClient();
+    }
+
+    public void BaseSpawned(GameObject go) {
         go.transform.parent = baseParent.transform;
+        canvas.SetActive(false);
     }
 }
