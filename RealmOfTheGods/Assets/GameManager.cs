@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour {
 
     public void BaseSpawned(GameObject go) {
         go.transform.parent = baseParent.transform;
+        go.transform.localRotation = Quaternion.identity;
+        go.transform.localPosition = Vector3.zero;
         canvas.SetActive(false);
     }
 }
