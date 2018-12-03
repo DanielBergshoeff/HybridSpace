@@ -135,16 +135,7 @@ public class Client : NetworkBehaviour
         if (!isLocalPlayer) { return; }
         Debug.Log("Reached rpc sync base once");
         baseCore = go;
-        baseCore.transform.rotation = rot;
-        baseCore.transform.localPosition = Vector3.zero;
         OnBasePlaced.Invoke(go);
-        Debug.Log(go.GetComponent<BaseScript>().GetHashCode());
-
-        var baseScripts = FindObjectsOfType<BaseScript>();
-        Debug.Log("Basescripts found in scene: ");
-        foreach(BaseScript b in baseScripts) {
-            Debug.Log(b.GetHashCode());
-        }
     }
 
     [Command]
