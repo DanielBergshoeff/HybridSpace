@@ -112,7 +112,6 @@ public class Client : NetworkBehaviour
                 flags[i].transform.position = pos;
             }
         }
-        
     }
 
     [Command]
@@ -134,10 +133,18 @@ public class Client : NetworkBehaviour
     [ClientRpc]
     private void RpcSyncBaseOnce(Quaternion rot, GameObject go) {
         if (!isLocalPlayer) { return; }
+        Debug.Log("Reached rpc sync base once");
         baseCore = go;
+        baseCore.transform.rotation = rot;
+        baseCore.transform.localPosition = Vector3.zero;
         OnBasePlaced.Invoke(go);
-        go.transform.rotation = rot;
-        go.transform.localPosition = Vector3.zero;
+        Debug.Log(go.GetComponent<BaseScript>().GetHashCode());
+
+        var baseScripts = FindObjectsOfType<BaseScript>();
+        Debug.Log("Basescripts found in scene: ");
+        foreach(BaseScript b in baseScripts) {
+            Debug.Log(b.GetHashCode());
+        }
     }
 
     [Command]
