@@ -118,6 +118,9 @@ public class Client : NetworkBehaviour
     private void CmdSpawnFlag(Vector3 pos) {
         GameObject flag = Instantiate(flagPrefab, baseCore.transform.position + pos, Quaternion.identity);
         flag.transform.parent = baseCore.transform;
+        if(flags == null) {
+            flags = new List<GameObject>();
+        }
         flags.Add(flag);
     }
 
@@ -154,9 +157,9 @@ public class Client : NetworkBehaviour
 
     [ClientRpc]
     private void RpcSyncWarriorOnce(Vector3 localPos, Quaternion localRot, GameObject go, GameObject parent) {
-        /*go.transform.parent = parent.transform;
+        go.transform.parent = parent.transform;
         go.transform.localPosition = localPos;
-        go.transform.localRotation = localRot;*/
+        go.transform.localRotation = localRot;
 
         if (warriors == null) {
             warriors = new List<GameObject>();
