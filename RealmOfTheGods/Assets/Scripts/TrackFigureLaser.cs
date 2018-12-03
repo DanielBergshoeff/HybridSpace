@@ -9,11 +9,8 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
 
     public GameObject line;
     public LineRenderer laserLineRenderer;
-    public float laserWidth = 0.1f;
-    public float laserMaxLength = 10f;
-
-    public GameObject prefabWarrior;
-    public GameObject baseIsland;
+    private float laserWidth = 0.1f;
+    private float laserMaxLength = 10f;
 
     public GameObject vbbAction;
 
