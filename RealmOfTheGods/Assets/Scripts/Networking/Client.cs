@@ -140,8 +140,10 @@ public class Client : NetworkBehaviour
 
     [Command]
     private void CmdSpawnWarrior(Vector3 pos) {
-        GameObject go = Instantiate(warriorPrefab, baseCore.transform.position + pos, Quaternion.identity);
+        GameObject go = Instantiate(warriorPrefab);
         go.transform.parent = baseCore.transform;
+        go.transform.localPosition = pos;
+        go.transform.localRotation = Quaternion.identity;
         NetworkServer.Spawn(go);
         RpcSyncWarriorOnce(go.transform.localPosition, go.transform.localRotation, go, baseCore);
         if(warriors == null) {
@@ -152,9 +154,9 @@ public class Client : NetworkBehaviour
 
     [ClientRpc]
     private void RpcSyncWarriorOnce(Vector3 localPos, Quaternion localRot, GameObject go, GameObject parent) {
-        go.transform.parent = parent.transform;
+        /*go.transform.parent = parent.transform;
         go.transform.localPosition = localPos;
-        go.transform.localRotation = localRot;
+        go.transform.localRotation = localRot;*/
 
         if (warriors == null) {
             warriors = new List<GameObject>();

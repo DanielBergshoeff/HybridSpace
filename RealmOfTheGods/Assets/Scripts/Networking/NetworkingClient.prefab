@@ -89,4 +89,5 @@ MonoBehaviour:
   warriorPrefab: {fileID: 1488078174216080, guid: 3f0c12c2d4a1eb744a12c42dadf961ed,
     type: 2}
   basePrefab: {fileID: 1843047908937018, guid: 827d961110d157244bb61da6f31b035f, type: 2}
+  flagPrefab: {fileID: 1417914996663836, guid: 6603593dcef509f44955423381f10691, type: 2}
   baseCore: {fileID: 0}
