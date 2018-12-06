@@ -135,6 +135,9 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
 
         if(vb.gameObject == vbbAction) {
             if (currentLaserPosition != Vector3.negativeInfinity) {
+                Debug.Log("Current laser position: " + currentLaserPosition);
+                Debug.Log("Current laser position relative to base: " + (currentLaserPosition - Client.LocalClient.baseCore.transform.position));
+
                 Client.LocalClient.SpawnWarriorClient(currentLaserPosition - Client.LocalClient.baseCore.transform.position);
                 line.SetActive(false);
                 completed = false;
