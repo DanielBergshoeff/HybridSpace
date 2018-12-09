@@ -131,7 +131,8 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
 
             Debug.Log("Current laser position: " + currentLaserPosition);
 
-            Debug.Log("Current laser position relative to base: " + (currentLaserPosition - Client.LocalClient.baseCore.transform.position));
+            Debug.Log("Current laser position relative to base: " + Client.LocalClient.baseCore.transform.InverseTransformPoint(currentLaserPosition));
+            Debug.Log("Current laser direction relative to base: " + Client.LocalClient.baseCore.transform.InverseTransformDirection(currentLaserPosition));
         }
         else {
             if (tempProjection != null) {
@@ -160,9 +161,9 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
         if(vb.gameObject == vbbAction) {
             if (currentLaserPosition != Vector3.negativeInfinity) {
                 Debug.Log("Current laser position: " + currentLaserPosition);
-                Debug.Log("Current laser position relative to base: " + (currentLaserPosition - Client.LocalClient.baseCore.transform.position));
+                Debug.Log("Current laser direction relative to base: " + Client.LocalClient.baseCore.transform.InverseTransformDirection(currentLaserPosition));
 
-                Client.LocalClient.SpawnWarriorClient(currentLaserPosition - Client.LocalClient.baseCore.transform.position);
+                Client.LocalClient.SpawnWarriorClient(Client.LocalClient.baseCore.transform.InverseTransformDirection(currentLaserPosition));
                 line.SetActive(false);
                 completed = false;
                 ResetButtonColours();
