@@ -34,7 +34,6 @@ public class Client : NetworkBehaviour
 
     private void Update() {
         if (isServer) {
-            /*
             if(warriors != null) {
                 for (int i = 0; i < warriors.Count; i++) {
                     if(warriors[i].transform.position != flags[i].transform.position) {
@@ -44,7 +43,6 @@ public class Client : NetworkBehaviour
                     RpcSyncGameObject(i, warriors[i].transform.localPosition, warriors[i].transform.localRotation);
                 }
             }
-            */
         }
     }
 
