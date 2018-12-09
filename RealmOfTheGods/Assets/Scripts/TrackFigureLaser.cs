@@ -10,7 +10,7 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
     public GameObject line;
     public LineRenderer laserLineRenderer;
     private float laserWidth = 0.1f;
-    private float laserMaxLength = 10f;
+    private float laserMaxLength = 1000f;
 
     public GameObject vbbAction;
 
@@ -176,7 +176,7 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
         base.Update();
         if(completed)
         {
-            ShootLaserFromTargetPosition(currentCard.transform.position, -currentCard.transform.up, laserMaxLength);
+                ShootLaserFromTargetPosition(currentCard.transform.position, -currentCard.transform.up, laserMaxLength);
         }
 	}
 
