@@ -113,6 +113,8 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
             endPosition = raycastHit.point;
 
             currentLaserPosition = raycastHit.point;
+
+            Debug.Log("Current laser position: " + (currentLaserPosition - Client.LocalClient.baseCore.transform.position));
         }
 
         laserLineRenderer.SetPosition(0, targetPosition);
