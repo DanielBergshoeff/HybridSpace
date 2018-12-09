@@ -7,6 +7,9 @@ using UnityEngine.Networking.Match;
 
 public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
 
+    public GameObject tempProjectionPrefab;
+    private GameObject tempProjection;
+
     public GameObject line;
     public LineRenderer laserLineRenderer;
     private float laserWidth = 0.1f;
@@ -109,12 +112,31 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
 
         if (Physics.Raycast(ray, out raycastHit, length))
         {
+            //If there is no projection yet, create a projection at the point of impact
+            if(tempProjection == null) {
+                tempProjection = Instantiate(tempProjectionPrefab, raycastHit.point, Quaternion.identity, Client.LocalClient.baseCore.transform);
+            }
+            //If there is a projection, but its not active, set to active
+            else if(tempProjection.activeSelf == false) {
+                tempProjection.SetActive(true);
+            }
+
+            //Set the projection position to the point of impact
+            tempProjection.transform.position = raycastHit.point;
+
             Debug.Log(raycastHit.collider.name);
             endPosition = raycastHit.point;
 
             currentLaserPosition = raycastHit.point;
 
-            Debug.Log("Current laser position: " + (currentLaserPosition - Client.LocalClient.baseCore.transform.position));
+            Debug.Log("Current laser position: " + currentLaserPosition);
+
+            Debug.Log("Current laser position relative to base: " + (currentLaserPosition - Client.LocalClient.baseCore.transform.position));
+        }
+        else {
+            if (tempProjection != null) {
+                tempProjection.SetActive(false);
+            }
         }
 
         laserLineRenderer.SetPosition(0, targetPosition);
