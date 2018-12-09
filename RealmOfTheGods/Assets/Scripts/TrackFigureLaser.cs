@@ -163,7 +163,7 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
                 Debug.Log("Current laser position: " + currentLaserPosition);
                 Debug.Log("Current laser direction relative to base: " + Client.LocalClient.baseCore.transform.InverseTransformDirection(currentLaserPosition));
 
-                Client.LocalClient.SpawnWarriorClient(Client.LocalClient.baseCore.transform.InverseTransformDirection(currentLaserPosition));
+                Client.LocalClient.SpawnWarriorClient(Client.LocalClient.baseCore.transform.InverseTransformPoint(currentLaserPosition));
                 line.SetActive(false);
                 completed = false;
                 ResetButtonColours();
