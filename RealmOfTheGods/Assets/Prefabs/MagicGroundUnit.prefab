@@ -38,7 +38,6 @@ GameObject:
   - component: {fileID: 4067353100267744}
   - component: {fileID: 33757033353622392}
   - component: {fileID: 23175618096291892}
-  - component: {fileID: 114924035744793406}
   - component: {fileID: 114241943043844560}
   m_Layer: 0
   m_Name: magicGroundUnit_v1
@@ -190,18 +189,6 @@ MonoBehaviour:
     i15: 13
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
---- !u!114 &114924035744793406
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1519687281525186}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9dd4da4a6cab594abce5eb7b5c26fff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myParticleSystem: {fileID: 0}
 --- !u!198 &198600035827759074
 ParticleSystem:
   m_ObjectHideFlags: 1
