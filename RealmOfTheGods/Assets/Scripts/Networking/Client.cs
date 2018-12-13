@@ -37,7 +37,7 @@ public class Client : NetworkBehaviour
             if(warriors != null) {
                 for (int i = 0; i < warriors.Count; i++) {
                     if(warriors[i].transform.position != flags[i].transform.position) {
-                        warriors[i].transform.position = Vector3.MoveTowards(warriors[i].transform.position, flags[i].transform.position, warriors[i].GetComponent<Unit>().speed * Time.deltaTime);
+                        warriors[i].transform.position = Vector3.MoveTowards(warriors[i].transform.position, flags[i].transform.position, warriors[i].GetComponentInChildren<Unit>().speed * Time.deltaTime);
                     }
 
                     RpcSyncGameObject(i, warriors[i].transform.localPosition, warriors[i].transform.localRotation);
@@ -87,7 +87,6 @@ public class Client : NetworkBehaviour
 
     public void SpawnWarriorClient(Vector3 pos) {
         if (!isLocalPlayer) { return; }
-        Debug.Log("Spawn warrior client pos: " + pos);
         CmdSpawnWarrior(pos);
         CmdSpawnFlag(pos);
     }
@@ -137,20 +136,17 @@ public class Client : NetworkBehaviour
     [ClientRpc]
     private void RpcSyncBaseOnce(Quaternion rot, GameObject go) {
         if (!isLocalPlayer) { return; }
-        Debug.Log("Reached rpc sync base once");
         baseCore = go;
         OnBasePlaced.Invoke(go);
     }
 
     [Command]
     private void CmdSpawnWarrior(Vector3 pos) {
-        Debug.Log("Cmd Spawn warrior server pos: " + pos);
         GameObject go = Instantiate(warriorPrefab);
         go.transform.parent = baseCore.transform;
         go.transform.localPosition = pos;
         go.transform.localRotation = Quaternion.identity;
         NetworkServer.Spawn(go);
-        Debug.Log("Cmd Spawn warrior server local pos: " + go.transform.localPosition);
         RpcSyncWarriorOnce(go.transform.localPosition, go.transform.localRotation, go, baseCore);
         if(warriors == null) {
             warriors = new List<GameObject>();
@@ -163,8 +159,6 @@ public class Client : NetworkBehaviour
         go.transform.parent = parent.transform;
         go.transform.localPosition = localPos;
         go.transform.localRotation = localRot;
-
-        Debug.Log("Rpc Spawn warrior client server pos: " + go.transform.localPosition);
 
         if (warriors == null) {
             warriors = new List<GameObject>();

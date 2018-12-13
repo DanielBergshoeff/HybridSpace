@@ -10,6 +10,8 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
     public GameObject tempProjectionPrefab;
     private GameObject tempProjection;
 
+    public UnitType typeToSpawn;
+
     public GameObject line;
     public LineRenderer laserLineRenderer;
     private float laserWidth = 0.1f;
@@ -41,7 +43,6 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
     {
         if (newStatus == TrackableBehaviour.Status.NO_POSE)
         {
-            Debug.Log("Front not found");
             //SetParent(line.transform, backCard.transform, 0);
             SetParent(parentObjectsToSwap.transform, backCard.transform, 0);
             currentCard = backCard;
@@ -52,8 +53,6 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
         }
         else //if (newStatus == TrackableBehaviour.Status.TRACKED || newStatus == TrackableBehaviour.Status.EXTENDED_TRACKED || newStatus == TrackableBehaviour.Status.DETECTED)
         {
-            Debug.Log("Front found");
-
             //SetParent(line.transform, frontCard.transform, 0);
             SetParent(parentObjectsToSwap.transform, frontCard.transform, 0);
 
@@ -123,16 +122,9 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
 
             //Set the projection position to the point of impact
             tempProjection.transform.position = raycastHit.point;
-
-            Debug.Log(raycastHit.collider.name);
             endPosition = raycastHit.point;
 
             currentLaserPosition = raycastHit.point;
-
-            Debug.Log("Current laser position: " + currentLaserPosition);
-
-            Debug.Log("Current laser position relative to base: " + Client.LocalClient.baseCore.transform.InverseTransformPoint(currentLaserPosition));
-            Debug.Log("Current laser direction relative to base: " + Client.LocalClient.baseCore.transform.InverseTransformDirection(currentLaserPosition));
         }
         else {
             if (tempProjection != null) {
@@ -153,16 +145,11 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
 
     public override void OnButtonPressed(VirtualButtonBehaviour vb)
     {
-        Debug.Log("Button pressed: " + vb.gameObject.name);
         base.OnButtonPressed(vb);
-        Debug.Log("Got through base!");
         vb.gameObject.GetComponentInChildren<SpriteRenderer>().color = colorPressed;
 
         if(vb.gameObject == vbbAction) {
             if (currentLaserPosition != Vector3.negativeInfinity) {
-                Debug.Log("Current laser position: " + currentLaserPosition);
-                Debug.Log("Current laser direction relative to base: " + Client.LocalClient.baseCore.transform.InverseTransformDirection(currentLaserPosition));
-
                 Client.LocalClient.SpawnWarriorClient(Client.LocalClient.baseCore.transform.InverseTransformPoint(currentLaserPosition));
                 line.SetActive(false);
                 completed = false;
@@ -177,8 +164,6 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
                 }
             }
         }
-
-        Debug.Log("End of OnButtonPressed");
     }
 
     public override void OnButtonReleased(VirtualButtonBehaviour vb)

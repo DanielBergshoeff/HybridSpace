@@ -31,7 +31,6 @@ public class TrackFigurePlacement : AbstractTrackFigure, ITrackableEventHandler{
     {
         if (newStatus == TrackableBehaviour.Status.NO_POSE)
         {
-            Debug.Log("Front not found");
             if (!completed)
             {
                 foreach (GameObject go in objectsToHide)
@@ -43,7 +42,6 @@ public class TrackFigurePlacement : AbstractTrackFigure, ITrackableEventHandler{
         else //if (newStatus == TrackableBehaviour.Status.TRACKED || newStatus == TrackableBehaviour.Status.EXTENDED_TRACKED || newStatus == TrackableBehaviour.Status.DETECTED)
         {
             if(!completed) { 
-            Debug.Log("Front found");
                 foreach (GameObject go in objectsToHide) {
                     go.transform.GetChild(0).GetComponent<Renderer>().enabled = true;
                 }
