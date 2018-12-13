@@ -3,18 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using Vuforia;
 
-public enum UnitType {
-    Null,
-    Warrior
-}
-
 public class TrackFigurePlacement : AbstractTrackFigure, ITrackableEventHandler{
     public GameObject[] objectsToHide;
 
-    public UnitType unitToPlace;
-
     public GameObject frontCard;
     public GameObject backCard;
+
+    public UnitType unitToSpawn;
 
     public Color colorStart;
     public Color colorPressed;
@@ -68,7 +63,7 @@ public class TrackFigurePlacement : AbstractTrackFigure, ITrackableEventHandler{
 
         if (Physics.Raycast(ray, out raycastHit, 110)) {
             Debug.Log(raycastHit.collider.name);
-            Client.LocalClient.SpawnWarriorClient(raycastHit.point - Client.LocalClient.baseCore.transform.position);
+            Client.LocalClient.SpawnUnitClient(raycastHit.point - Client.LocalClient.baseCore.transform.position, unitToSpawn);
 
             foreach (VirtualButtonBehaviourArray vbba in vbBehaviourArray) {
                 foreach (VirtualButtonBehaviour vbb in vbba.vbBehaviours) {

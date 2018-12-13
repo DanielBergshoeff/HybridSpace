@@ -5,7 +5,22 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Events;
 
+public enum UnitType {
+    Null,
+    MagicGroundUnit,
+    MagicFlyingUnit,
+    MagicRangedUnit,
+    MightGroundUnit,
+    MightGroundUnitFast
+}
+
 public class MyGameObjectEvent : UnityEvent<GameObject> {
+}
+
+[Serializable]
+public class TypeToPrefab {
+    public UnitType type;
+    public GameObject gameObject;
 }
 
 public class Client : NetworkBehaviour
@@ -15,10 +30,11 @@ public class Client : NetworkBehaviour
 
     // private reference to custom client persistance
     private ClientConnection clientConnection;
-
-    [SerializeField] private GameObject warriorPrefab;
+    
     [SerializeField] private GameObject basePrefab;
     [SerializeField] private GameObject flagPrefab;
+
+    [SerializeField] private TypeToPrefab[] typeToPrefabs;
 
     public static MyGameObjectEvent OnBasePlaced;
 
@@ -85,9 +101,9 @@ public class Client : NetworkBehaviour
         clientConnection = clientConnectionBase.Get(conn, this);
     }
 
-    public void SpawnWarriorClient(Vector3 pos) {
+    public void SpawnUnitClient(Vector3 pos, UnitType type) {
         if (!isLocalPlayer) { return; }
-        CmdSpawnWarrior(pos);
+        CmdSpawnUnit(pos, type);
         CmdSpawnFlag(pos);
     }
 
@@ -141,21 +157,28 @@ public class Client : NetworkBehaviour
     }
 
     [Command]
-    private void CmdSpawnWarrior(Vector3 pos) {
-        GameObject go = Instantiate(warriorPrefab);
-        go.transform.parent = baseCore.transform;
-        go.transform.localPosition = pos;
-        go.transform.localRotation = Quaternion.identity;
-        NetworkServer.Spawn(go);
-        RpcSyncWarriorOnce(go.transform.localPosition, go.transform.localRotation, go, baseCore);
-        if(warriors == null) {
-            warriors = new List<GameObject>();
+    private void CmdSpawnUnit(Vector3 pos, UnitType unit) {
+        GameObject go = null;
+        foreach (TypeToPrefab typeToPrefab in typeToPrefabs) {
+            if(typeToPrefab.type == unit) {
+                go = Instantiate(typeToPrefab.gameObject);
+            }
         }
-        warriors.Add(go);
+        if (go != null) {
+            go.transform.parent = baseCore.transform;
+            go.transform.localPosition = pos;
+            go.transform.localRotation = Quaternion.identity;
+            NetworkServer.Spawn(go);
+            RpcSyncUnitOnce(go.transform.localPosition, go.transform.localRotation, go, baseCore);
+            if (warriors == null) {
+                warriors = new List<GameObject>();
+            }
+            warriors.Add(go);
+        }
     }
 
     [ClientRpc]
-    private void RpcSyncWarriorOnce(Vector3 localPos, Quaternion localRot, GameObject go, GameObject parent) {
+    private void RpcSyncUnitOnce(Vector3 localPos, Quaternion localRot, GameObject go, GameObject parent) {
         go.transform.parent = parent.transform;
         go.transform.localPosition = localPos;
         go.transform.localRotation = localRot;

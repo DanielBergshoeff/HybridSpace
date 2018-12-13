@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 33757033353622392}
   - component: {fileID: 23175618096291892}
   - component: {fileID: 114241943043844560}
+  - component: {fileID: 65464575206908744}
   m_Layer: 0
   m_Name: magicGroundUnit_v1
   m_TagString: Untagged
@@ -69,7 +70,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1844230087890074}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.3423574, y: 0.0025, z: -0.08044046}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4067353100267744}
@@ -84,8 +85,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1519687281525186}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.11, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0.21, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 4048908459933148}
   m_RootOrder: 0
@@ -145,6 +146,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1519687281525186}
   m_Mesh: {fileID: 4300000, guid: eea3ad2c17e87ca49ac36b84b4adcec7, type: 3}
+--- !u!65 &65464575206908744
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1519687281525186}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.02499044, y: 0.079713315, z: 0.17657976}
+  m_Center: {x: -0.0023561884, y: 0, z: -0.018267807}
 --- !u!114 &114241943043844560
 MonoBehaviour:
   m_ObjectHideFlags: 1

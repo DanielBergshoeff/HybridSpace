@@ -86,8 +86,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clientConnectionBase: {fileID: 11400000, guid: e67f12f6c78563c4ab5c9d580d710f6c,
     type: 2}
-  warriorPrefab: {fileID: 1844230087890074, guid: 4932156bcb3e49c44bec535410e1120d,
-    type: 2}
   basePrefab: {fileID: 1108970880345226, guid: 5881709642ccc384b931154ff00fd316, type: 2}
   flagPrefab: {fileID: 1417914996663836, guid: 6603593dcef509f44955423381f10691, type: 2}
+  typeToPrefabs:
+  - type: 1
+    gameObject: {fileID: 1844230087890074, guid: 4932156bcb3e49c44bec535410e1120d,
+      type: 2}
+  - type: 2
+    gameObject: {fileID: 1167290932315872, guid: d3445431ae035e644bb5f3aa43597daf,
+      type: 2}
+  - type: 3
+    gameObject: {fileID: 1675939561978206, guid: 2ad88dbbe2ce15b47becc358b12eee1a,
+      type: 2}
+  - type: 4
+    gameObject: {fileID: 1599272819850448, guid: d3123ab74ddf1ad469106fa59cbdecc3,
+      type: 2}
+  - type: 5
+    gameObject: {fileID: 1552516002018498, guid: 5fd28ff4995a4b14b9fa05a6c0d48034,
+      type: 2}
   baseCore: {fileID: 0}

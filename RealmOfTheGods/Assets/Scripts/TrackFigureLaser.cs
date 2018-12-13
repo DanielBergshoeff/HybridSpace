@@ -150,7 +150,7 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
 
         if(vb.gameObject == vbbAction) {
             if (currentLaserPosition != Vector3.negativeInfinity) {
-                Client.LocalClient.SpawnWarriorClient(Client.LocalClient.baseCore.transform.InverseTransformPoint(currentLaserPosition));
+                Client.LocalClient.SpawnUnitClient(Client.LocalClient.baseCore.transform.InverseTransformPoint(currentLaserPosition), typeToSpawn);
                 line.SetActive(false);
                 completed = false;
                 ResetButtonColours();
@@ -178,7 +178,7 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
             
         }
         else if(Input.GetKeyDown(KeyCode.W)) {
-            Client.LocalClient.SpawnWarriorClient(Vector3.zero);
+            Client.LocalClient.SpawnUnitClient(Vector3.zero, typeToSpawn);
         }
 
         base.Update();
