@@ -171,3 +171,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
+  health: 10
+  attackRange: 1
+  timePerAttack: 1
+  timePerAttackCheck: 0.1
+  prefabHealthSlider: {fileID: 0}
+  prefabCanvas: {fileID: 0}

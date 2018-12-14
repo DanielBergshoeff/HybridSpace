@@ -140,6 +140,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 4
+  health: 10
+  attackRange: 1
+  timePerAttack: 1
+  timePerAttackCheck: 0.1
+  prefabHealthSlider: {fileID: 1767995951458308, guid: 60e8e2cacc87cdb43bfaa11e71129b7c,
+    type: 2}
+  prefabCanvas: {fileID: 1784448943657362, guid: 40552eeb9f9589b46b6572b3cf6413b9,
+    type: 2}
+  healthSlider: {fileID: 0}
 --- !u!114 &114424958108966396
 MonoBehaviour:
   m_ObjectHideFlags: 1

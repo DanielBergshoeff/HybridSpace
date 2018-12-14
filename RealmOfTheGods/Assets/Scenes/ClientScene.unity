@@ -570,8 +570,25 @@ Prefab:
     - target: {fileID: 114500013733616586, guid: 5fd28ff4995a4b14b9fa05a6c0d48034,
         type: 2}
       propertyPath: attackRange
-      value: 0.4
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114500013733616586, guid: 5fd28ff4995a4b14b9fa05a6c0d48034,
+        type: 2}
+      propertyPath: speed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114500013733616586, guid: 5fd28ff4995a4b14b9fa05a6c0d48034,
+        type: 2}
+      propertyPath: prefabHealthSlider
+      value: 
+      objectReference: {fileID: 1767995951458308, guid: 60e8e2cacc87cdb43bfaa11e71129b7c,
+        type: 2}
+    - target: {fileID: 114500013733616586, guid: 5fd28ff4995a4b14b9fa05a6c0d48034,
+        type: 2}
+      propertyPath: prefabCanvas
+      value: 
+      objectReference: {fileID: 1784448943657362, guid: 40552eeb9f9589b46b6572b3cf6413b9,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5fd28ff4995a4b14b9fa05a6c0d48034, type: 2}
   m_IsPrefabAsset: 0
@@ -2285,8 +2302,20 @@ Prefab:
     - target: {fileID: 114487545298258608, guid: d3123ab74ddf1ad469106fa59cbdecc3,
         type: 2}
       propertyPath: attackRange
-      value: 0.4
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114487545298258608, guid: d3123ab74ddf1ad469106fa59cbdecc3,
+        type: 2}
+      propertyPath: prefabHealthSlider
+      value: 
+      objectReference: {fileID: 1767995951458308, guid: 60e8e2cacc87cdb43bfaa11e71129b7c,
+        type: 2}
+    - target: {fileID: 114487545298258608, guid: d3123ab74ddf1ad469106fa59cbdecc3,
+        type: 2}
+      propertyPath: prefabCanvas
+      value: 
+      objectReference: {fileID: 1784448943657362, guid: 40552eeb9f9589b46b6572b3cf6413b9,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d3123ab74ddf1ad469106fa59cbdecc3, type: 2}
   m_IsPrefabAsset: 0
@@ -3204,8 +3233,20 @@ Prefab:
     - target: {fileID: 114241943043844560, guid: 4932156bcb3e49c44bec535410e1120d,
         type: 2}
       propertyPath: attackRange
-      value: 0.4
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114241943043844560, guid: 4932156bcb3e49c44bec535410e1120d,
+        type: 2}
+      propertyPath: prefabHealthSlider
+      value: 
+      objectReference: {fileID: 1767995951458308, guid: 60e8e2cacc87cdb43bfaa11e71129b7c,
+        type: 2}
+    - target: {fileID: 114241943043844560, guid: 4932156bcb3e49c44bec535410e1120d,
+        type: 2}
+      propertyPath: prefabCanvas
+      value: 
+      objectReference: {fileID: 1784448943657362, guid: 40552eeb9f9589b46b6572b3cf6413b9,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4932156bcb3e49c44bec535410e1120d, type: 2}
   m_IsPrefabAsset: 0
@@ -4280,9 +4321,16 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114444763388044090, guid: 2ad88dbbe2ce15b47becc358b12eee1a,
         type: 2}
-      propertyPath: attackRange
-      value: 1
-      objectReference: {fileID: 0}
+      propertyPath: prefabHealthSlider
+      value: 
+      objectReference: {fileID: 1767995951458308, guid: 60e8e2cacc87cdb43bfaa11e71129b7c,
+        type: 2}
+    - target: {fileID: 114444763388044090, guid: 2ad88dbbe2ce15b47becc358b12eee1a,
+        type: 2}
+      propertyPath: prefabCanvas
+      value: 
+      objectReference: {fileID: 1784448943657362, guid: 40552eeb9f9589b46b6572b3cf6413b9,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2ad88dbbe2ce15b47becc358b12eee1a, type: 2}
   m_IsPrefabAsset: 0
