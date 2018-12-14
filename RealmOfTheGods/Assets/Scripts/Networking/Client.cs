@@ -14,6 +14,12 @@ public enum UnitType {
     MightGroundUnitFast
 }
 
+public enum TeamType {
+    Null,
+    Magic,
+    Might
+}
+
 public class MyGameObjectEvent : UnityEvent<GameObject> {
 }
 
