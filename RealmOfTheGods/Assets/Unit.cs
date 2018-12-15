@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
-public class Unit : MonoBehaviour {
+public class Unit : NetworkBehaviour {
 
     public float speed = 3.0f;
-    [SerializeField] private float health = 10.0f;
+    [SyncVar] [SerializeField] private float health = 10.0f;
     public float attackRange = 1.0f;
     public float timePerAttack = 1.0f;
 
@@ -31,7 +32,7 @@ public class Unit : MonoBehaviour {
 
     private float timePassed = 0.0f;
     private float attackTimer = 0.0f;
-    private Unit target;
+    [SyncVar] private Unit target;
     private float targetDistance = 0.0f;
     public bool alive = true;
 
@@ -66,6 +67,10 @@ public class Unit : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        healthSlider.value = health / totalHealth;
+
+        if (!isServer) { return; }
+
         healthSlider.transform.position = transform.position + transform.parent.up * 0.3f;
 
         if (alive) {
