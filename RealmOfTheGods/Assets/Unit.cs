@@ -32,7 +32,7 @@ public class Unit : NetworkBehaviour {
 
     private float timePassed = 0.0f;
     private float attackTimer = 0.0f;
-    [SyncVar] private Unit target;
+    private Unit target;
     private float targetDistance = 0.0f;
     public bool alive = true;
 
@@ -68,10 +68,11 @@ public class Unit : NetworkBehaviour {
 	// Update is called once per frame
 	void Update () {
         healthSlider.value = health / totalHealth;
-
-        if (!isServer) { return; }
-
         healthSlider.transform.position = transform.position + transform.parent.up * 0.3f;
+
+        if (Client.LocalClient != null) {
+            if(!Client.LocalClient.isServer) { return; }
+        }
 
         if (alive) {
             //If a target has been set and is still alive

@@ -12,8 +12,9 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
 
     public UnitType typeToSpawn;
 
-    public GameObject line;
-    public LineRenderer laserLineRenderer;
+    public GameObject linePrefab;
+    private GameObject line;
+    private LineRenderer laserLineRenderer;
     private float laserWidth = 0.1f;
     private float laserMaxLength = 1000f;
 
@@ -77,9 +78,10 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
 
         ResetButtonColours();
 
+        line = Instantiate(linePrefab, Vector3.zero, Quaternion.identity);
         line.SetActive(false);
         frontCard.GetComponent<TrackableBehaviour>().RegisterTrackableEventHandler(this);
-
+        laserLineRenderer = line.GetComponent<LineRenderer>();
         Vector3[] initLaserPositions = new Vector3[2] { Vector3.zero, Vector3.zero };
         laserLineRenderer.SetPositions(initLaserPositions);
         laserLineRenderer.startWidth = laserWidth;
