@@ -10,6 +10,7 @@ public class Unit : NetworkBehaviour {
     [SyncVar] [SerializeField] private float health = 10.0f;
     public float attackRange = 1.0f;
     public float timePerAttack = 1.0f;
+    public float damage = 1.0f;
 
     public float Health {
         get {
@@ -80,7 +81,7 @@ public class Unit : NetworkBehaviour {
                 attackTimer -= Time.deltaTime;
                 //If the timer reaches 0 -> attack
                 if (attackTimer <= 0.0f) {
-                    target.Health -= 1.0f;
+                    target.Health -= damage;
                     attackTimer = timePerAttack;
                 }
             }
