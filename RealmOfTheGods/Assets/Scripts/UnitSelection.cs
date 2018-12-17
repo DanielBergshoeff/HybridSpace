@@ -147,9 +147,10 @@ public class UnitSelection : MonoBehaviour, IVirtualButtonEventHandler {
                 //Set the projection position to the point of impact
                 tempProjection.transform.position = raycastHit.point;
             }
-
-            if (raycastHit.collider.gameObject.GetComponent<Unit>() != null)
-                selectedUnit = raycastHit.collider.gameObject.transform.parent.gameObject;
+            else if (controlOption == ControlOption.Select) {
+                if (raycastHit.collider.gameObject.GetComponent<Unit>() != null)
+                    selectedUnit = raycastHit.collider.gameObject.transform.parent.gameObject;
+            }
 
             currentLaserPosition = raycastHit.point;
             endPosition = raycastHit.point;
