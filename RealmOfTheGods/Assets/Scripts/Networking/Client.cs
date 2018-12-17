@@ -185,6 +185,7 @@ public class Client : NetworkBehaviour
 
     [ClientRpc]
     private void RpcSyncUnitOnce(Vector3 localPos, Quaternion localRot, GameObject go, GameObject parent) {
+        if(!isLocalPlayer) { return; }
         go.transform.parent = parent.transform;
         go.transform.localPosition = localPos;
         go.transform.localRotation = localRot;
