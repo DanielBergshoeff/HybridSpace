@@ -81,14 +81,14 @@ public class UnitSelection : MonoBehaviour, IVirtualButtonEventHandler {
             //Turn on laser so the user can select a unit
             line.SetActive(true);
             controlOption = ControlOption.Select;
-            vbbSelect.gameObject.GetComponentInChildren<Renderer>().material.color = buttonsActivatedColor;
+            vbbSelect.gameObject.GetComponentInChildren<SpriteRenderer>().color = buttonsActivatedColor;
         }
         else if (controlOption == ControlOption.Select) {
             //Select unit at end of laser, turn off laser, and set controloption to move
             if(selectedUnit != null) {
                 controlOption = ControlOption.Move;
-                vbbSelect.gameObject.GetComponentInChildren<Renderer>().material.color = buttonsStartColor;
-                vbbMove.gameObject.GetComponentInChildren<Renderer>().material.color = buttonsActivatedColor;
+                vbbSelect.gameObject.GetComponentInChildren<SpriteRenderer>().color = buttonsStartColor;
+                vbbMove.gameObject.GetComponentInChildren<SpriteRenderer>().color = buttonsActivatedColor;
             }
         }
     }
@@ -98,7 +98,7 @@ public class UnitSelection : MonoBehaviour, IVirtualButtonEventHandler {
             //Send unit to end laser
             if (currentLaserPosition != Vector3.negativeInfinity) {
                 Client.LocalClient.SetUnitFlag(currentLaserPosition, selectedUnit);
-                vbbMove.gameObject.GetComponentInChildren<Renderer>().material.color = buttonsStartColor;
+                vbbMove.gameObject.GetComponentInChildren<SpriteRenderer>().color = buttonsStartColor;
                 line.SetActive(false);
                 controlOption = ControlOption.NULL;
                 tempProjection.SetActive(false);
@@ -118,7 +118,7 @@ public class UnitSelection : MonoBehaviour, IVirtualButtonEventHandler {
 
     void SetButtonColors(Color color) {
         foreach(VirtualButtonBehaviour vbb in virtualButtonBehaviours) {
-            vbb.gameObject.GetComponentInChildren<Renderer>().material.color = color;
+            vbb.gameObject.GetComponentInChildren<SpriteRenderer>().color = color;
         }
     }
 

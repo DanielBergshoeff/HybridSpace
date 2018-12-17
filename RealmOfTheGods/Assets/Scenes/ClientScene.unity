@@ -4173,8 +4173,8 @@ MonoBehaviour:
   frontCard: {fileID: 857401812}
   tempProjectionPrefab: {fileID: 1417914996663836, guid: bdb4ee59ea419e548bfaaed082797114,
     type: 2}
-  buttonsStartColor: {r: 1, g: 0.6745283, b: 0.6745283, a: 0}
-  buttonsActivatedColor: {r: 1, g: 0.7028302, b: 0.9545212, a: 0}
+  buttonsStartColor: {r: 1, g: 0.6745283, b: 0.6745283, a: 0.69803923}
+  buttonsActivatedColor: {r: 1, g: 0.7028302, b: 0.9545212, a: 0.76862746}
   linePrefab: {fileID: 1972287571970942, guid: 59989640ece12094b9578b8deb005748, type: 2}
 --- !u!4 &1788940895
 Transform:
