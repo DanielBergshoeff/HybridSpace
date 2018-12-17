@@ -74,9 +74,6 @@ public class UnitSelection : MonoBehaviour, IVirtualButtonEventHandler {
         if(controlOption == ControlOption.Select || controlOption == ControlOption.Move) {
             ShootLaserFromTargetPosition(frontCard.transform.position, -frontCard.transform.up, laserMaxLength);
         }
-        else {
-            tempProjection.SetActive(false);
-        }
     }
 
     void OnSelect() {
@@ -104,6 +101,7 @@ public class UnitSelection : MonoBehaviour, IVirtualButtonEventHandler {
                 vbbMove.gameObject.GetComponentInChildren<Renderer>().material.color = buttonsStartColor;
                 line.SetActive(false);
                 controlOption = ControlOption.NULL;
+                tempProjection.SetActive(false);
             }
         }
     }
@@ -113,6 +111,9 @@ public class UnitSelection : MonoBehaviour, IVirtualButtonEventHandler {
         selectedUnit = null;
         line.SetActive(false);
         controlOption = ControlOption.NULL;
+        if(tempProjection != null) {
+            tempProjection.SetActive(false);
+        }
     }
 
     void SetButtonColors(Color color) {
