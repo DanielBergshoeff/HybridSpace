@@ -77,7 +77,7 @@ public class UnitSelection : MonoBehaviour, IVirtualButtonEventHandler {
     }
 
     void OnSelect() {
-        if (controlOption == ControlOption.NULL || controlOption == ControlOption.Move) {
+        if (controlOption == ControlOption.NULL) {
             //Turn on laser so the user can select a unit
             line.SetActive(true);
             controlOption = ControlOption.Select;
@@ -97,7 +97,7 @@ public class UnitSelection : MonoBehaviour, IVirtualButtonEventHandler {
         if(controlOption == ControlOption.Move) {
             //Send unit to end laser
             if (currentLaserPosition != Vector3.negativeInfinity) {
-                Client.LocalClient.SetUnitFlag(currentLaserPosition, selectedUnit);
+                Client.LocalClient.SetUnitFlag(Client.LocalClient.baseCore.transform.InverseTransformPoint(currentLaserPosition), selectedUnit);
                 vbbMove.gameObject.GetComponentInChildren<SpriteRenderer>().color = buttonsStartColor;
                 line.SetActive(false);
                 controlOption = ControlOption.NULL;
@@ -135,7 +135,7 @@ public class UnitSelection : MonoBehaviour, IVirtualButtonEventHandler {
 
         if (Physics.Raycast(ray, out raycastHit, length)) {
             if (controlOption == ControlOption.Move) {
-                //If there is no projection yet, create a projection at the point of impact
+                /*//If there is no projection yet, create a projection at the point of impact
                 if (tempProjection == null) {
                     tempProjection = Instantiate(tempProjectionPrefab, raycastHit.point, Quaternion.identity, Client.LocalClient.baseCore.transform);
                 }
@@ -145,7 +145,7 @@ public class UnitSelection : MonoBehaviour, IVirtualButtonEventHandler {
                 }
 
                 //Set the projection position to the point of impact
-                tempProjection.transform.position = raycastHit.point;
+                tempProjection.transform.position = raycastHit.point; */
             }
             else if (controlOption == ControlOption.Select) {
                 if (raycastHit.collider.gameObject.GetComponent<Unit>() != null)

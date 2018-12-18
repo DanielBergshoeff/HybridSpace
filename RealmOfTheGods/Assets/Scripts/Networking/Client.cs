@@ -115,7 +115,14 @@ public class Client : NetworkBehaviour
 
     public void SetUnitFlag(Vector3 pos, GameObject unit) {
         if(!isLocalPlayer) { return; }
-        CmdSetFlag(pos, unit);
+        int index = 0;
+        for (int i = 0; i < warriors.Count; i++) {
+            if(warriors[i] == unit) {
+                index = i;
+            }
+        }
+        flags[index].transform.localPosition = pos;
+        CmdSetFlag(pos, index);
     }
 
     protected void SetClientBaseServer(GameObject newBaseCore) {
@@ -128,12 +135,8 @@ public class Client : NetworkBehaviour
     }
 
     [Command]
-    private void CmdSetFlag(Vector3 pos, GameObject unit) {
-        for (int i = 0; i < warriors.Count; i++) {
-            if (warriors[i] == unit) {
-                flags[i].transform.position = pos;
-            }
-        }
+    private void CmdSetFlag(Vector3 pos, int index) {
+        flags[index].transform.localPosition = pos;
     }
 
     [Command]
