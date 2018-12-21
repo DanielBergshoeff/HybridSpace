@@ -143,6 +143,7 @@ public class Client : NetworkBehaviour
     private void CmdSpawnFlag(Vector3 pos) {
         GameObject flag = Instantiate(flagPrefab, baseCore.transform.position + pos, Quaternion.identity);
         flag.transform.parent = baseCore.transform;
+        flag.transform.localPosition = pos;
         if(flags == null) {
             flags = new List<GameObject>();
         }

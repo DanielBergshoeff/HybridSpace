@@ -27,7 +27,6 @@ public class UnitSelection : MonoBehaviour, IVirtualButtonEventHandler {
     private LineRenderer laserLineRenderer;
     private Vector3 currentLaserPosition;
     private GameObject selectedUnit;
-    private GameObject tempProjection;
     private List<VirtualButtonBehaviour> virtualButtonBehaviours;
 
     public void OnButtonPressed(VirtualButtonBehaviour vb) {
@@ -101,7 +100,6 @@ public class UnitSelection : MonoBehaviour, IVirtualButtonEventHandler {
                 vbbMove.gameObject.GetComponentInChildren<SpriteRenderer>().color = buttonsStartColor;
                 line.SetActive(false);
                 controlOption = ControlOption.NULL;
-                tempProjection.SetActive(false);
             }
         }
     }
@@ -111,9 +109,6 @@ public class UnitSelection : MonoBehaviour, IVirtualButtonEventHandler {
         selectedUnit = null;
         line.SetActive(false);
         controlOption = ControlOption.NULL;
-        if(tempProjection != null) {
-            tempProjection.SetActive(false);
-        }
     }
 
     void SetButtonColors(Color color) {
@@ -135,17 +130,6 @@ public class UnitSelection : MonoBehaviour, IVirtualButtonEventHandler {
 
         if (Physics.Raycast(ray, out raycastHit, length)) {
             if (controlOption == ControlOption.Move) {
-                /*//If there is no projection yet, create a projection at the point of impact
-                if (tempProjection == null) {
-                    tempProjection = Instantiate(tempProjectionPrefab, raycastHit.point, Quaternion.identity, Client.LocalClient.baseCore.transform);
-                }
-                //If there is a projection, but its not active, set to active
-                else if (tempProjection.activeSelf == false) {
-                    tempProjection.SetActive(true);
-                }
-
-                //Set the projection position to the point of impact
-                tempProjection.transform.position = raycastHit.point; */
             }
             else if (controlOption == ControlOption.Select) {
                 if (raycastHit.collider.gameObject.GetComponent<Unit>() != null)
@@ -154,11 +138,6 @@ public class UnitSelection : MonoBehaviour, IVirtualButtonEventHandler {
 
             currentLaserPosition = raycastHit.point;
             endPosition = raycastHit.point;
-        }
-        else {
-            if (tempProjection != null) {
-                tempProjection.SetActive(false);
-            }
         }
 
         laserLineRenderer.SetPosition(0, targetPosition);

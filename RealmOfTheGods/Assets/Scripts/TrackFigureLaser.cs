@@ -178,7 +178,7 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
         base.Update();
         if(completed)
         {
-                ShootLaserFromTargetPosition(currentCard.transform.position, -currentCard.transform.up, laserMaxLength);
+            ShootLaserFromTargetPosition(currentCard.transform.position, -currentCard.transform.up, laserMaxLength);
         }
 	}
 
