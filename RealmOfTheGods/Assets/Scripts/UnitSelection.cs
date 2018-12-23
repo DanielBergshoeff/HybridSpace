@@ -6,17 +6,15 @@ using Vuforia;
 public class UnitSelection : MonoBehaviour, IVirtualButtonEventHandler {
     public enum ControlOption {
         NULL,
-        Select,
         Move
     }
-
-    public VirtualButtonBehaviour vbbSelect;
+    
     public VirtualButtonBehaviour vbbMove;
     public VirtualButtonBehaviour vbbCancel;
-    public ControlOption controlOption;
     public float laserWidth = 0.1f;
     public GameObject frontCard;
     public GameObject tempProjectionPrefab;
+    public TeamType team;
 
     public Color buttonsStartColor;
     public Color buttonsActivatedColor;
@@ -26,14 +24,13 @@ public class UnitSelection : MonoBehaviour, IVirtualButtonEventHandler {
     private GameObject line;
     private LineRenderer laserLineRenderer;
     private Vector3 currentLaserPosition;
-    private GameObject selectedUnit;
+
+    private ControlOption controlOption;
+
     private List<VirtualButtonBehaviour> virtualButtonBehaviours;
 
     public void OnButtonPressed(VirtualButtonBehaviour vb) {
-        if (vb == vbbSelect) {
-            OnSelect();
-        }
-        else if (vb == vbbMove) {
+        if (vb == vbbMove) {
             OnMove();
         }
         else if (vb == vbbCancel) {
@@ -48,12 +45,9 @@ public class UnitSelection : MonoBehaviour, IVirtualButtonEventHandler {
     // Use this for initialization
     void Start() {
         virtualButtonBehaviours = new List<VirtualButtonBehaviour>();
-
-        vbbSelect.RegisterEventHandler(this);
         vbbMove.RegisterEventHandler(this);
         vbbCancel.RegisterEventHandler(this);
-
-        virtualButtonBehaviours.Add(vbbSelect);
+        
         virtualButtonBehaviours.Add(vbbMove);
         virtualButtonBehaviours.Add(vbbCancel);
 
@@ -70,43 +64,25 @@ public class UnitSelection : MonoBehaviour, IVirtualButtonEventHandler {
 
     // Update is called once per frame
     void Update() {
-        if(controlOption == ControlOption.Select || controlOption == ControlOption.Move) {
+        if(controlOption == ControlOption.Move) {
             ShootLaserFromTargetPosition(frontCard.transform.position, -frontCard.transform.up, laserMaxLength);
         }
     }
 
-    void OnSelect() {
+    void OnMove() {
         if (controlOption == ControlOption.NULL) {
             //Turn on laser so the user can select a unit
             line.SetActive(true);
-            controlOption = ControlOption.Select;
-            vbbSelect.gameObject.GetComponentInChildren<SpriteRenderer>().color = buttonsActivatedColor;
+            controlOption = ControlOption.Move;
+            vbbMove.gameObject.GetComponentInChildren<SpriteRenderer>().color = buttonsActivatedColor;
         }
-        else if (controlOption == ControlOption.Select) {
-            //Select unit at end of laser, turn off laser, and set controloption to move
-            if(selectedUnit != null) {
-                controlOption = ControlOption.Move;
-                vbbSelect.gameObject.GetComponentInChildren<SpriteRenderer>().color = buttonsStartColor;
-                vbbMove.gameObject.GetComponentInChildren<SpriteRenderer>().color = buttonsActivatedColor;
-            }
-        }
-    }
-
-    void OnMove() {
-        if(controlOption == ControlOption.Move) {
-            //Send unit to end laser
-            if (currentLaserPosition != Vector3.negativeInfinity) {
-                Client.LocalClient.SetUnitFlag(Client.LocalClient.baseCore.transform.InverseTransformPoint(currentLaserPosition), selectedUnit);
-                vbbMove.gameObject.GetComponentInChildren<SpriteRenderer>().color = buttonsStartColor;
-                line.SetActive(false);
-                controlOption = ControlOption.NULL;
-            }
+        else {
+            controlOption = ControlOption.NULL;
         }
     }
 
     void OnCancel() {
         SetButtonColors(buttonsStartColor);
-        selectedUnit = null;
         line.SetActive(false);
         controlOption = ControlOption.NULL;
     }
@@ -126,17 +102,9 @@ public class UnitSelection : MonoBehaviour, IVirtualButtonEventHandler {
 
         currentLaserPosition = Vector3.negativeInfinity;
 
-        selectedUnit = null;
-
         if (Physics.Raycast(ray, out raycastHit, length)) {
-            if (controlOption == ControlOption.Move) {
-            }
-            else if (controlOption == ControlOption.Select) {
-                if (raycastHit.collider.gameObject.GetComponent<Unit>() != null)
-                    selectedUnit = raycastHit.collider.gameObject.transform.parent.gameObject;
-            }
-
             currentLaserPosition = raycastHit.point;
+            Client.LocalClient.SetUnitFlag(Client.LocalClient.baseCore.transform.InverseTransformPoint(currentLaserPosition), team);
             endPosition = raycastHit.point;
         }
 

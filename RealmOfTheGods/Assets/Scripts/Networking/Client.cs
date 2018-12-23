@@ -16,8 +16,10 @@ public enum UnitType {
 
 public enum TeamType {
     Null,
-    Magic,
-    Might
+    Yellow,
+    Blue,
+    Red,
+    Green
 }
 
 public class MyGameObjectEvent : UnityEvent<GameObject> {
@@ -39,6 +41,7 @@ public class Client : NetworkBehaviour
     
     [SerializeField] private GameObject basePrefab;
     [SerializeField] private GameObject flagPrefab;
+    [SerializeField] private GameObject unitPrefab;
 
     [SerializeField] private TypeToPrefab[] typeToPrefabs;
 
@@ -48,6 +51,8 @@ public class Client : NetworkBehaviour
 
     private List<GameObject> warriors;
     private List<GameObject> flags;
+    
+    public TeamType team;
 
     public static Client LocalClient {
         get;
@@ -59,7 +64,7 @@ public class Client : NetworkBehaviour
             if(warriors != null) {
                 for (int i = 0; i < warriors.Count; i++) {
                     if(warriors[i].transform.position != flags[i].transform.position) {
-                        warriors[i].transform.position = Vector3.MoveTowards(warriors[i].transform.position, flags[i].transform.position, warriors[i].GetComponentInChildren<Unit>().speed * Time.deltaTime);
+                        warriors[i].transform.position = Vector3.MoveTowards(warriors[i].transform.position, flags[i].transform.position, warriors[i].GetComponentInChildren<Humanoid>().speed * Time.deltaTime);
                     }
 
                     RpcSyncGameObject(i, warriors[i].transform.localPosition, warriors[i].transform.localRotation);
@@ -113,16 +118,14 @@ public class Client : NetworkBehaviour
         CmdSpawnFlag(pos);
     }
 
-    public void SetUnitFlag(Vector3 pos, GameObject unit) {
+    public void SpawnUnitClient(TeamType team) {
+        this.team = team;
+        CmdSpawnTeamUnit(team);
+    }
+
+    public void SetUnitFlag(Vector3 pos, TeamType team) {
         if(!isLocalPlayer) { return; }
-        int index = 0;
-        for (int i = 0; i < warriors.Count; i++) {
-            if(warriors[i] == unit) {
-                index = i;
-            }
-        }
-        flags[index].transform.localPosition = pos;
-        CmdSetFlag(pos, index);
+        CmdSetFlag(pos, team);
     }
 
     protected void SetClientBaseServer(GameObject newBaseCore) {
@@ -135,7 +138,13 @@ public class Client : NetworkBehaviour
     }
 
     [Command]
-    private void CmdSetFlag(Vector3 pos, int index) {
+    private void CmdSetFlag(Vector3 pos, TeamType team) {
+        int index = 0;
+        for (int i = 0; i < flags.Count; i++) {
+            if(warriors[i].GetComponentInChildren<Humanoid>().team == team) {
+                index = i;
+            }
+        }
         flags[index].transform.localPosition = pos;
     }
 
@@ -185,6 +194,11 @@ public class Client : NetworkBehaviour
             }
             warriors.Add(go);
         }
+    }
+
+    [Command]
+    private void CmdSpawnTeamUnit(TeamType team) {
+        GameObject unit = Instantiate(unitPrefab, Vector3.zero, Quaternion.identity);
     }
 
     [ClientRpc]

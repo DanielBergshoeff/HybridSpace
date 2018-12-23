@@ -87,7 +87,8 @@ MonoBehaviour:
   clientConnectionBase: {fileID: 11400000, guid: e67f12f6c78563c4ab5c9d580d710f6c,
     type: 2}
   basePrefab: {fileID: 1108970880345226, guid: 5881709642ccc384b931154ff00fd316, type: 2}
-  flagPrefab: {fileID: 1417914996663836, guid: 6603593dcef509f44955423381f10691, type: 2}
+  flagPrefab: {fileID: 1595435037669758, guid: 6603593dcef509f44955423381f10691, type: 2}
+  unitPrefab: {fileID: 1293321475843992, guid: b06bbf2114758cf4381b8b13370c279b, type: 2}
   typeToPrefabs:
   - type: 1
     gameObject: {fileID: 1091126547288754, guid: 4932156bcb3e49c44bec535410e1120d,
@@ -105,3 +106,4 @@ MonoBehaviour:
     gameObject: {fileID: 1345733413867698, guid: 5fd28ff4995a4b14b9fa05a6c0d48034,
       type: 2}
   baseCore: {fileID: 0}
+  team: 0

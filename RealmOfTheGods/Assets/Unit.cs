@@ -49,12 +49,12 @@ public class Unit : NetworkBehaviour {
     // Use this for initialization
     void Start () {
         Renderer[] renderers = meshes.GetComponentsInChildren<Renderer>();
-        if (team == TeamType.Magic) {
+        if (team == TeamType.Green) {
             foreach (Renderer r in renderers) {
                 r.material.color = Color.green;
             }
         }
-        else if(team == TeamType.Might) {
+        else if(team == TeamType.Yellow) {
             foreach (Renderer r in renderers) {
                 r.material.color = Color.yellow;
             }
