@@ -22,6 +22,12 @@ public enum TeamType {
     Green
 }
 
+[System.Serializable]
+public class TeamToGameObject {
+    public TeamType team;
+    public GameObject prefab;
+}
+
 public class MyGameObjectEvent : UnityEvent<GameObject> {
 }
 
@@ -44,6 +50,10 @@ public class Client : NetworkBehaviour
     [SerializeField] private GameObject unitPrefab;
 
     [SerializeField] private TypeToPrefab[] typeToPrefabs;
+
+    [SerializeField] private TeamToGameObject[] teamToGameObjects;
+
+    private Playground playground;
 
     public static MyGameObjectEvent OnBasePlaced;
 
@@ -130,6 +140,7 @@ public class Client : NetworkBehaviour
 
     protected void SetClientBaseServer(GameObject newBaseCore) {
         baseCore = newBaseCore;
+        playground = baseCore.GetComponent<Playground>();
         RpcSyncBaseOnce(baseCore.transform.rotation, baseCore);
     }
 
@@ -162,6 +173,7 @@ public class Client : NetworkBehaviour
     [Command]
     private void CmdSpawnBase() {
         baseCore = Instantiate(basePrefab, Vector3.zero, Quaternion.identity);
+        playground = baseCore.GetComponent<Playground>();
         NetworkServer.Spawn(baseCore);
         foreach (ClientConnection clientConnection in clientConnection.clients) {
             clientConnection.client.SetClientBaseServer(baseCore);
@@ -198,7 +210,29 @@ public class Client : NetworkBehaviour
 
     [Command]
     private void CmdSpawnTeamUnit(TeamType team) {
-        GameObject unit = Instantiate(unitPrefab, Vector3.zero, Quaternion.identity);
+        for (int i = 0; i < teamToGameObjects.Length; i++) {
+            if(teamToGameObjects[i].team == team) {
+                GameObject unit = Instantiate(teamToGameObjects[i].prefab, Vector3.zero, Quaternion.identity);
+                unit.transform.parent = baseCore.transform;
+                for (int j = 0; j < playground.teamToSpawnPoint.Length; j++) {
+                    if(playground.teamToSpawnPoint[j].team == team) {
+                        unit.transform.position = playground.teamToSpawnPoint[j].prefab.transform.position;
+                        break;
+                    }
+                }
+                
+                
+                NetworkServer.Spawn(unit);
+                RpcSyncUnitOnce(unit.transform.localPosition, unit.transform.localRotation, unit, baseCore);
+
+                if (warriors == null) {
+                    warriors = new List<GameObject>();
+                }
+                warriors.Add(unit);
+
+                break;
+            }
+        }
     }
 
     [ClientRpc]

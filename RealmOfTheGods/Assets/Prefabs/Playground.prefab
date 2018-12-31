@@ -54,8 +54,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4712991556133638}
   - component: {fileID: 114229293704987880}
+  - component: {fileID: 114457931498816106}
   m_Layer: 0
-  m_Name: PlayGround
+  m_Name: Playground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1804,6 +1805,26 @@ MonoBehaviour:
     i15: 22
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
+--- !u!114 &114457931498816106
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1108970880345226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96c38b72462feec4b9df3ea53605cd92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teamToSpawnPoint:
+  - team: 1
+    prefab: {fileID: 1063705804391656}
+  - team: 2
+    prefab: {fileID: 1452202741432606}
+  - team: 3
+    prefab: {fileID: 1965544709958658}
+  - team: 4
+    prefab: {fileID: 1932416488553872}
 --- !u!136 &136144582453924936
 CapsuleCollider:
   m_ObjectHideFlags: 1

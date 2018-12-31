@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Playground : MonoBehaviour {
 
-    public List<GameObject> spawn;
+    public TeamToGameObject[] teamToSpawnPoint;
+    public int amtOfPlayers = 0;
 
 	// Use this for initialization
 	void Start () {

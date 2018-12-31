@@ -105,5 +105,14 @@ MonoBehaviour:
   - type: 5
     gameObject: {fileID: 1345733413867698, guid: 5fd28ff4995a4b14b9fa05a6c0d48034,
       type: 2}
+  teamToGameObjects:
+  - team: 1
+    prefab: {fileID: 1477280795603718, guid: 06c83e5065c66e141ac9fb24f7baf092, type: 2}
+  - team: 2
+    prefab: {fileID: 1684519777110682, guid: e98a98fe0651d2141a5eab3489149fe9, type: 2}
+  - team: 3
+    prefab: {fileID: 1965647719957118, guid: 8969e12da3c2a3e43b39a669e21e7c1d, type: 2}
+  - team: 4
+    prefab: {fileID: 1919852944184332, guid: c7df185f6c5195a4ca5624b768ae1a80, type: 2}
   baseCore: {fileID: 0}
   team: 0
