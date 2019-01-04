@@ -37,6 +37,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4761227552398272}
+  - component: {fileID: 114861203379546126}
   m_Layer: 0
   m_Name: FlagYellow
   m_TagString: Untagged
@@ -211,3 +212,35 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114861203379546126
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1595435037669758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 102
+    i1: 3
+    i2: 89
+    i3: 61
+    i4: 206
+    i5: 245
+    i6: 9
+    i7: 244
+    i8: 73
+    i9: 85
+    i10: 66
+    i11: 51
+    i12: 129
+    i13: 241
+    i14: 6
+    i15: 145
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0

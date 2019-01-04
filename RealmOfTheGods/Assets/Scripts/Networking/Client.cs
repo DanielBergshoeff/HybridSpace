@@ -14,6 +14,7 @@ public enum UnitType {
     MightGroundUnitFast
 }
 
+[Serializable]
 public enum TeamType {
     Null,
     Yellow,
@@ -131,6 +132,7 @@ public class Client : NetworkBehaviour
     public void SpawnUnitClient(TeamType team) {
         this.team = team;
         CmdSpawnTeamUnit(team);
+        CmdSpawnTeamFlag(team);
     }
 
     public void SetUnitFlag(Vector3 pos, TeamType team) {
@@ -157,6 +159,31 @@ public class Client : NetworkBehaviour
             }
         }
         flags[index].transform.localPosition = pos;
+    }
+
+    [Command]
+    private void CmdSpawnTeamFlag(TeamType team) {
+        Debug.Log("Start team flag thing");
+        for (int i = 0; i < teamToGameObjects.Length; i++) {
+            if (teamToGameObjects[i].team == team) {
+                GameObject flag = Instantiate(flagPrefab, Vector3.zero, Quaternion.identity);
+                flag.transform.parent = baseCore.transform;
+                for (int j = 0; j < playground.teamToSpawnPoint.Length; j++) {
+                    if (playground.teamToSpawnPoint[j].team == team) {
+                        flag.transform.position = playground.teamToSpawnPoint[j].prefab.transform.position;
+                        break;
+                    }
+                }
+
+                if (flags == null) {
+                    flags = new List<GameObject>();
+                }
+                flags.Add(flag);
+                Debug.Log("Team flag spawned");
+
+                break;
+            }
+        }
     }
 
     [Command]
@@ -220,8 +247,7 @@ public class Client : NetworkBehaviour
                         break;
                     }
                 }
-                
-                
+
                 NetworkServer.Spawn(unit);
                 RpcSyncUnitOnce(unit.transform.localPosition, unit.transform.localRotation, unit, baseCore);
 
@@ -229,6 +255,7 @@ public class Client : NetworkBehaviour
                     warriors = new List<GameObject>();
                 }
                 warriors.Add(unit);
+                Debug.Log("Team unit spawned");
 
                 break;
             }

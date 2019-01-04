@@ -28,6 +28,22 @@ public class GameManager : MonoBehaviour {
         go.transform.parent = baseParent.transform;
         go.transform.localRotation = Quaternion.identity;
         go.transform.localPosition = Vector3.zero;
-        canvas.SetActive(false);
+        //canvas.SetActive(false);
+    }
+
+    public void SpawnUnitRed() {
+        Client.LocalClient.SpawnUnitClient(TeamType.Red);
+    }
+
+    public void SpawnUnitBlue() {
+        Client.LocalClient.SpawnUnitClient(TeamType.Blue);
+    }
+
+    public void SpawnUnitGreen() {
+        Client.LocalClient.SpawnUnitClient(TeamType.Green);
+    }
+
+    public void SpawnUnitYellow() {
+        Client.LocalClient.SpawnUnitClient(TeamType.Yellow);
     }
 }

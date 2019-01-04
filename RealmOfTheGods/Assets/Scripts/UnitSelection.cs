@@ -67,6 +67,9 @@ public class UnitSelection : MonoBehaviour, IVirtualButtonEventHandler {
         if(controlOption == ControlOption.Move) {
             ShootLaserFromTargetPosition(frontCard.transform.position, -frontCard.transform.up, laserMaxLength);
         }
+        if(Input.GetKeyDown(KeyCode.L)) {
+            OnMove();
+        }
     }
 
     void OnMove() {
@@ -77,7 +80,7 @@ public class UnitSelection : MonoBehaviour, IVirtualButtonEventHandler {
             vbbMove.gameObject.GetComponentInChildren<SpriteRenderer>().color = buttonsActivatedColor;
         }
         else {
-            controlOption = ControlOption.NULL;
+            OnCancel();
         }
     }
 
@@ -104,7 +107,7 @@ public class UnitSelection : MonoBehaviour, IVirtualButtonEventHandler {
 
         if (Physics.Raycast(ray, out raycastHit, length)) {
             currentLaserPosition = raycastHit.point;
-            Client.LocalClient.SetUnitFlag(Client.LocalClient.baseCore.transform.InverseTransformPoint(currentLaserPosition), team);
+            Client.LocalClient.SetUnitFlag(Client.LocalClient.baseCore.transform.InverseTransformPoint(currentLaserPosition), Client.LocalClient.team);
             endPosition = raycastHit.point;
         }
 
