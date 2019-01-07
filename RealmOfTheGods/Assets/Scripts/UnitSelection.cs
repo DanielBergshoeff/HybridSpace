@@ -24,7 +24,7 @@ public class UnitSelection : MonoBehaviour, IVirtualButtonEventHandler {
     private GameObject line;
     private LineRenderer laserLineRenderer;
     private Vector3 currentLaserPosition;
-
+    private int layerMask;
     private ControlOption controlOption;
 
     private List<VirtualButtonBehaviour> virtualButtonBehaviours;
@@ -52,6 +52,8 @@ public class UnitSelection : MonoBehaviour, IVirtualButtonEventHandler {
         virtualButtonBehaviours.Add(vbbCancel);
 
         SetButtonColors(buttonsStartColor);
+
+        layerMask = LayerMask.GetMask("LaserTarget");
 
         line = Instantiate(linePrefab, Vector3.zero, Quaternion.identity);
         line.SetActive(false);
@@ -105,7 +107,7 @@ public class UnitSelection : MonoBehaviour, IVirtualButtonEventHandler {
 
         currentLaserPosition = Vector3.negativeInfinity;
 
-        if (Physics.Raycast(ray, out raycastHit, length)) {
+        if (Physics.Raycast(ray, out raycastHit, length, layerMask)) {
             currentLaserPosition = raycastHit.point;
             Client.LocalClient.SetUnitFlag(Client.LocalClient.baseCore.transform.InverseTransformPoint(currentLaserPosition), Client.LocalClient.team);
             endPosition = raycastHit.point;
