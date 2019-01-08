@@ -24,6 +24,7 @@ public class Egg : MonoBehaviour {
         if (Client.LocalClient != null) {
             if (!Client.LocalClient.isServer) { return; }
         }
+
         if (other.gameObject.tag == "Humanoid") {
             //Set humanoid as new owner and parent
             if (other.gameObject.GetComponent<Humanoid>() != null) {
@@ -50,7 +51,7 @@ public class Egg : MonoBehaviour {
 
     public void SetSpawn() {
         owner = null;
-        transform.parent = Client.LocalClient.baseCore.transform;
+        transform.parent = Client.baseCore.transform;
         transform.localPosition = spawnPositions[Random.Range(0, spawnPositions.Count)];
     }
 }

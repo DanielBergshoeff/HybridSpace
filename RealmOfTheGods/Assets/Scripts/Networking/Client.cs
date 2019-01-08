@@ -54,14 +54,14 @@ public class Client : NetworkBehaviour
 
     [SerializeField] private TeamToGameObject[] teamToGameObjects;
 
-    private Playground playground;
+    private static Playground playground;
 
     public static MyGameObjectEvent OnBasePlaced;
 
-    public GameObject baseCore;
+    public static GameObject baseCore;
 
-    private List<GameObject> warriors;
-    private List<GameObject> flags;
+    private static List<GameObject> warriors;
+    private static List<GameObject> flags;
     
     public TeamType team;
 
@@ -203,9 +203,9 @@ public class Client : NetworkBehaviour
         baseCore = Instantiate(basePrefab, Vector3.zero, Quaternion.identity);
         playground = baseCore.GetComponent<Playground>();
         NetworkServer.Spawn(baseCore);
-        foreach (ClientConnection clientConnection in clientConnection.clients) {
+        /*foreach (ClientConnection clientConnection in clientConnection.clients) {
             clientConnection.client.SetClientBaseServer(baseCore);
-        }
+        }*/
     }
 
     [ClientRpc]

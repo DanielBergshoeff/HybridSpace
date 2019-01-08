@@ -115,7 +115,7 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
         {
             //If there is no projection yet, create a projection at the point of impact
             if(tempProjection == null) {
-                tempProjection = Instantiate(tempProjectionPrefab, raycastHit.point, Quaternion.identity, Client.LocalClient.baseCore.transform);
+                tempProjection = Instantiate(tempProjectionPrefab, raycastHit.point, Quaternion.identity, Client.baseCore.transform);
             }
             //If there is a projection, but its not active, set to active
             else if(tempProjection.activeSelf == false) {
@@ -152,7 +152,7 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
 
         if(vb.gameObject == vbbAction) {
             if (currentLaserPosition != Vector3.negativeInfinity) {
-                Client.LocalClient.SpawnUnitClient(Client.LocalClient.baseCore.transform.InverseTransformPoint(currentLaserPosition), typeToSpawn);
+                Client.LocalClient.SpawnUnitClient(Client.baseCore.transform.InverseTransformPoint(currentLaserPosition), typeToSpawn);
                 line.SetActive(false);
                 completed = false;
                 ResetButtonColours();

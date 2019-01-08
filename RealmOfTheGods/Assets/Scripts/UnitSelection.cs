@@ -109,7 +109,7 @@ public class UnitSelection : MonoBehaviour, IVirtualButtonEventHandler {
 
         if (Physics.Raycast(ray, out raycastHit, length, layerMask)) {
             currentLaserPosition = raycastHit.point;
-            Client.LocalClient.SetUnitFlag(Client.LocalClient.baseCore.transform.InverseTransformPoint(currentLaserPosition), Client.LocalClient.team);
+            Client.LocalClient.SetUnitFlag(Client.baseCore.transform.InverseTransformPoint(currentLaserPosition), Client.LocalClient.team);
             endPosition = raycastHit.point;
         }
 
