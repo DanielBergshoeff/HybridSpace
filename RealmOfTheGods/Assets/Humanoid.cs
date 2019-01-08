@@ -35,7 +35,7 @@ public class Humanoid : MonoBehaviour {
 
         if (stunTimer <= 0.0f) {
             if (other.tag == "Ravine") {
-                Client.LocalClient.RespawnUnitServer(team);
+                Client.RespawnUnitServer(team);
                 stunTimer = stunDuration;
 
                 if(GetComponentInChildren<Egg>() != null) {

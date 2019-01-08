@@ -60,6 +60,7 @@ public class Client : NetworkBehaviour
 
     public static GameObject baseCore;
 
+    private static GameObject egg;
     private static List<GameObject> warriors;
     private static List<GameObject> flags;
     
@@ -81,6 +82,10 @@ public class Client : NetworkBehaviour
                     }
                     RpcSyncGameObject(i, warriors[i].transform.localPosition, warriors[i].transform.localRotation);
                 }
+            }
+
+            if(egg != null) {
+                RpcSyncEgg(Client.baseCore.transform.InverseTransformPoint(egg.transform.position), egg.transform.rotation);
             }
         }
     }
@@ -144,6 +149,7 @@ public class Client : NetworkBehaviour
     protected void SetClientBaseServer(GameObject newBaseCore) {
         baseCore = newBaseCore;
         playground = baseCore.GetComponent<Playground>();
+        egg = baseCore.GetComponentInChildren<Egg>().gameObject;
         RpcSyncBaseOnce(baseCore.transform.rotation, baseCore);
     }
 
@@ -203,15 +209,18 @@ public class Client : NetworkBehaviour
         baseCore = Instantiate(basePrefab, Vector3.zero, Quaternion.identity);
         playground = baseCore.GetComponent<Playground>();
         NetworkServer.Spawn(baseCore);
-        /*foreach (ClientConnection clientConnection in clientConnection.clients) {
+
+        foreach (ClientConnection clientConnection in clientConnection.clients) {
             clientConnection.client.SetClientBaseServer(baseCore);
-        }*/
+        }
     }
 
     [ClientRpc]
     private void RpcSyncBaseOnce(Quaternion rot, GameObject go) {
         if (!isLocalPlayer) { return; }
         baseCore = go;
+        playground = baseCore.GetComponent<Playground>();
+        egg = baseCore.GetComponentInChildren<Egg>().gameObject;
         OnBasePlaced.Invoke(go);
     }
 
@@ -263,7 +272,7 @@ public class Client : NetworkBehaviour
         }
     }
 
-    public void RespawnUnitServer(TeamType team) {
+    public static void RespawnUnitServer(TeamType team) {
         for (int i = 0; i < warriors.Count; i++) {
             if(warriors[i].GetComponentInChildren<Humanoid>().team == team) {
                 for (int j = 0; j < playground.teamToSpawnPoint.Length; j++) {
@@ -271,7 +280,6 @@ public class Client : NetworkBehaviour
                         warriors[i].transform.position = playground.teamToSpawnPoint[j].prefab.transform.position;
                     }
                 }
-                RpcSyncUnitOnce(warriors[i].transform.localPosition, warriors[i].transform.localRotation, warriors[i], baseCore);
             }
         }
     }
@@ -295,6 +303,13 @@ public class Client : NetworkBehaviour
         if(!isLocalPlayer) { return; }
         warriors[index].transform.localPosition = localPos;
         warriors[index].transform.localRotation = localRotation;
+    }
+
+    [ClientRpc]
+    private void RpcSyncEgg(Vector3 localPos, Quaternion rotation) {
+        if(!isLocalPlayer) { return; }
+        egg.transform.position = baseCore.transform.position + localPos;
+        egg.transform.rotation = rotation;
     }
 
     // Called when Client loses connection, Clientside
