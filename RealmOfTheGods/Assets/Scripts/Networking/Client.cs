@@ -75,7 +75,9 @@ public class Client : NetworkBehaviour
             if(warriors != null) {
                 for (int i = 0; i < warriors.Count; i++) {
                     if(warriors[i].transform.position != flags[i].transform.position) {
-                        warriors[i].transform.position = Vector3.MoveTowards(warriors[i].transform.position, flags[i].transform.position, warriors[i].GetComponentInChildren<Humanoid>().speed * Time.deltaTime);
+                        if (warriors[i].GetComponentInChildren<Humanoid>().stunTimer <= 0.0f) {
+                            warriors[i].transform.position = Vector3.MoveTowards(warriors[i].transform.position, flags[i].transform.position, warriors[i].GetComponentInChildren<Humanoid>().speed * Time.deltaTime);
+                        }
                     }
 
                     RpcSyncGameObject(i, warriors[i].transform.localPosition, warriors[i].transform.localRotation);

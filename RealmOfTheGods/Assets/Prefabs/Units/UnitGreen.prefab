@@ -22,9 +22,11 @@ GameObject:
   - component: {fileID: 33958725393964570}
   - component: {fileID: 23791142826759628}
   - component: {fileID: 114830287004780322}
+  - component: {fileID: 65719958855872090}
+  - component: {fileID: 54430696152363184}
   m_Layer: 0
   m_Name: Cylinder (4)
-  m_TagString: Untagged
+  m_TagString: Humanoid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -40,7 +42,7 @@ GameObject:
   - component: {fileID: 114009777175719252}
   m_Layer: 0
   m_Name: UnitGreen
-  m_TagString: Untagged
+  m_TagString: Humanoid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -114,6 +116,33 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1355454590994376}
   m_Mesh: {fileID: 4300000, guid: 9e6f8a044f174f14ab2995b55ab826bc, type: 3}
+--- !u!54 &54430696152363184
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1355454590994376}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &65719958855872090
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1355454590994376}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.011991676, y: 0.019486858, z: 0.09535891}
+  m_Center: {x: -4.656613e-10, y: -0.0066491775, z: -0.005595885}
 --- !u!114 &114009777175719252
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -160,3 +189,6 @@ MonoBehaviour:
   speed: 0.3
   stealRange: 0.3
   team: 4
+  Egg: {fileID: 0}
+  stunTimer: 0
+  stunDuration: 2
