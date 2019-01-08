@@ -79,7 +79,6 @@ public class Client : NetworkBehaviour
                             warriors[i].transform.position = Vector3.MoveTowards(warriors[i].transform.position, flags[i].transform.position, warriors[i].GetComponentInChildren<Humanoid>().speed * Time.deltaTime);
                         }
                     }
-
                     RpcSyncGameObject(i, warriors[i].transform.localPosition, warriors[i].transform.localRotation);
                 }
             }
@@ -260,6 +259,19 @@ public class Client : NetworkBehaviour
                 Debug.Log("Team unit spawned");
 
                 break;
+            }
+        }
+    }
+
+    public void RespawnUnitServer(TeamType team) {
+        for (int i = 0; i < warriors.Count; i++) {
+            if(warriors[i].GetComponentInChildren<Humanoid>().team == team) {
+                for (int j = 0; j < playground.teamToSpawnPoint.Length; j++) {
+                    if(playground.teamToSpawnPoint[j].team == team) {
+                        warriors[i].transform.position = playground.teamToSpawnPoint[j].prefab.transform.position;
+                    }
+                }
+                RpcSyncUnitOnce(warriors[i].transform.localPosition, warriors[i].transform.localRotation, warriors[i], baseCore);
             }
         }
     }

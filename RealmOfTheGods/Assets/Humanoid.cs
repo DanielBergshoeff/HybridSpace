@@ -27,32 +27,23 @@ public class Humanoid : MonoBehaviour {
         }
     }
 
-    /*private void OnTriggerEnter(Collider other) {
+    private void OnTriggerEnter(Collider other) {
         Debug.Log("Triggered!");
         if (Client.LocalClient != null) {
             if (!Client.LocalClient.isServer) { return; }
         }
 
         if (stunTimer <= 0.0f) {
-            if (other.tag == "Egg") {
-                if (other.transform.parent.tag != "Humanoid") {
-                    TakeEgg(other.gameObject);
-                }
-                else {
-                    TakeEgg(other.transform.parent.gameObject.GetComponent<Humanoid>().Egg);
-                    other.transform.parent.gameObject.GetComponent<Humanoid>().Egg = null;
-                    other.transform.parent.gameObject.GetComponent<Humanoid>().stunTimer = stunDuration;
-                }
-            }
-            else if (other.tag == "Humanoid") {
-                if (other.gameObject.GetComponent<Humanoid>().Egg != null) {
-                    TakeEgg(other.gameObject.GetComponent<Humanoid>().Egg);
-                    other.gameObject.GetComponent<Humanoid>().Egg = null;
-                    other.gameObject.GetComponent<Humanoid>().stunTimer = stunDuration;
+            if (other.tag == "Ravine") {
+                Client.LocalClient.RespawnUnitServer(team);
+                stunTimer = stunDuration;
+
+                if(GetComponentInChildren<Egg>() != null) {
+                    GetComponentInChildren<Egg>().SetSpawn();
                 }
             }
         }
-    }*/
+    }
 
     private void TakeEgg(GameObject egg) {
         Egg = egg;
