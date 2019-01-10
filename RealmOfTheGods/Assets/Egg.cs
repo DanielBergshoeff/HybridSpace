@@ -7,7 +7,7 @@ public class Egg : MonoBehaviour {
     public Humanoid owner = null;
 
     private static List<Vector3> spawnPositions = new List<Vector3>() {
-        new Vector3(0, 0, 0)
+        new Vector3(0, 0.175f, 0)
     };
 
 	// Use this for initialization
@@ -17,7 +17,7 @@ public class Egg : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+
 	}
 
     private void OnTriggerEnter(Collider other) {

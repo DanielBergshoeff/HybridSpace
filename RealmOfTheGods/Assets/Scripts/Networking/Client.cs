@@ -85,7 +85,7 @@ public class Client : NetworkBehaviour
             }
 
             if(egg != null) {
-                RpcSyncEgg(Client.baseCore.transform.InverseTransformPoint(egg.transform.position), egg.transform.rotation);
+                RpcSyncEgg(Client.baseCore.transform.InverseTransformPoint(egg.transform.position));
             }
         }
     }
@@ -306,10 +306,9 @@ public class Client : NetworkBehaviour
     }
 
     [ClientRpc]
-    private void RpcSyncEgg(Vector3 localPos, Quaternion rotation) {
+    private void RpcSyncEgg(Vector3 localPos) {
         if(!isLocalPlayer) { return; }
         egg.transform.position = baseCore.transform.position + localPos;
-        egg.transform.rotation = rotation;
     }
 
     // Called when Client loses connection, Clientside
