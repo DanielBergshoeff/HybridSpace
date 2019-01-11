@@ -152,7 +152,7 @@ public class TrackFigureLaser : AbstractTrackFigure, ITrackableEventHandler{
 
         if(vb.gameObject == vbbAction) {
             if (currentLaserPosition != Vector3.negativeInfinity) {
-                Client.LocalClient.SpawnUnitClient(Client.baseCore.transform.InverseTransformPoint(currentLaserPosition), typeToSpawn);
+                //Client.LocalClient.SpawnUnitClient(Client.baseCore.transform.InverseTransformPoint(currentLaserPosition), typeToSpawn);
                 line.SetActive(false);
                 completed = false;
                 ResetButtonColours();

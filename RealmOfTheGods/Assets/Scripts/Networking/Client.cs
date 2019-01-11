@@ -85,7 +85,7 @@ public class Client : NetworkBehaviour
             }
 
             if(egg != null) {
-                RpcSyncEgg(Client.baseCore.transform.InverseTransformPoint(egg.transform.position));
+                RpcSyncEgg(Client.baseCore.transform.InverseTransformPoint(egg.transform.position), egg.transform.rotation);
             }
         }
     }
@@ -129,11 +129,12 @@ public class Client : NetworkBehaviour
         clientConnection = clientConnectionBase.Get(conn, this);
     }
 
+    /*
     public void SpawnUnitClient(Vector3 pos, UnitType type) {
         if (!isLocalPlayer) { return; }
         CmdSpawnUnit(pos, type);
         CmdSpawnFlag(pos);
-    }
+    }*/
 
     public void SpawnUnitClient(TeamType team) {
         this.team = team;
@@ -224,6 +225,7 @@ public class Client : NetworkBehaviour
         OnBasePlaced.Invoke(go);
     }
 
+    /*
     [Command]
     private void CmdSpawnUnit(Vector3 pos, UnitType unit) {
         GameObject go = null;
@@ -243,7 +245,7 @@ public class Client : NetworkBehaviour
             }
             warriors.Add(go);
         }
-    }
+    }*/
 
     [Command]
     private void CmdSpawnTeamUnit(TeamType team) {
@@ -259,7 +261,9 @@ public class Client : NetworkBehaviour
                 }
 
                 NetworkServer.Spawn(unit);
-                RpcSyncUnitOnce(unit.transform.localPosition, unit.transform.localRotation, unit, baseCore);
+                foreach (ClientConnection clientConnection in clientConnection.clients) {
+                    clientConnection.client.SetClientUnitServer(unit.transform.localPosition, unit.transform.localRotation, unit, baseCore);
+                }
 
                 if (warriors == null) {
                     warriors = new List<GameObject>();
@@ -270,6 +274,10 @@ public class Client : NetworkBehaviour
                 break;
             }
         }
+    }
+
+    private void SetClientUnitServer(Vector3 localPos, Quaternion localRot, GameObject go, GameObject parent) {
+        RpcSyncUnitOnce(localPos, localRot, go, parent);
     }
 
     public static void RespawnUnitServer(TeamType team) {
@@ -306,9 +314,10 @@ public class Client : NetworkBehaviour
     }
 
     [ClientRpc]
-    private void RpcSyncEgg(Vector3 localPos) {
+    private void RpcSyncEgg(Vector3 localPos, Quaternion rotation) {
         if(!isLocalPlayer) { return; }
         egg.transform.position = baseCore.transform.position + localPos;
+        egg.transform.rotation = rotation;
     }
 
     // Called when Client loses connection, Clientside

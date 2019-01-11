@@ -63,7 +63,7 @@ public class TrackFigurePlacement : AbstractTrackFigure, ITrackableEventHandler{
 
         if (Physics.Raycast(ray, out raycastHit, 110)) {
             Debug.Log(raycastHit.collider.name);
-            Client.LocalClient.SpawnUnitClient(raycastHit.point - Client.baseCore.transform.position, unitToSpawn);
+            //Client.LocalClient.SpawnUnitClient(raycastHit.point - Client.baseCore.transform.position, unitToSpawn);
 
             foreach (VirtualButtonBehaviourArray vbba in vbBehaviourArray) {
                 foreach (VirtualButtonBehaviour vbb in vbba.vbBehaviours) {
