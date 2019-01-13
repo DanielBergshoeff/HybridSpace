@@ -5,8 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "State/OstrichChase")]
 public class OstrichChaseState : State {
 
-
-
     public override void OnEnter(FiniteStateMachine stateMachine)
     {
         SelectChaseTarget(stateMachine);
@@ -19,9 +17,16 @@ public class OstrichChaseState : State {
 
     public override void OnUpdate(FiniteStateMachine stateMachine)
     {
+        //Keep chasing the chased target.
         stateMachine.navAgent.SetDestination(stateMachine.chaseTarget.position);
     }
 
+    //Checks every player in range of the ostricht.
+    //If the player has the egg, he will be the chased target of the ostrich.
+    //If no player has the egg, the ostrich will start chasing the closest player (AT THAT POINT, the ostrich will not keep switching targets until
+    //the currently chased player has left the radius or has died.
+
+    //TODO Properly implement the check whether a player has the egg.
     private void SelectChaseTarget(FiniteStateMachine stateMachine)
     {
         List<GameObject> players = stateMachine.players;

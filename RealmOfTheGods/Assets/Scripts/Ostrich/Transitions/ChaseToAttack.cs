@@ -10,6 +10,7 @@ public class ChaseToAttack : Transition
         return ReachedTarget(stateMachine);
     }
 
+    //Return true if the ostrich has reached the player he'd been chasing.
     private bool ReachedTarget(FiniteStateMachine stateMachine)
     {
         return stateMachine.navAgent.remainingDistance < 0.5f;

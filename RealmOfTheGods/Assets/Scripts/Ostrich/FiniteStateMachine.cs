@@ -7,7 +7,6 @@ public class FiniteStateMachine : MonoBehaviour{
 
     [SerializeField]
     private State startState;
-
     private State currentState;
 
     public List<GameObject> waypoints;
@@ -31,7 +30,7 @@ public class FiniteStateMachine : MonoBehaviour{
         {
             Debug.Log(triggeredTransition.debugText);
             currentState.OnExit(this);
-            currentState = triggeredTransition.GetNextState();
+            currentState = triggeredTransition.nextState;
             currentState.OnEnter(this);
         }
         currentState.OnUpdate(this);

@@ -11,11 +11,6 @@ public abstract class State : ScriptableObject {
     public abstract void OnUpdate(FiniteStateMachine stateMachine);
     public abstract void OnExit(FiniteStateMachine stateMachine);
 
-    public void AddTransition(Transition transition)
-    {
-        transitions.Add(transition);
-    }
-
     public Transition triggeredTransition(FiniteStateMachine stateMachine)
     {
         foreach (Transition transition in transitions)

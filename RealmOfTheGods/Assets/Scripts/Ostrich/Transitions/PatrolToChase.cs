@@ -11,6 +11,10 @@ public class PatrolToChase : Transition {
         return InRangeOfPlayer(stateMachine);
     }
 
+    //Return true if the ostrich is in range of any player.
+    //Note: this was quite a simple fix, perhaps you have better ideas of registering detection of any player?
+    //Note: The selection of which player to chase will be handled in the OstrichChaseState.
+
     bool InRangeOfPlayer(FiniteStateMachine stateMachine)
     {
         foreach (GameObject player in stateMachine.players)

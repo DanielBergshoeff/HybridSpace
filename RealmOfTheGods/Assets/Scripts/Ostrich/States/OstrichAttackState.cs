@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "State/OstrichAttack")]
 public class OstrichAttackState : State
 {
+    //TODO Implement the killing of the player.
     public override void OnEnter(FiniteStateMachine stateMachine)
     {
         //Attack/kill the chased player, trigger animation etc.
@@ -12,6 +13,8 @@ public class OstrichAttackState : State
 
     public override void OnExit(FiniteStateMachine stateMachine)
     {
+        //Reset the chase target
+        //TODO Remove the player from the available chaseable players.
         stateMachine.chaseTarget = null;
     }
 

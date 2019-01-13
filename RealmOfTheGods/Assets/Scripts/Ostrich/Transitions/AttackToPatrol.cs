@@ -10,9 +10,11 @@ public class AttackToPatrol : Transition
         return ChasedPlayerDead(stateMachine);
     }
 
+    //Return true if the ostrich has finished killing, and the player is dead.
+    //TODO Properly implement this function.
     private bool ChasedPlayerDead(FiniteStateMachine stateMachine)
     {
         //return player is dead;
-        return true;
+        return true; 
     }
 }

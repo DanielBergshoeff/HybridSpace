@@ -8,9 +8,4 @@ public abstract class Transition : ScriptableObject{
     public string debugText;
 
     public abstract bool ConditionTriggered(FiniteStateMachine stateMachine);
-
-    public State GetNextState()
-    {
-        return nextState;
-    }
 }

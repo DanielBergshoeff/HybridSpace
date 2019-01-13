@@ -10,6 +10,7 @@ public class ChaseToPatrol : Transition {
         return TargetOutOfRange(stateMachine);
     }
 
+    //Return true if the player the ostrich had been chasing has left its radius.
     private bool TargetOutOfRange(FiniteStateMachine stateMachine)
     {
         return Vector3.Distance(stateMachine.transform.position, stateMachine.chaseTarget.position) > stateMachine.radius;
