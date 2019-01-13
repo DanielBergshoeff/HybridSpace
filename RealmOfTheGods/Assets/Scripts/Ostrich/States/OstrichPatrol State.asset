@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f50c1ef13db04b54eb70918703cc7c27, type: 3}
+  m_Name: OstrichPatrol State
+  m_EditorClassIdentifier: 
+  transitions:
+  - {fileID: 11400000, guid: e62572d872372c04cb4d30043c236ee9, type: 2}
