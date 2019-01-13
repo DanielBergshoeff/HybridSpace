@@ -44,7 +44,7 @@ public class Client : NetworkBehaviour
     [SerializeField] private ClientConnection clientConnectionBase;
 
     // private reference to custom client persistance
-    private ClientConnection clientConnection;
+    private static ClientConnection clientConnection;
     
     [SerializeField] private GameObject basePrefab;
     [SerializeField] private GameObject flagPrefab;
@@ -64,7 +64,7 @@ public class Client : NetworkBehaviour
     private static List<GameObject> warriors;
     private static List<GameObject> flags;
     
-    public TeamType team;
+    public static TeamType team;
 
     public static Client LocalClient {
         get;
@@ -72,22 +72,56 @@ public class Client : NetworkBehaviour
     }
 
     private void Update() {
-        if (isServer) {
-            if(warriors != null) {
-                for (int i = 0; i < warriors.Count; i++) {
-                    if(warriors[i].transform.position != flags[i].transform.position) {
-                        if (warriors[i].GetComponentInChildren<Humanoid>().stunTimer <= 0.0f) {
-                            warriors[i].transform.position = Vector3.MoveTowards(warriors[i].transform.position, flags[i].transform.position, warriors[i].GetComponentInChildren<Humanoid>().speed * Time.deltaTime);
-                        }
-                    }
-                    RpcSyncGameObject(i, warriors[i].transform.localPosition, warriors[i].transform.localRotation);
+
+    }
+
+    public static void SetEggParent(TeamType team, Vector3 position) {
+        foreach (ClientConnection client in clientConnection.clients) {
+            client.client.SetEggParentServer(team, position);
+        }
+    }
+
+    private void SetEggParentServer(TeamType team, Vector3 position) {
+        RpcSetEggParent(team, position);
+    }
+
+    [ClientRpc]
+    private void RpcSetEggParent(TeamType teamType, Vector3 position) {
+        if (teamType == TeamType.Null) {
+            egg.transform.parent = baseCore.transform;
+            egg.transform.localPosition = position;
+        }
+        else {
+            for (int i = 0; i < warriors.Count; i++) {
+                if (warriors[i].GetComponentInChildren<Humanoid>().team == teamType) {
+                    egg.transform.parent = warriors[i].GetComponentInChildren<Humanoid>().transform;
+                    egg.transform.localPosition = position;
                 }
             }
+        }
 
-            if(egg != null) {
-                RpcSyncEgg(Client.baseCore.transform.InverseTransformPoint(egg.transform.position), egg.transform.rotation);
+        
+    }
+
+    public static void SyncUnits() {
+        if (warriors != null) {
+            for (int i = 0; i < warriors.Count; i++) {
+                if (warriors[i].transform.position != flags[i].transform.position) {
+                    if (warriors[i].GetComponentInChildren<Humanoid>().stunTimer <= 0.0f) {
+                        if (Vector3.Distance(warriors[i].transform.position, flags[i].transform.position) > 0.01f) {
+                            warriors[i].transform.position = Vector3.MoveTowards(warriors[i].transform.position, flags[i].transform.position, warriors[i].GetComponentInChildren<Humanoid>().speed * Time.deltaTime);
+                            foreach (ClientConnection client in clientConnection.clients) {
+                                client.client.SyncUnitsServer(i);
+                            }
+                        }
+                    }
+                }
             }
         }
+    }
+
+    public void SyncUnitsServer(int i) {
+        RpcSyncGameObject(i, warriors[i].transform.localPosition, warriors[i].transform.localRotation);
     }
 
     // variable for demonstration purposes
@@ -120,6 +154,23 @@ public class Client : NetworkBehaviour
         }
     }
 
+    public static void SyncUnitPoints(TeamType teamtype, float points) {
+        for (int i = 0; i < warriors.Count; i++) {
+            if(warriors[i].GetComponentInChildren<Humanoid>().team == teamtype) {
+                foreach (ClientConnection client in clientConnection.clients) {
+                    client.client.RpcSyncUnitPoints(i, points);
+                }
+            }
+        }
+    }
+
+    [ClientRpc]
+    private void RpcSyncUnitPoints(int index, float newpoints) {
+        Debug.Log(index);
+        Debug.Log(newpoints);
+        warriors[index].GetComponentInChildren<Humanoid>().points = newpoints;
+    }
+
     // Create custom persistance instance
     [Command]
     private void CmdGetConnection(string adress) {
@@ -137,7 +188,7 @@ public class Client : NetworkBehaviour
     }*/
 
     public void SpawnUnitClient(TeamType team) {
-        this.team = team;
+        Client.team = team;
         CmdSpawnTeamUnit(team);
         CmdSpawnTeamFlag(team);
     }

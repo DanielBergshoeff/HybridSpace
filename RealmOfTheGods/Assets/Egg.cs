@@ -14,11 +14,17 @@ public class Egg : MonoBehaviour {
 	void Start () {
 
 	}
-	
-	// Update is called once per frame
-	void Update () {
 
-	}
+    // Update is called once per frame
+    void Update() {
+        if (Client.LocalClient != null) {
+            if (!Client.LocalClient.isServer) { return; }
+        }
+
+        if (owner != null) {
+            owner.AddPoints();
+        }
+    }
 
     private void OnTriggerEnter(Collider other) {
         if (Client.LocalClient != null) {
@@ -36,6 +42,7 @@ public class Egg : MonoBehaviour {
                         transform.parent = other.gameObject.transform;
                         transform.localPosition = new Vector3(0, 0, 0);
                         owner = other.gameObject.GetComponent<Humanoid>();
+                        Client.SetEggParent(owner.team, Vector3.zero);
                     }
                 }
             }
@@ -52,6 +59,8 @@ public class Egg : MonoBehaviour {
     public void SetSpawn() {
         owner = null;
         transform.parent = Client.baseCore.transform;
-        transform.localPosition = spawnPositions[Random.Range(0, spawnPositions.Count)];
+        Vector3 newPosition = spawnPositions[Random.Range(0, spawnPositions.Count)];
+        transform.localPosition = newPosition;
+        Client.SetEggParent(TeamType.Null, newPosition);
     }
 }

@@ -1,23 +1,34 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.Networking;
 
-public class Humanoid : MonoBehaviour {
+public class Humanoid : NetworkBehaviour {
 
     public float speed = 0.3f;
     public float stealRange = 0.3f;
     public TeamType team;
-    public GameObject Egg = null;
     public float stunTimer = 0.0f;
     public float stunDuration = 2.0f;
+    public Text pointText;
+    public float points = 0.0f;
 
-	// Use this for initialization
-	void Start () {
+    public int intPoints = 0;
 
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    public void AddPoints() {
+        Debug.Log("Points changed");
+        points += Time.deltaTime * 10;
+        if (Mathf.RoundToInt(points) > intPoints) {
+            intPoints = Mathf.RoundToInt(points);
+            Client.SyncUnitPoints(team, points);
+        }
+    }
+
+    // Update is called once per frame
+    void Update () {
+        pointText.text = Mathf.RoundToInt(points).ToString();
+
         if (Client.LocalClient != null) {
             if (!Client.LocalClient.isServer) { return; }
         }
@@ -43,12 +54,6 @@ public class Humanoid : MonoBehaviour {
                 }
             }
         }
-    }
-
-    private void TakeEgg(GameObject egg) {
-        Egg = egg;
-        Egg.transform.parent = transform;
-        Egg.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
     }
 
     private void OnDrawGizmosSelected() {
