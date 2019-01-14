@@ -13,6 +13,9 @@ public class Humanoid : NetworkBehaviour {
     public float stunDuration = 2.0f;
     public Text pointText;
     public float points = 0.0f;
+    public static int maxPoints = 500;
+
+    public Rigidbody myRigidBody;
 
     public int intPoints = 0;
 
@@ -22,20 +25,39 @@ public class Humanoid : NetworkBehaviour {
         if (Mathf.RoundToInt(points) > intPoints) {
             intPoints = Mathf.RoundToInt(points);
             Client.SyncUnitPoints(team, points);
+            if(intPoints >= maxPoints) {
+                Client.GameOver(team);
+            }
         }
+    }
+
+    private void Start() {
+        myRigidBody = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update () {
-        pointText.text = Mathf.RoundToInt(points).ToString();
+        if (!GameManager.GameOver) {
+            pointText.text = Mathf.RoundToInt(points).ToString();
 
-        if (Client.LocalClient != null) {
-            if (!Client.LocalClient.isServer) { return; }
-        }
+            if (Client.LocalClient != null) {
+                if (!Client.LocalClient.isServer) { return; }
+            }
 
-        if(stunTimer >= 0.0f) {
-            stunTimer -= Time.deltaTime;
+            if (stunTimer >= 0.0f) {
+                stunTimer -= Time.deltaTime;
+            }
         }
+    }
+
+    public void SetSpeed(float time, float multiplier) {
+        SetSpeedOverTime(time, multiplier);
+    }
+
+    IEnumerator SetSpeedOverTime(float time, float multiplier) {
+        speed *= multiplier;
+        yield return new WaitForSeconds(time);
+        speed /= multiplier;
     }
 
     private void OnTriggerEnter(Collider other) {
@@ -45,11 +67,18 @@ public class Humanoid : NetworkBehaviour {
         }
 
         if (stunTimer <= 0.0f) {
-            if (other.tag == "Ravine") {
+            if (other.tag == "Ravine" || other.tag == "Mountain") {
                 Client.RespawnUnitServer(team);
                 stunTimer = stunDuration;
+                if(points >= 100) {
+                    points -= 100;
+                }
+                else {
+                    points = 0;
+                }
+                Client.SyncUnitPoints(team, points);
 
-                if(GetComponentInChildren<Egg>() != null) {
+                if (GetComponentInChildren<Egg>() != null) {
                     GetComponentInChildren<Egg>().SetSpawn();
                 }
             }

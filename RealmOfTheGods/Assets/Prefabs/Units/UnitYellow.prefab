@@ -299,6 +299,8 @@ MonoBehaviour:
   stunDuration: 2
   pointText: {fileID: 114307637854542776}
   points: 0
+  myRigidBody: {fileID: 0}
+  intPoints: 0
 --- !u!222 &222846563150734472
 CanvasRenderer:
   m_ObjectHideFlags: 1

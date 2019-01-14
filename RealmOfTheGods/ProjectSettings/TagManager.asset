@@ -8,6 +8,7 @@ TagManager:
   - Mountain
   - Ravine
   - Egg
+  - Base
   layers:
   - Default
   - TransparentFX

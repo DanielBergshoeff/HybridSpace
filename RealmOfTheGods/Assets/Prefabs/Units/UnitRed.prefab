@@ -197,6 +197,8 @@ MonoBehaviour:
   stunDuration: 2
   pointText: {fileID: 114360218821097022}
   points: 0
+  myRigidBody: {fileID: 0}
+  intPoints: 0
 --- !u!114 &114360218821097022
 MonoBehaviour:
   m_ObjectHideFlags: 1

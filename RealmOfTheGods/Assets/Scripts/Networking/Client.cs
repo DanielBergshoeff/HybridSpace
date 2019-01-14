@@ -75,6 +75,44 @@ public class Client : NetworkBehaviour
 
     }
 
+    public void BoostUnit(TeamType teamType) {
+        CmdBoostUnitServer(teamType);
+    }
+
+    public static void GameOver(TeamType winningTeam) {
+        GameManager.GameOver = true;
+        for (int i = 0; i < warriors.Count; i++) {
+            if(warriors[i].GetComponentInChildren<Humanoid>().team == winningTeam) {
+                warriors[i].GetComponentInChildren<Humanoid>().pointText.text = "YOU WON";
+            }
+            else {
+                warriors[i].GetComponentInChildren<Humanoid>().pointText.text = "YOU LOST";
+            }
+        }
+    }
+
+    [ClientRpc]
+    private void RpcGameOver(TeamType winningTeam) {
+        GameManager.GameOver = true;
+        for (int i = 0; i < warriors.Count; i++) {
+            if (warriors[i].GetComponentInChildren<Humanoid>().team == winningTeam) {
+                warriors[i].GetComponentInChildren<Humanoid>().pointText.text = "YOU WON";
+            }
+            else {
+                warriors[i].GetComponentInChildren<Humanoid>().pointText.text = "YOU LOST";
+            }
+        }
+    }
+
+    [Command]
+    public void CmdBoostUnitServer(TeamType teamType) {
+        for (int i = 0; i < warriors.Count; i++) {
+            if (warriors[i].GetComponentInChildren<Humanoid>().team == teamType) {
+                warriors[i].GetComponentInChildren<Humanoid>().SetSpeed(3.0f, 2.0f);
+            }
+        }
+    }
+
     public static void SetEggParent(TeamType team, Vector3 position) {
         foreach (ClientConnection client in clientConnection.clients) {
             client.client.SetEggParentServer(team, position);

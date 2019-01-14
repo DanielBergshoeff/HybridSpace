@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour {
 
     public GameObject baseParent;
     public GameObject canvas;
+    public static bool GameOver = false;
 
 	// Use this for initialization
 	void Start () {

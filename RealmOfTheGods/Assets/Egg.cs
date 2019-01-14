@@ -17,12 +17,14 @@ public class Egg : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (Client.LocalClient != null) {
-            if (!Client.LocalClient.isServer) { return; }
-        }
+        if (!GameManager.GameOver) {
+            if (Client.LocalClient != null) {
+                if (!Client.LocalClient.isServer) { return; }
+            }
 
-        if (owner != null) {
-            owner.AddPoints();
+            if (owner != null) {
+                owner.AddPoints();
+            }
         }
     }
 

@@ -11,6 +11,11 @@ public class UnitSelection : MonoBehaviour, IVirtualButtonEventHandler {
     
     public VirtualButtonBehaviour vbbMove;
     public VirtualButtonBehaviour vbbCancel;
+    public VirtualButtonBehaviour vbbBoost;
+
+    public float boostTimer = 0.0f;
+    public static float boostCoolDown = 10.0f;
+
     public float laserWidth = 0.1f;
     public GameObject frontCard;
     public GameObject tempProjectionPrefab;
@@ -36,6 +41,9 @@ public class UnitSelection : MonoBehaviour, IVirtualButtonEventHandler {
         else if (vb == vbbCancel) {
             OnCancel();
         }
+        else if(vb == vbbBoost) {
+            OnBoost();
+        }
     }
 
     public void OnButtonReleased(VirtualButtonBehaviour vb) {
@@ -47,6 +55,7 @@ public class UnitSelection : MonoBehaviour, IVirtualButtonEventHandler {
         virtualButtonBehaviours = new List<VirtualButtonBehaviour>();
         vbbMove.RegisterEventHandler(this);
         vbbCancel.RegisterEventHandler(this);
+        vbbBoost.RegisterEventHandler(this);
         
         virtualButtonBehaviours.Add(vbbMove);
         virtualButtonBehaviours.Add(vbbCancel);
@@ -72,6 +81,9 @@ public class UnitSelection : MonoBehaviour, IVirtualButtonEventHandler {
         if(Input.GetKeyDown(KeyCode.L)) {
             OnMove();
         }
+        if(boostTimer >= 0.0f) {
+            boostTimer -= Time.deltaTime;
+        }
     }
 
     void OnMove() {
@@ -90,6 +102,13 @@ public class UnitSelection : MonoBehaviour, IVirtualButtonEventHandler {
         SetButtonColors(buttonsStartColor);
         line.SetActive(false);
         controlOption = ControlOption.NULL;
+    }
+
+    void OnBoost() {
+        if (boostTimer <= 0) {
+            Client.LocalClient.BoostUnit(Client.team);
+            boostTimer += boostCoolDown;
+        }
     }
 
     void SetButtonColors(Color color) {
