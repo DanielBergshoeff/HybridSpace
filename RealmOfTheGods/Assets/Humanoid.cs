@@ -55,8 +55,10 @@ public class Humanoid : NetworkBehaviour {
     }
 
     IEnumerator SetSpeedOverTime(float time, float multiplier) {
+        Debug.Log("Set speed to " + (speed * multiplier).ToString());
         speed *= multiplier;
         yield return new WaitForSeconds(time);
+        Debug.Log("Set speed to " + (speed / multiplier).ToString());
         speed /= multiplier;
     }
 
