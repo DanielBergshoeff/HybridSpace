@@ -54,7 +54,8 @@ public class Humanoid : NetworkBehaviour {
     }
 
     public void SetSpeed(float time, float multiplier) {
-        SetSpeedOverTime(time, multiplier);
+        StartCoroutine(SetSpeedOverTime(time, multiplier));
+        Debug.Log("IEnumerator activated");
     }
 
     IEnumerator SetSpeedOverTime(float time, float multiplier) {
