@@ -173,6 +173,33 @@ public class Client : NetworkBehaviour
         }
     }
 
+    public static void UnitFalling(TeamType teamType) {
+        foreach (ClientConnection client in clientConnection.clients) {
+            client.client.UnitFallServer(teamType);
+        }
+    }
+
+    public void UnitFallServer(TeamType teamType) {
+        RpcUnitFall(teamType);
+    }
+
+    [ClientRpc]
+    private void RpcUnitFall(TeamType teamType) {
+        for (int i = 0; i < warriors.Count; i++) {
+            if(warriors[i].GetComponentInChildren<Humanoid>().team == teamType) {
+                if (warriors[i].GetComponentInChildren<Humanoid>().myRigidBody.useGravity == false) {
+                    warriors[i].GetComponentInChildren<Humanoid>().myRigidBody.useGravity = true;
+                    warriors[i].GetComponentInChildren<Humanoid>().myRigidBody.isKinematic = false;
+                }
+                else {
+                    warriors[i].GetComponentInChildren<Humanoid>().myRigidBody.useGravity = false;
+                    warriors[i].GetComponentInChildren<Humanoid>().myRigidBody.isKinematic = true;
+                    warriors[i].GetComponentInChildren<Humanoid>().transform.localPosition = Vector3.zero;
+                }
+            }
+        }
+    }
+
     public void SyncUnitsServer(int i) {
         RpcSyncGameObject(i, warriors[i].transform.localPosition, warriors[i].transform.localRotation);
     }

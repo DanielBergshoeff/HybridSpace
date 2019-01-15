@@ -51,10 +51,6 @@ public class Humanoid : NetworkBehaviour {
             if (stunTimer >= 0.0f) {
                 stunTimer -= Time.deltaTime;
             }
-            
-            if(falling) {
-                Client.SyncUnitOnce(team);
-            }
         }
     }
 
@@ -82,7 +78,7 @@ public class Humanoid : NetworkBehaviour {
                 stunTimer = stunDuration;
                 myRigidBody.useGravity = true;
                 myRigidBody.isKinematic = false;
-                falling = true;
+                Client.UnitFalling(team);
             }
             else if (other.tag == "Mountain" || other.tag == "Tree") {
                 transform.parent.position = transform.parent.position - (transform.parent.forward * 0.05f);
@@ -104,8 +100,7 @@ public class Humanoid : NetworkBehaviour {
         if (other.tag == "Spawn") {
             myRigidBody.useGravity = false;
             myRigidBody.isKinematic = true;
-            falling = false;
-
+            Client.UnitFalling(team);
             transform.localPosition = Vector3.zero;
 
             Client.RespawnUnitServer(team);
