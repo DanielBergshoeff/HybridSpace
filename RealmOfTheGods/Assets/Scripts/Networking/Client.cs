@@ -173,6 +173,25 @@ public class Client : NetworkBehaviour
         }
     }
 
+    public static void UnitStun(TeamType teamType, bool stun) {
+        foreach (ClientConnection client in clientConnection.clients) {
+            client.client.UnitStunServer(teamType, stun);
+        }
+    }
+
+    public void UnitStunServer(TeamType teamType, bool stun) {
+        RpcUnitStun(teamType, stun);
+    }
+
+    [ClientRpc]
+    private void RpcUnitStun(TeamType teamType, bool stun) {
+        for (int i = 0; i < warriors.Count; i++) {
+            if (warriors[i].GetComponentInChildren<Humanoid>().team == teamType) {
+                warriors[i].GetComponentInChildren<Humanoid>().animator.SetBool("Stun", stun);
+            }
+        }
+    }
+
     public static void UnitFalling(TeamType teamType) {
         foreach (ClientConnection client in clientConnection.clients) {
             client.client.UnitFallServer(teamType);

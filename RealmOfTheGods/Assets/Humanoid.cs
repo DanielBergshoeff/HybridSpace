@@ -10,7 +10,7 @@ public class Humanoid : NetworkBehaviour {
     public float speed = 0.3f;
     public float stealRange = 0.3f;
     public TeamType team;
-    public float stunTimer = 0.0f;
+    public float stunTimer = -0.1f;
     public float stunDuration = 2.0f;
     public Text pointText;
     public float points = 0.0f;
@@ -50,6 +50,10 @@ public class Humanoid : NetworkBehaviour {
 
             if (stunTimer >= 0.0f) {
                 stunTimer -= Time.deltaTime;
+                if(stunTimer < 0) {
+                    //Send message to clients to stop stun animation
+                    Client.UnitStun(team, false);
+                }
             }
         }
     }
@@ -75,7 +79,7 @@ public class Humanoid : NetworkBehaviour {
 
         if (stunTimer <= 0.0f) {
             if (other.tag == "Ravine") {
-                stunTimer = stunDuration;
+                Stun();
                 myRigidBody.useGravity = true;
                 myRigidBody.isKinematic = false;
                 Client.UnitFalling(team);
@@ -93,7 +97,7 @@ public class Humanoid : NetworkBehaviour {
                 if (GetComponentInChildren<Egg>() != null) {
                     GetComponentInChildren<Egg>().SetSpawn();
                 }
-                stunTimer = stunDuration;
+                Stun();
             }
         }
 
@@ -118,6 +122,12 @@ public class Humanoid : NetworkBehaviour {
             }
         }
 
+    }
+
+    private void Stun() {
+        //Send message to clients to start stun animation
+        Client.UnitStun(team, true);
+        stunTimer = stunDuration;
     }
 
     private void OnDrawGizmosSelected() {

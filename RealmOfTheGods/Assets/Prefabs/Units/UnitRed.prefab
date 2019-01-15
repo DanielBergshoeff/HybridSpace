@@ -795,11 +795,12 @@ MonoBehaviour:
   speed: 0.3
   stealRange: 0.3
   team: 3
-  stunTimer: 0
+  stunTimer: -0.1
   stunDuration: 2
   pointText: {fileID: 114360218821097022}
   points: 0
   animator: {fileID: 0}
+  falling: 0
   myRigidBody: {fileID: 0}
   intPoints: 0
 --- !u!114 &114110848791712500
@@ -816,11 +817,12 @@ MonoBehaviour:
   speed: 0.3
   stealRange: 0.3
   team: 3
-  stunTimer: 0
+  stunTimer: -0.1
   stunDuration: 2
   pointText: {fileID: 114360218821097022}
   points: 0
   animator: {fileID: 0}
+  falling: 0
   myRigidBody: {fileID: 0}
   intPoints: 0
 --- !u!114 &114360218821097022
