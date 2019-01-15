@@ -16,6 +16,7 @@ public class Humanoid : NetworkBehaviour {
     public float points = 0.0f;
     public static int maxPoints = 500;
     public Animator animator;
+    public bool falling = false;
 
     public Rigidbody myRigidBody;
 
@@ -50,6 +51,10 @@ public class Humanoid : NetworkBehaviour {
             if (stunTimer >= 0.0f) {
                 stunTimer -= Time.deltaTime;
             }
+            
+            if(falling) {
+                Client.SyncUnitOnce(team);
+            }
         }
     }
 
@@ -74,27 +79,49 @@ public class Humanoid : NetworkBehaviour {
 
         if (stunTimer <= 0.0f) {
             if (other.tag == "Ravine") {
-                Client.RespawnUnitServer(team);
                 stunTimer = stunDuration;
-                if(points >= 100) {
+                myRigidBody.useGravity = true;
+                myRigidBody.isKinematic = false;
+                falling = true;
+            }
+            else if (other.tag == "Mountain" || other.tag == "Tree") {
+                transform.parent.position = transform.parent.position - (transform.parent.forward * 0.05f);
+                Client.SyncUnitOnce(team);
+                if (points >= 100) {
                     points -= 100;
                 }
                 else {
                     points = 0;
                 }
                 Client.SyncUnitPoints(team, points);
-
                 if (GetComponentInChildren<Egg>() != null) {
                     GetComponentInChildren<Egg>().SetSpawn();
                 }
-            }
-            else if(other.tag == "Mountain" || other.tag == "Tree") {
-                Debug.Log("Throw back");
-                Debug.Log(transform.parent.position);
-                transform.parent.position = transform.parent.position - (transform.parent.forward * 20);
-                Debug.Log(transform.parent.position);
+                stunTimer = stunDuration;
             }
         }
+
+        if (other.tag == "Spawn") {
+            myRigidBody.useGravity = false;
+            myRigidBody.isKinematic = true;
+            falling = false;
+
+            transform.localPosition = Vector3.zero;
+
+            Client.RespawnUnitServer(team);
+            if (points >= 100) {
+                points -= 100;
+            }
+            else {
+                points = 0;
+            }
+            Client.SyncUnitPoints(team, points);
+
+            if (GetComponentInChildren<Egg>() != null) {
+                GetComponentInChildren<Egg>().SetSpawn();
+            }
+        }
+
     }
 
     private void OnDrawGizmosSelected() {

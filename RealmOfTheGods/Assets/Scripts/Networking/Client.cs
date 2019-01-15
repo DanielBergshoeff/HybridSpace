@@ -163,6 +163,16 @@ public class Client : NetworkBehaviour
         }
     }
 
+    public static void SyncUnitOnce(TeamType teamType) {
+        for (int i = 0; i < warriors.Count; i++) {
+            if (warriors[i].GetComponentInChildren<Humanoid>().team == teamType) {
+                foreach (ClientConnection client in clientConnection.clients) {
+                    client.client.SyncUnitsServer(i);
+                }
+            }
+        }
+    }
+
     public void SyncUnitsServer(int i) {
         RpcSyncGameObject(i, warriors[i].transform.localPosition, warriors[i].transform.localRotation);
     }
