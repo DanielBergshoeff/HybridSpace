@@ -49,13 +49,6 @@ public class Egg : MonoBehaviour {
                 }
             }
         }
-        else if(other.gameObject.tag == "Mountain") {
-            //Break egg and respawn it in different spot
-            if(owner != null) {
-                owner.stunTimer = owner.stunDuration;
-            }
-            SetSpawn();
-        }
     }
 
     public void SetSpawn() {

@@ -60,7 +60,7 @@ public class Client : NetworkBehaviour
 
     public static GameObject baseCore;
 
-    private static GameObject egg;
+    public static GameObject egg;
     private static List<GameObject> warriors;
     private static List<GameObject> flags;
     
@@ -111,7 +111,7 @@ public class Client : NetworkBehaviour
 
         for (int i = 0; i < warriors.Count; i++) {
             if (warriors[i].GetComponentInChildren<Humanoid>().team == teamType) {
-                warriors[i].GetComponentInChildren<Humanoid>().SetSpeed(3.0f, 2.0f);
+                warriors[i].GetComponentInChildren<Humanoid>().SetSpeed(5.0f, 2.0f);
                 Debug.Log("New speed has been set");
             }
         }

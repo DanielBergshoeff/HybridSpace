@@ -14,7 +14,7 @@ public class UnitSelection : MonoBehaviour, IVirtualButtonEventHandler {
     public VirtualButtonBehaviour vbbBoost;
 
     public float boostTimer = 0.0f;
-    public static float boostCoolDown = 30.0f;
+    public float boostCoolDown = 30.0f;
 
     public float laserWidth = 0.1f;
     public GameObject frontCard;
@@ -112,7 +112,7 @@ public class UnitSelection : MonoBehaviour, IVirtualButtonEventHandler {
         if (boostTimer <= 0) {
             Debug.Log("Boost!");
             Client.LocalClient.BoostUnit(Client.team);
-            boostTimer += boostCoolDown;
+            boostTimer = boostCoolDown;
         }
     }
 

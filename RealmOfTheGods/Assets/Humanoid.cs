@@ -73,7 +73,7 @@ public class Humanoid : NetworkBehaviour {
         }
 
         if (stunTimer <= 0.0f) {
-            if (other.tag == "Ravine" || other.tag == "Mountain") {
+            if (other.tag == "Ravine") {
                 Client.RespawnUnitServer(team);
                 stunTimer = stunDuration;
                 if(points >= 100) {
@@ -87,6 +87,12 @@ public class Humanoid : NetworkBehaviour {
                 if (GetComponentInChildren<Egg>() != null) {
                     GetComponentInChildren<Egg>().SetSpawn();
                 }
+            }
+            else if(other.tag == "Mountain" || other.tag == "Tree") {
+                Debug.Log("Throw back");
+                Debug.Log(transform.parent.position);
+                transform.parent.position = transform.parent.position - (transform.parent.forward * 20);
+                Debug.Log(transform.parent.position);
             }
         }
     }
