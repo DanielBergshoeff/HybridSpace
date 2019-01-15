@@ -14,7 +14,7 @@ public class UnitSelection : MonoBehaviour, IVirtualButtonEventHandler {
     public VirtualButtonBehaviour vbbBoost;
 
     public float boostTimer = 0.0f;
-    public static float boostCoolDown = 10.0f;
+    public static float boostCoolDown = 30.0f;
 
     public float laserWidth = 0.1f;
     public GameObject frontCard;
@@ -81,6 +81,9 @@ public class UnitSelection : MonoBehaviour, IVirtualButtonEventHandler {
         if(Input.GetKeyDown(KeyCode.L)) {
             OnMove();
         }
+        else if (Input.GetKeyDown(KeyCode.P)) {
+            OnBoost();
+        }
         if(boostTimer >= 0.0f) {
             boostTimer -= Time.deltaTime;
         }
@@ -105,7 +108,9 @@ public class UnitSelection : MonoBehaviour, IVirtualButtonEventHandler {
     }
 
     void OnBoost() {
+        Debug.Log("Check boost timer");
         if (boostTimer <= 0) {
+            Debug.Log("Boost!");
             Client.LocalClient.BoostUnit(Client.team);
             boostTimer += boostCoolDown;
         }
