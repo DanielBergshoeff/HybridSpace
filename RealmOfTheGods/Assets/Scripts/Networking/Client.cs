@@ -76,6 +76,7 @@ public class Client : NetworkBehaviour
     }
 
     public void BoostUnit(TeamType teamType) {
+        Debug.Log("Send boost to server");
         CmdBoostUnitServer(teamType);
     }
 
@@ -106,9 +107,12 @@ public class Client : NetworkBehaviour
 
     [Command]
     public void CmdBoostUnitServer(TeamType teamType) {
+        Debug.Log("Boost arrived at server for "+ teamType);
+
         for (int i = 0; i < warriors.Count; i++) {
             if (warriors[i].GetComponentInChildren<Humanoid>().team == teamType) {
                 warriors[i].GetComponentInChildren<Humanoid>().SetSpeed(3.0f, 2.0f);
+                Debug.Log("New speed has been set");
             }
         }
     }
