@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
+using UnityEngine.Animations;
 
 public class Humanoid : NetworkBehaviour {
 
@@ -14,6 +15,7 @@ public class Humanoid : NetworkBehaviour {
     public Text pointText;
     public float points = 0.0f;
     public static int maxPoints = 500;
+    public Animator animator;
 
     public Rigidbody myRigidBody;
 
@@ -33,6 +35,7 @@ public class Humanoid : NetworkBehaviour {
 
     private void Start() {
         myRigidBody = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame

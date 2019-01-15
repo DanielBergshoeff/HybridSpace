@@ -147,6 +147,7 @@ public class Client : NetworkBehaviour
                 if (warriors[i].transform.position != flags[i].transform.position) {
                     if (warriors[i].GetComponentInChildren<Humanoid>().stunTimer <= 0.0f) {
                         if (Vector3.Distance(warriors[i].transform.position, flags[i].transform.position) > 0.01f) {
+                            warriors[i].transform.LookAt(flags[i].transform.position);
                             warriors[i].transform.position = Vector3.MoveTowards(warriors[i].transform.position, flags[i].transform.position, warriors[i].GetComponentInChildren<Humanoid>().speed * Time.deltaTime);
                             foreach (ClientConnection client in clientConnection.clients) {
                                 client.client.SyncUnitsServer(i);
@@ -400,6 +401,7 @@ public class Client : NetworkBehaviour
         if(!isLocalPlayer) { return; }
         warriors[index].transform.localPosition = localPos;
         warriors[index].transform.localRotation = localRotation;
+        warriors[index].GetComponentInChildren<Humanoid>().animator.SetTrigger("Walk");
     }
 
     [ClientRpc]
