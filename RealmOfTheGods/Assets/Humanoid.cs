@@ -115,6 +115,7 @@ public class Humanoid : NetworkBehaviour {
             else {
                 points = 0;
             }
+            Client.SyncUnitOnce(team);
             Client.SyncUnitPoints(team, points);
 
             if (GetComponentInChildren<Egg>() != null) {
