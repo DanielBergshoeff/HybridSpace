@@ -35,13 +35,12 @@ public class UnitSelectionManager : MonoBehaviour {
                 //unitSelection.frontCard.SetActive(true);
                 
             }
-            else {
-                /*
+            else {/*
                 unitSelection.frontCard.SetActive(false);
                 unitSelection.vbbCancel.gameObject.SetActive(false);
                 unitSelection.vbbMove.gameObject.SetActive(false);
-                unitSelection.vbbBoost.gameObject.SetActive(false);
-                unitSelection.frontCard.GetComponent<ImageTargetBehaviour>().enabled = false;*/
+                unitSelection.vbbBoost.gameObject.SetActive(false);*/
+                unitSelection.frontCard.GetComponent<ImageTargetBehaviour>().enabled = false;
             }
         }
     }
