@@ -34,17 +34,21 @@ public class GameManager : MonoBehaviour {
 
     public void SpawnUnitRed() {
         Client.LocalClient.SpawnUnitClient(TeamType.Red);
+        UnitSelectionManager.TurnOnUnitSelection(TeamType.Red);
     }
 
     public void SpawnUnitBlue() {
         Client.LocalClient.SpawnUnitClient(TeamType.Blue);
+        UnitSelectionManager.TurnOnUnitSelection(TeamType.Blue);
     }
 
     public void SpawnUnitGreen() {
         Client.LocalClient.SpawnUnitClient(TeamType.Green);
+        UnitSelectionManager.TurnOnUnitSelection(TeamType.Green);
     }
 
     public void SpawnUnitYellow() {
         Client.LocalClient.SpawnUnitClient(TeamType.Yellow);
+        UnitSelectionManager.TurnOnUnitSelection(TeamType.Yellow);
     }
 }

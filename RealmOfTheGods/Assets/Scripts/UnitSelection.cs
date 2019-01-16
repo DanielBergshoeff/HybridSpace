@@ -30,7 +30,7 @@ public class UnitSelection : MonoBehaviour, IVirtualButtonEventHandler {
     private LineRenderer laserLineRenderer;
     private Vector3 currentLaserPosition;
     private int layerMask;
-    private ControlOption controlOption;
+    public ControlOption controlOption;
 
     private List<VirtualButtonBehaviour> virtualButtonBehaviours;
 
@@ -50,8 +50,13 @@ public class UnitSelection : MonoBehaviour, IVirtualButtonEventHandler {
 
     }
 
+    public void SetLineActive(bool active) {
+        line.SetActive(active);
+    }
+
     // Use this for initialization
     void Start() {
+        Debug.Log("Start");
         virtualButtonBehaviours = new List<VirtualButtonBehaviour>();
         vbbMove.RegisterEventHandler(this);
         vbbCancel.RegisterEventHandler(this);
@@ -101,7 +106,7 @@ public class UnitSelection : MonoBehaviour, IVirtualButtonEventHandler {
         }
     }
 
-    void OnCancel() {
+    public void OnCancel() {
         SetButtonColors(buttonsStartColor);
         line.SetActive(false);
         controlOption = ControlOption.NULL;
