@@ -372,9 +372,10 @@ public class Client : NetworkBehaviour
         baseCore = go;
         playground = baseCore.GetComponent<Playground>();
         egg = baseCore.GetComponentInChildren<Egg>().gameObject;
-        circleLocation.CircleLocation.base2 = playground.towers[0];
+        /*circleLocation.CircleLocation.base2 = playground.towers[0];
         circleLocation.CircleLocation.base3 = playground.towers[1];
         circleLocation.CircleLocation.base4 = playground.towers[2];
+        circleLocation.CircleLocation.playground = playground.gameObject;*/
         OnBasePlaced.Invoke(go);
     }
 

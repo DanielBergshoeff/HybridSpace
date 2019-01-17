@@ -11,6 +11,7 @@ public class circleLocation : MonoBehaviour {
     public GameObject base2;
     public GameObject base3;
     public GameObject base4;
+    public GameObject playground;
 
     public float minSphereSoftness;
     public float maxSphereSoftness;
@@ -41,6 +42,7 @@ public class circleLocation : MonoBehaviour {
     private Vector4 base2Location;
     private Vector4 base3Location;
     private Vector4 base4Location;
+    private Vector4 playgroundLocation;
 
     void Start () {
         // circleTerrain.SetVector("_Center", cubeLocation);
@@ -83,6 +85,9 @@ public class circleLocation : MonoBehaviour {
 
             base4Location = base4.transform.position;
             circleTerrain.SetVector("_Center4", base4Location);
+
+            playgroundLocation = playground.transform.position;
+            circleTerrain.SetVector("_TotalCenter", playgroundLocation);
         }
     }
 }
