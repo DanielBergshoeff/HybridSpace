@@ -4156,6 +4156,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1929655279298152
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4588142441919068}
+  - component: {fileID: 114168547160882020}
+  m_Layer: 0
+  m_Name: MistManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1930325112623740
 GameObject:
   m_ObjectHideFlags: 1
@@ -6647,6 +6663,19 @@ Transform:
   m_Father: {fileID: 4174006797389554}
   m_RootOrder: 27
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!4 &4588142441919068
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1929655279298152}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4712991556133638}
+  m_RootOrder: 26
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4588619963607838
 Transform:
   m_ObjectHideFlags: 1
@@ -7060,7 +7089,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1108970880345226}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.032579366, y: 0.0013027787, z: -0.016874978}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 4263105323299612}
@@ -7089,6 +7118,7 @@ Transform:
   - {fileID: 4316159829301064}
   - {fileID: 4122464083984484}
   - {fileID: 4601768434377322}
+  - {fileID: 4588142441919068}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -19121,6 +19151,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 0}
+--- !u!114 &114168547160882020
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1929655279298152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2b8a94d5fd78334b95d79e1003c33b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  active: 0
+  circleTerrain: {fileID: 2100000, guid: b3551b5c9b027244bbf9d6ea7e8b235c, type: 2}
+  player: {fileID: 0}
+  base2: {fileID: 1296461342371600}
+  base3: {fileID: 1290162473013226}
+  base4: {fileID: 1614712881008118}
+  playground: {fileID: 1108970880345226}
+  minSphereSoftness: 0.5
+  maxSphereSoftness: 1.5
+  playerSphereSoftness: 0.5
+  playerSphereRadius: 1.4
+  maxSphereRadius: 1.5
 --- !u!114 &114229293704987880
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -19174,9 +19227,9 @@ MonoBehaviour:
   - team: 4
     prefab: {fileID: 1932416488553872}
   towers:
-  - {fileID: 1491595183175986}
-  - {fileID: 1665379071641458}
-  - {fileID: 1739264933856834}
+  - {fileID: 1296461342371600}
+  - {fileID: 1290162473013226}
+  - {fileID: 1614712881008118}
   amtOfPlayers: 0
 --- !u!136 &136133089577969792
 CapsuleCollider:

@@ -66,10 +66,10 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _Radius: 0.9970726
-    - _RadiusPlayer: 100
+    - _Radius: 2.401114
+    - _RadiusPlayer: 1.4
     - _SmoothnessTextureChannel: 0
-    - _Softness: 1.0029252
+    - _Softness: 0.59889066
     - _SoftnessPlayer: 0.5
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -79,10 +79,10 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Center: {r: 1.9913248, g: 0.0025088675, b: 1.7001209, a: 0}
-    - _Center2: {r: 0, g: 0, b: 0, a: 0}
-    - _Center3: {r: -0.75, g: 0, b: -2.42, a: 0}
-    - _Center4: {r: 1.8899999, g: 0, b: 2.88, a: 0}
+    - _Center: {r: -3.752796, g: 0.00000011923149, b: -7.9143323e-16, a: 0}
+    - _Center2: {r: 2.5025795, g: 0.30869722, b: 3.6068752, a: 0}
+    - _Center3: {r: 1.6815796, g: 0.30869722, b: -4.079126, a: 0}
+    - _Center4: {r: -3.2664206, g: 0.3026972, b: 1.826875, a: 0}
     - _CircleColor: {r: 1, g: 0, b: 0, a: 1}
     - _CircleColor2: {r: 1, g: 0, b: 0, a: 1}
     - _CircleColor3: {r: 1, g: 0, b: 0, a: 1}
