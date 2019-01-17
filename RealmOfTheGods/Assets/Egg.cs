@@ -42,7 +42,7 @@ public class Egg : MonoBehaviour {
                             owner.stunTimer = owner.stunDuration;
                         }
                         transform.parent = other.gameObject.transform;
-                        transform.localPosition = new Vector3(0, 0, 0);
+                        transform.localPosition = new Vector3(0, 0.3f, 0);
                         owner = other.gameObject.GetComponent<Humanoid>();
                         Client.SetEggParent(owner.team, Vector3.zero);
                     }

@@ -45,6 +45,7 @@ public class circleLocation : MonoBehaviour {
     private Vector4 playgroundLocation;
 
     void Start () {
+        Debug.Log("Circle location set");
         // circleTerrain.SetVector("_Center", cubeLocation);
         CircleLocation = this;
         CircleLocation.circleTerrain.SetFloat("_RadiusPlayer", 100);
