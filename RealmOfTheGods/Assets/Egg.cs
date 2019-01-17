@@ -39,12 +39,12 @@ public class Egg : MonoBehaviour {
                 if (other.gameObject.GetComponent<Humanoid>() != owner) {
                     if (other.gameObject.GetComponent<Humanoid>().stunTimer <= 0.0f) {
                         if (owner != null) {
-                            owner.stunTimer = owner.stunDuration;
+                            owner.Stun();
                         }
                         transform.parent = other.gameObject.transform;
-                        transform.localPosition = new Vector3(0, 0.3f, 0);
+                        transform.localPosition = new Vector3(0, 0.3f, 0.2f);
                         owner = other.gameObject.GetComponent<Humanoid>();
-                        Client.SetEggParent(owner.team, Vector3.zero);
+                        Client.SetEggParent(owner.team, transform.localPosition);
                     }
                 }
             }

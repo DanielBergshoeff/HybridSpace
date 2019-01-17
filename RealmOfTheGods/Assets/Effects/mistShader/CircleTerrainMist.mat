@@ -66,10 +66,10 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _Radius: 1.5797971
+    - _Radius: 1.5961446
     - _RadiusPlayer: 1.4
     - _SmoothnessTextureChannel: 0
-    - _Softness: 0.92020375
+    - _Softness: 0.9038632
     - _SoftnessPlayer: 0.5
     - _SpecularHighlights: 1
     - _SrcBlend: 1

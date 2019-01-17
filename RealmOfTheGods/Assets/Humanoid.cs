@@ -124,7 +124,7 @@ public class Humanoid : NetworkBehaviour {
 
     }
 
-    private void Stun() {
+    public void Stun() {
         //Send message to clients to start stun animation
         Client.UnitStun(team, true);
         stunTimer = stunDuration;
