@@ -18,6 +18,9 @@ public class Humanoid : NetworkBehaviour {
     public Animator animator;
     public bool falling = false;
 
+    public ParticleSystem myParticleSystem;
+    public ParticleSystem myStunParticleSystem;
+
     public Rigidbody myRigidBody;
 
     public int intPoints = 0;

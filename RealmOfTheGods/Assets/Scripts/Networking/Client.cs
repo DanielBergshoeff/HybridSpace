@@ -442,14 +442,31 @@ public class Client : NetworkBehaviour
         RpcSyncUnitOnce(localPos, localRot, go, parent);
     }
 
-    public static void RespawnUnitServer(TeamType team) {
+    public static void RespawnUnitServer(TeamType teamType) {
         for (int i = 0; i < warriors.Count; i++) {
-            if(warriors[i].GetComponentInChildren<Humanoid>().team == team) {
+            if(warriors[i].GetComponentInChildren<Humanoid>().team == teamType) {
                 for (int j = 0; j < playground.teamToSpawnPoint.Length; j++) {
-                    if(playground.teamToSpawnPoint[j].team == team) {
+                    if(playground.teamToSpawnPoint[j].team == teamType) {
                         warriors[i].transform.position = playground.teamToSpawnPoint[j].prefab.transform.position;
                     }
                 }
+            }
+        }
+
+        foreach (ClientConnection clientConnection in clientConnection.clients) {
+            clientConnection.client.RespawnUnitServerOnce(teamType);
+        }
+    }
+
+    public void RespawnUnitServerOnce(TeamType teamType) {
+        RpcRespawnUnit(teamType);
+    }
+
+    [ClientRpc]
+    private void RpcRespawnUnit(TeamType teamType) {
+        for (int i = 0; i < warriors.Count; i++) {
+            if(warriors[i].GetComponentInChildren<Humanoid>().team == teamType) {
+                warriors[i].GetComponentInChildren<Humanoid>().myParticleSystem.Play();
             }
         }
     }
