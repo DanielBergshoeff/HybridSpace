@@ -196,6 +196,7 @@ public class Client : NetworkBehaviour
         for (int i = 0; i < warriors.Count; i++) {
             if (warriors[i].GetComponentInChildren<Humanoid>().team == teamType) {
                 warriors[i].GetComponentInChildren<Humanoid>().animator.SetBool("Stun", stun);
+                warriors[i].GetComponentInChildren<Humanoid>().myStunParticleSystem.Play();
             }
         }
     }

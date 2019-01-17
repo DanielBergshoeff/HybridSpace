@@ -55,6 +55,11 @@ public class CustomNetworkManager : NetworkManager {
     public override void OnStartServer()
     {
         Debug.Log("Server creation succeeded");
+        connectionConfig.NetworkDropThreshold = 45;
+        connectionConfig.OverflowDropThreshold = 45;
+        connectionConfig.AckDelay = 200;
+        connectionConfig.AcksType = ConnectionAcksType.Acks128;
+        connectionConfig.MaxSentMessageQueueSize = 300;
         //onServerStarted.Raise();
     }
 
