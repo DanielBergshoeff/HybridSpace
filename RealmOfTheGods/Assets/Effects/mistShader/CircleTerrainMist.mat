@@ -67,13 +67,15 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _Radius: 0.9970726
-    - _RadiusPlayer: 100
+    - _RadiusPlayer: 1
     - _SmoothnessTextureChannel: 0
     - _Softness: 1.0029252
     - _SoftnessPlayer: 0.5
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Thickness: 20
+    - _TotalRadius: 4
+    - _TotalSoftness: 2
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
@@ -88,3 +90,4 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _MainColor: {r: 0.6745283, g: 0.9936905, b: 1, a: 1}
+    - _TotalCenter: {r: 0, g: 0, b: 0, a: 0}
