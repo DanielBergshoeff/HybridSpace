@@ -90,6 +90,14 @@ public class Client : NetworkBehaviour
                 warriors[i].GetComponentInChildren<Humanoid>().pointText.text = "YOU LOST";
             }
         }
+
+        foreach (ClientConnection client in clientConnection.clients) {
+            client.client.GameOverServer(winningTeam);
+        }
+    }
+
+    public void GameOverServer (TeamType winningTeam) {
+        RpcGameOver(winningTeam);
     }
 
     [ClientRpc]
