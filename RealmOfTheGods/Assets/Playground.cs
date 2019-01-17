@@ -5,6 +5,7 @@ using UnityEngine;
 public class Playground : MonoBehaviour {
 
     public TeamToGameObject[] teamToSpawnPoint;
+    public GameObject[] towers;
     public int amtOfPlayers = 0;
 
 	// Use this for initialization

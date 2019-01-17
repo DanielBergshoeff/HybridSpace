@@ -372,6 +372,9 @@ public class Client : NetworkBehaviour
         baseCore = go;
         playground = baseCore.GetComponent<Playground>();
         egg = baseCore.GetComponentInChildren<Egg>().gameObject;
+        circleLocation.CircleLocation.base2 = playground.towers[0];
+        circleLocation.CircleLocation.base3 = playground.towers[1];
+        circleLocation.CircleLocation.base4 = playground.towers[2];
         OnBasePlaced.Invoke(go);
     }
 
@@ -454,6 +457,11 @@ public class Client : NetworkBehaviour
         }
 
         warriors.Add(go);
+
+        if(go.GetComponentInChildren<Humanoid>().team == Client.team) {
+            circleLocation.CircleLocation.player = go;
+            circleLocation.ActivateMist();
+        }
     }
 
     [ClientRpc]
