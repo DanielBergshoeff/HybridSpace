@@ -79,7 +79,7 @@ public class Humanoid : NetworkBehaviour {
 
         if (stunTimer <= 0.0f) {
             if (other.tag == "Ravine") {
-                Stun();
+                stunTimer = stunDuration;
                 myRigidBody.useGravity = true;
                 myRigidBody.isKinematic = false;
                 Client.UnitFalling(team);
@@ -108,6 +108,7 @@ public class Humanoid : NetworkBehaviour {
             transform.localPosition = Vector3.zero;
 
             Client.RespawnUnitServer(team);
+            Stun();
             if (points >= 100) {
                 points -= 100;
             }
